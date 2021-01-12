@@ -135,7 +135,7 @@
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
             android:layout_gravity="center"
-            android:background="@drawable/orangebtn"
+            android:background="@drawable/orangebtn_selector_img"
             android:text="완료"
             android:textColor="@color/colorWhite"
             android:textSize="16sp"
