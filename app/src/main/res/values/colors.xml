@@ -18,4 +18,5 @@
     <color name="colorEmailSignInPressed">#004D40</color>
 
     <color name="black">#FF000000</color>
+    <color name="red">#fa4d4d</color>
 </resources>
