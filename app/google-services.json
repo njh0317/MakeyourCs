@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "133083826447",
+    "firebase_url": "https://makeyourcs-default-rtdb.firebaseio.com",
+    "project_id": "makeyourcs",
+    "storage_bucket": "makeyourcs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:133083826447:android:e67c78fa74ddc7281f167a",
+        "android_client_info": {
+          "package_name": "com.example.makeyourcs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "133083826447-rbijt9ruq57el0j6hmeqmniut6j7a4aj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.makeyourcs",
+            "certificate_hash": "61bd2e8977f70e140a30cbcfd2844e8aba820aee"
+          }
+        },
+        {
+          "client_id": "133083826447-6m7n99fbs8dfm1sv9lsoot9toajfq1ov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv40VO9dknzDVEJZruWncEoQmyvAD0Lqk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "133083826447-6m7n99fbs8dfm1sv9lsoot9toajfq1ov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
