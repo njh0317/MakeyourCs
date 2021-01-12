@@ -19,4 +19,8 @@
 
     <color name="black">#FF000000</color>
     <color name="red">#fa4d4d</color>
+    <color name="orange">#FF9C00</color>
+
+    <color name="line_gray">#E6E6E6</color>
+    <color name="cursorColor">#F7D358</color>
 </resources>
