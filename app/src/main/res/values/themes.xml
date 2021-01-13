@@ -1,5 +1,4 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
@@ -13,5 +12,15 @@
         <item name="android:textColor">@color/colorWhite</item>
 
     </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorWhite</item>
+        <item name="colorPrimaryDark">@color/colorWhite</item>
+        <item name="colorAccent">@color/colorWhite</item>
+        <item name="android:typeface">@color/colorWhite</item>
+        <item name="titleTextColor">@color/colorBlack</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+
 
 </resources>
