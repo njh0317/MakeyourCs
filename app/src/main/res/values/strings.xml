@@ -17,6 +17,8 @@
     <string name="signup_cele">
         이제, 간단한 프로필 설정 후\n<b>MakeyourCs</b> 를 사용할 수 있습니다!
     </string>
+    <string name="signup_email_dup">중복된 이메일 주소입니다. 다시 입력해 주세요.</string>
+    <string name="signup_email_form">이메일 형식에 맞지 않습니다. 다시 입력해 주세요.</string>
 
 
     <!-- Bottom Navigation View -->

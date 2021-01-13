@@ -1,104 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Signup_idActivity">
 
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.makeyourcs.viewmodel.ViewModelCheckPw" />
+    </data>
+
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".Signup_idActivity">
+
 
         <LinearLayout
-            android:id="@+id/signin_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="20dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <android.widget.Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_arrow_left" />
+            <LinearLayout
+                android:id="@+id/signin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp">
+
+                <android.widget.Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_arrow_left" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="80dp"
+                    android:text="비밀번호 설정"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="80dp"
-                android:text="비밀번호 설정"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:text="비밀번호는 6 ~ 20자로 되어야 합니다."
+                android:textSize="14sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <android.widget.Button
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="29dp"
+                    android:background="@drawable/btn_x" />
+
+                <android.widget.Button
+                    android:layout_width="17dp"
+                    android:layout_height="17dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="73dp"
+                    android:layout_marginRight="29dp"
+                    android:background="@drawable/btn_x" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:hint="   비밀번호"
+                    android:paddingRight="35dip"
+                    android:inputType="textPassword"
+                    android:text="@={vm.pw}"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="60dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:hint="   비밀번호 확인"
+                    android:paddingRight="35dip"
+                    android:inputType="textPassword"
+                    android:text="@={vm.checkpw}"/>
+
+            </RelativeLayout>
+
+            <android.widget.Button
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/orangebtn_selector_img"
+                android:text="확인"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:onClick="@{(view) -> vm.showText(view)}"/>
+
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="14sp"
-            android:text="비밀번호는 6 ~ 20자로 되어야 합니다."/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp">
-
-            <android.widget.Button
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="29dp"
-                android:layout_marginTop="13dp"
-                android:background="@drawable/btn_x" />
-
-            <android.widget.Button
-                android:layout_width="17dp"
-                android:layout_height="17dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="29dp"
-                android:layout_marginTop="73dp"
-                android:background="@drawable/btn_x" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingRight="35dip"
-                android:hint="   비밀번호"
-                android:background="@drawable/border"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
-
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:paddingRight="35dip"
-                android:hint="   비밀번호 확인"
-                android:background="@drawable/border"
-                android:layout_marginTop="60dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"/>
-
-        </RelativeLayout>
-
-        <android.widget.Button
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="center"
-            android:background="@drawable/orangebtn_selector_img"
-            android:text="확인"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

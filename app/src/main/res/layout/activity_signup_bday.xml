@@ -1,69 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Signup_idActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="vm"
+            type="com.example.makeyourcs.viewmodel.ViewModelCheckBday" />
+    </data>
 
-
-    <LinearLayout
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        tools:context=".Signup_idActivity">
+
 
         <LinearLayout
-            android:id="@+id/signin_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:orientation="vertical">
 
-            <android.widget.Button
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/btn_arrow_left" />
+            <LinearLayout
+                android:id="@+id/signin_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            <TextView
+                <android.widget.Button
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/btn_arrow_left" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="90dp"
+                    android:text="생일 입력"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/bdaycake" />
+
+            <!-- 날짜 제한하기, 초기 날짜 설정하기 -->
+            <DatePicker
+                android:id="@+id/datePicker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"/>
+
+            <android.widget.Button
+                android:layout_width="160dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="생일 입력"
-                android:layout_marginLeft="90dp"
-                android:textColor="@color/black"
-                android:textSize="20sp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/orangebtn_selector_img"
+                android:text="가입"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
                 android:textStyle="bold" />
+
         </LinearLayout>
-
-        <ImageView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/bdaycake"/>
-
-        <!-- 날짜 제한하기, 초기 날짜 설정하기 -->
-        <DatePicker
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/datePicker"
-            android:layout_gravity="center_horizontal"
-            android:datePickerMode="spinner"
-            android:calendarViewShown="false"/>
-
-        <android.widget.Button
-            android:layout_width="160dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:background="@drawable/orangebtn_selector_img"
-            android:text="가입"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
+</layout>
