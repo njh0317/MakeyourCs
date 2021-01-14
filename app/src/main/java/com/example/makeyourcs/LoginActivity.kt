@@ -17,9 +17,7 @@ class LoginActivity : AppCompatActivity() {
         val loginButton : Button = findViewById(R.id.login)
         loginButton.setOnClickListener{
             makeAccount()
-
         }
-
     }
     fun makeAccount()
     {
