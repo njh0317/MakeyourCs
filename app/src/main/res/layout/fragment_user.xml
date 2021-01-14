@@ -1,44 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <RelativeLayout
+        android:id="@id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_height="30dp">
+
+        <Button
+            android:id="@+id/change_sub"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/round_shape_change_sub"
+            android:text="@string/change_sub_char"
+            android:textColor="@color/colorWhite"></Button>
+
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/dot_more_menu"></ImageButton>
+    </RelativeLayout>
+
     <LinearLayout
-        android:id="@+id/top_bar"
+        android:id="@+id/user_profile"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_bar"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/change_sub"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/change_sub_char"
-                android:background="@drawable/round_shape_change_sub"
-                android:textColor="@color/colorWhite"
-                android:layout_centerHorizontal="true">
-            </Button>
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/dot_more_menu"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                ></ImageButton>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
+            android:src="@drawable/ic_account"
+            android:layout_gravity="center">
+        </ImageView>
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="은주 한"
+            android:textSize="30sp"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/profile_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="ujjnue"
+            android:textSize="20sp">
+        </TextView>
+        <TextView
+            android:id="@+id/profile_follow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="팔로워 257명 팔로잉 217"
+            android:textSize="20sp"
+            android:layout_gravity="center">
+        </TextView>
+
+        <TextView
+            android:id="@+id/profile_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="KNU CSE"
+            android:textSize="20sp"></TextView>
     </LinearLayout>
-
-
     <FrameLayout
-        android:id="@+id/main_content"
+        android:layout_below="@+id/user_profile"
         android:layout_width="match_parent"
-        android:layout_below="@id/top_bar"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="wrap_content"></FrameLayout>
 
 
 </RelativeLayout>
