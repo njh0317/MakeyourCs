@@ -30,7 +30,7 @@ class PostingActivity : AppCompatActivity()  {
                 setPost()
             }
             get_posting_btn -> {
-                getPost()
+                getPost(1)
             }
         }
 
@@ -51,10 +51,10 @@ class PostingActivity : AppCompatActivity()  {
         }
 
     }
-    private fun getPost(postId:String)
+    private fun getPost(postId:Int)
     {
         try{
-            firestore?.collection("Post")?.document(postId)?.get()?.addOnCompleteListener{task->
+            firestore?.collection("Post")?.document(postId.toString())?.get()?.addOnCompleteListener{task->
                 if(task.isSuccessful){
                     val posting = PostClass()
                     posting.postId = task.result!!["postId"].toString().toInt()
