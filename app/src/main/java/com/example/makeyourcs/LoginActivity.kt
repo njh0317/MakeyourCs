@@ -16,5 +16,6 @@ class LoginActivity : AppCompatActivity() {
         var binding=DataBindingUtil.setContentView<ActivityLoginBinding>(this,R.layout.activity_login)
         binding.vm=LoginViewModel()
 
+
     }
 }

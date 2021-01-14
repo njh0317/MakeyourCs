@@ -22,6 +22,10 @@
     <string name="favorite">Favorite</string>
     <string name="account">Account</string>
 
+    <!-- My Feed -->
+    <string name="change_sub_char">계정변경</string>
+
+
     <!-- Account -->
     <string name="post">Post</string>
     <string name="following">Following</string>

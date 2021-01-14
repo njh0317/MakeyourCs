@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Button
+                android:id="@+id/change_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/change_sub_char"
+                android:background="@drawable/round_shape_change_sub"
+                android:textColor="@color/colorWhite"
+                android:layout_centerHorizontal="true">
+            </Button>
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/dot_more_menu"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                ></ImageButton>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_below="@id/top_bar"
+        android:layout_height="match_parent">
+    </FrameLayout>
+
+
+</RelativeLayout>
