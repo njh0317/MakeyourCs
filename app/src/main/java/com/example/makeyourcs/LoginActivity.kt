@@ -7,12 +7,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.Repository.AccountRepository
 import com.google.firebase.firestore.FirebaseFirestore
 
 
 class LoginActivity : AppCompatActivity() {
 
     var firestore : FirebaseFirestore? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -76,6 +78,10 @@ class LoginActivity : AppCompatActivity() {
             Log.d("Errortag", e.toString())
 
         }
+
+    }
+    fun login(id:String, pw:String)
+    {
 
     }
 }
