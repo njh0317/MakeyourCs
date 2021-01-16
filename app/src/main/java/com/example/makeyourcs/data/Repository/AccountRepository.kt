@@ -1,11 +1,15 @@
 package com.example.makeyourcs.data.Repository
 
-import com.example.makeyourcs.data.firebase.FirebaseSource
+import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 
 class AccountRepository(
-    private val firebase:FirebaseSource
+    private val firebase:FirebaseAuthSource
 ) {
-    fun confirmID(userId : String) = firebase.confirmID(userId) //아이디 존재 여부
+    fun login(email: String, password: String) = firebase.login(email, password)
 
-    fun login(userId : String, userPw : String) = firebase.confirmID(userId, userPw) //로그인 가능 여부
+    fun register(email: String, password: String) = firebase.register(email, password)
+
+    fun currentUser() = firebase.currentUser()
+
+    fun logout() = firebase.logout()
 }
