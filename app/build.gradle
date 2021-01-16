@@ -31,6 +31,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    dataBinding { enabled = true }
+
 
 }
 apply plugin: 'com.android.application'
@@ -55,6 +57,16 @@ dependencies {
     //RxJava
     implementation "io.reactivex.rxjava2:rxjava:2.2.5"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
+
+    //New Material Design
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+
+    //Kodein Dependency Injection
+    implementation "org.kodein.di:kodein-di-generic-jvm:6.2.1"
+    implementation "org.kodein.di:kodein-di-framework-android-x:6.2.1"
 
 
 }
