@@ -2,8 +2,10 @@ package com.example.makeyourcs
 
 import android.app.Application
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import com.example.makeyourcs.data.firebase.FirebaseSource
 import com.example.makeyourcs.ui.auth.AuthViewModelFactory
+import com.example.makeyourcs.ui.auth.LoginActivity
 
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -18,10 +20,13 @@ class FirebaseApplication : Application(), KodeinAware{
     override val kodein = Kodein.lazy {
         import(androidXModule(this@FirebaseApplication))
 
-        bind() from singleton { FirebaseSource() }
+        bind() from singleton { FirebaseAuthSource() }
         bind() from singleton { AccountRepository(instance()) }
-        bind() from provider { AuthViewModelFactory(instance()) }
+        bind<AuthViewModelFactory>() with provider { AuthViewModelFactory(instance()) }
         //bind() from provider { HomeViewModelFactory(instance()) }
 
+    }
+    override fun onCreate() {
+        super.onCreate()
     }
 }

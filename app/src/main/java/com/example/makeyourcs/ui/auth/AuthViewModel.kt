@@ -14,7 +14,7 @@ class AuthViewModel(
     //email and password for the input
     var email: String? = null
     var password: String? = null
-
+    var username: String? = null
     //auth listener
     var authListener: AuthListener? = null
 
@@ -71,9 +71,9 @@ class AuthViewModel(
     }
 
     fun goToSignup(view: View) {
-//        Intent(view.context, SignupActivity::class.java).also {
-//            view.context.startActivity(it)
-//        }
+        Intent(view.context, SignupActivity::class.java).also {
+            view.context.startActivity(it)
+        }
     }
 
     fun goToLogin(view: View) {
