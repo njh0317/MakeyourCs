@@ -9,18 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Signup_profileActivity"></activity>
-        <activity android:name=".Signup_celeActivity"></activity>
-        <activity android:name=".Signup_bdayActivity" />
-        <activity android:name=".Signup_emailActivity" >
+        <activity android:name=".AccountManagementActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Signup_profileActivity" />
+        <activity android:name=".Signup_celeActivity" />
+        <activity android:name=".Signup_bdayActivity" />
+        <activity android:name=".Signup_emailActivity" />
         <activity android:name=".Signup_pwActivity" />
-        <activity android:name=".Signup_idActivity" />
+        <activity android:name=".Signup_idActivity"/>
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
     </application>
