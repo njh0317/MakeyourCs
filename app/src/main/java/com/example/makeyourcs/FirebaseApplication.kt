@@ -26,7 +26,4 @@ class FirebaseApplication : Application(), KodeinAware{
         //bind() from provider { HomeViewModelFactory(instance()) }
 
     }
-    override fun onCreate() {
-        super.onCreate()
-    }
 }

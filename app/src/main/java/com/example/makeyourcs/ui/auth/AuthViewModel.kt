@@ -3,6 +3,7 @@ package com.example.makeyourcs.ui.auth
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -30,8 +31,8 @@ class AuthViewModel(
     fun login() {
 
         //validating email and password
-        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
-            authListener?.onFailure("Invalid email or password")
+        if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
+            authListener?.onFailure("Invalid user or password")
             return
         }
 
@@ -39,7 +40,7 @@ class AuthViewModel(
         authListener?.onStarted()
 
         //calling login from repository to perform the actual authentication
-        val disposable = repository.login(email!!, password!!)
+        val disposable = repository.login(username!!, password!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -54,12 +55,17 @@ class AuthViewModel(
 
     //Doing same thing with signup
     fun signup() {
-        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+        if (email.isNullOrEmpty() || password.isNullOrEmpty()|| username.isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
             return
         }
         authListener?.onStarted()
-        val disposable = repository.register(email!!, password!!)
+        val account = AccountClass()
+        account.pw = password
+        account.email = email
+        account.userId = username
+
+        val disposable = repository.register(account)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
