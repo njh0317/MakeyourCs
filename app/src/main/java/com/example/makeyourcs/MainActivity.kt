@@ -2,9 +2,10 @@ package com.example.makeyourcs
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import com.example.makeyourcs.navigation.AlarmFragment
-import com.example.makeyourcs.navigation.DetailViewFragment
+import com.example.makeyourcs.navigation.HomeFragment
 import com.example.makeyourcs.navigation.GridFragment
 import com.example.makeyourcs.navigation.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,8 +16,9 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_home ->{
-                var detailViewFragment=DetailViewFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,detailViewFragment).commit()
+                Log.d("debugging","main activity")
+                var homeFragment=HomeFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content,homeFragment).commit()
                 return true
             }
             R.id.action_search ->{

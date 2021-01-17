@@ -76,10 +76,11 @@
             android:text="KNU CSE"
             android:textSize="20sp"></TextView>
     </LinearLayout>
-    <FrameLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/user_recycler"
         android:layout_below="@+id/user_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></FrameLayout>
-
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>

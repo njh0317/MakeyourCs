@@ -1,6 +1,7 @@
 package com.example.makeyourcs.navigation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ import com.example.makeyourcs.ValueObject
 import com.example.makeyourcs.adapter.RecyclerFeedAdapter
 import kotlinx.android.synthetic.main.fragment_home.*
 
-class UserFragment : Fragment(){
+class HomeFragment : Fragment(){
     private var userList = arrayListOf<ValueObject>(
         ValueObject("사진1", "test3", "ic_1"),
         ValueObject("사진2", "test3", "ic_2"),
@@ -29,16 +30,28 @@ class UserFragment : Fragment(){
         ValueObject("사진12", "test3",  "ic_2"),
         ValueObject("사진13", "test3",  "ic_3"),
         ValueObject("사진14", "test3",  "ic_4"),
-        ValueObject("사진15", "test3",  "ic_5")
-    )
+        ValueObject("사진15", "test3",  "ic_5") )
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var view=LayoutInflater.from(activity).inflate(R.layout.fragment_user,container,false)
+        var view=LayoutInflater.from(activity).inflate(R.layout.fragment_home,container,false)
+        Log.d("debug","it's in home fragment before setting adapter, layoutmanger")
+
+//        //Set the adapter
+//        val mAdapter = RecyclerFeedAdapter(view.context, userList)
+//        recycler_view.adapter = mAdapter
+//
+//        //Set the LayoutManager
+//        val staggeredGridLayoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
+//        recycler_view.layoutManager = staggeredGridLayoutManager
 
         val mAdapter=RecyclerFeedAdapter(view.context,userList)
         val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-        val rview=view.findViewById<RecyclerView>(R.id.user_recycler)
+        val rview=view.findViewById<RecyclerView>(R.id.recycler_view)
         rview.adapter=mAdapter
         rview.layoutManager=lmanager
+
+
+        Log.d("debug","it's in home fragment after setting adapter, layoutmanger")
 
         return view;
     }
