@@ -6,7 +6,7 @@ import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 class AccountRepository(
     private val firebase:FirebaseAuthSource
 ) {
-    fun login(userID: String, password: String) = firebase.login(userID, password)
+    fun login(email: String, password: String) = firebase.login(email, password)
 
     fun register(account: AccountClass) = firebase.register(account)
 

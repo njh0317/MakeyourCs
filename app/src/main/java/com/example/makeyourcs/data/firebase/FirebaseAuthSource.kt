@@ -17,8 +17,7 @@ class FirebaseAuthSource {
     }
 
 
-    fun login(userID: String, password: String) = Completable.create { emitter ->
-        var email = findEmailbyUserID(userID)
+    fun login(email: String, password: String) = Completable.create { emitter ->
         Log.d("TAG", email)
         firebaseAuth.signInWithEmailAndPassword(email!!, password).addOnCompleteListener {
             if (!emitter.isDisposed) {
@@ -52,12 +51,13 @@ class FirebaseAuthSource {
 
     fun register(account: AccountClass) = Completable.create { emitter ->
         System.out.println(account)
-        firestore.collection("Account").document(account.userId.toString()).set(account)
+
         firebaseAuth.createUserWithEmailAndPassword(account.email.toString(), account.pw.toString()).addOnCompleteListener {
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
                     emitter.onComplete()
                     System.out.println("insert success")
+                    firestore.collection("Account").document(account.userId.toString()).set(account)
                 }
                 else
                     emitter.onError(it.exception!!)

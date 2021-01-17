@@ -31,8 +31,8 @@ class AuthViewModel(
     fun login() {
 
         //validating email and password
-        if (username.isNullOrEmpty() || password.isNullOrEmpty()) {
-            authListener?.onFailure("Invalid user or password")
+        if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
+            authListener?.onFailure("Invalid email or password")
             return
         }
 
@@ -40,7 +40,7 @@ class AuthViewModel(
         authListener?.onStarted()
 
         //calling login from repository to perform the actual authentication
-        val disposable = repository.login(username!!, password!!)
+        val disposable = repository.login(email!!, password!!)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

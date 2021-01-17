@@ -12,6 +12,7 @@
     <string name="signout_success">Signout success</string>
     <string name="signout_fail">Signout fail</string>
     <string name="signout_fail_null">Please enter your email and password</string>
+    <string name="logout">Logout</string>
 
     <!-- Sign up -->
     <string name="signup">계정이 아직 없으신가요?</string>

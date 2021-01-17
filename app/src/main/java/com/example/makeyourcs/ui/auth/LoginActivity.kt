@@ -25,13 +25,16 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         )
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
-
         viewModel.authListener = this
 
 
     }
 
-    override fun onStarted() {
+    override fun onStarted() {//대기상태, 로그인시 로딩 같은거 넣으면 됨..!!
+
+    }
+
+    override fun onStart(){ //처음에
         super.onStart()
         viewModel.user?.let {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
@@ -39,12 +42,15 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         }
     }
 
-    override fun onSuccess() {
-        TODO("Not yet implemented")
+    override fun onSuccess() {//로그인 성공시
+        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+        startHomeActivity()
+
     }
 
     override fun onFailure(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(this, "로그인 실", Toast.LENGTH_SHORT).show()
+        System.out.println(message)
     }
 //    fun readAccount(id:String)
 //    {

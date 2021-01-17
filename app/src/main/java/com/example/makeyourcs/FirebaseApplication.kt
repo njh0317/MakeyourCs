@@ -6,6 +6,7 @@ import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import com.example.makeyourcs.data.firebase.FirebaseSource
 import com.example.makeyourcs.ui.auth.AuthViewModelFactory
 import com.example.makeyourcs.ui.auth.LoginActivity
+import com.example.makeyourcs.ui.home.HomeViewModelFactory
 
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -23,7 +24,7 @@ class FirebaseApplication : Application(), KodeinAware{
         bind() from singleton { FirebaseAuthSource() }
         bind() from singleton { AccountRepository(instance()) }
         bind<AuthViewModelFactory>() with provider { AuthViewModelFactory(instance()) }
-        //bind() from provider { HomeViewModelFactory(instance()) }
+        bind<HomeViewModelFactory>() with provider { HomeViewModelFactory(instance())}
 
     }
 }
