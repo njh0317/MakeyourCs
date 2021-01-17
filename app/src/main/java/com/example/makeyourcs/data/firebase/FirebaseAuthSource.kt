@@ -49,7 +49,7 @@ class FirebaseAuthSource {
         return email
     }
 
-    fun register(account: AccountClass) = Completable.create { emitter ->
+    fun register(account: AccountClass, subaccount:AccountClass.SubClass) = Completable.create { emitter ->
         System.out.println(account)
 
         firebaseAuth.createUserWithEmailAndPassword(account.email.toString(), account.pw.toString()).addOnCompleteListener {
@@ -58,6 +58,10 @@ class FirebaseAuthSource {
                     emitter.onComplete()
                     System.out.println("insert success")
                     firestore.collection("Account").document(account.userId.toString()).set(account)
+                    firestore.collection("Account")
+                        .document(account.userId.toString())
+                        .collection("SubAccount")
+                        .document(account.sub_count.toString()).set(subaccount)
                 }
                 else
                     emitter.onError(it.exception!!)

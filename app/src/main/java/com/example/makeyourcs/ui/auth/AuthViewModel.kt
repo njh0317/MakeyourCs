@@ -6,10 +6,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
-import com.example.makeyourcs.ui.signup.Signup_bdayActivity
-import com.example.makeyourcs.ui.signup.Signup_emailActivity
-import com.example.makeyourcs.ui.signup.Signup_idActivity
-import com.example.makeyourcs.ui.signup.Signup_pwActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -75,11 +71,13 @@ class AuthViewModel(
         account.pw = password
         account.email = email
         account.userId = id
-        account.year = year
-        account.month = month
-        account.day = day
+        val subaccount = AccountClass.SubClass()
+        subaccount.group_name = "mongu"
+        subaccount.name="mongu"
+        subaccount.introduction="I am mongu"
+
         System.out.println(account)
-        val disposable = repository.register(account)
+        val disposable = repository.register(account, subaccount)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -91,7 +89,7 @@ class AuthViewModel(
     }
 
     fun goToSignup(view: View) {
-        Intent(view.context, Signup_idActivity::class.java).also {
+        Intent(view.context, SignupActivity::class.java).also {
             view.context.startActivity(it)
         }
     }
@@ -101,22 +99,22 @@ class AuthViewModel(
             view.context.startActivity(it)
         }
     }
-    fun goToPw(view: View) {
-        Intent(view.context, Signup_pwActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-    fun goToEmail(view: View) {
-        Intent(view.context, Signup_emailActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-    fun goToBday(view: View) {
-        Intent(view.context, Signup_bdayActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-
+//    fun goToPw(view: View) {
+//        Intent(view.context, Signup_pwActivity::class.java).also {
+//            view.context.startActivity(it)
+//        }
+//    }
+//    fun goToEmail(view: View) {
+//        Intent(view.context, Signup_emailActivity::class.java).also {
+//            view.context.startActivity(it)
+//        }
+//    }
+//    fun goToBday(view: View) {
+//        Intent(view.context, Signup_bdayActivity::class.java).also {
+//            view.context.startActivity(it)
+//        }
+//    }
+//
 
 
     //disposing the disposables

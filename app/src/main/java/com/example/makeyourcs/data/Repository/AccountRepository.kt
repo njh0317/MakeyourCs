@@ -8,7 +8,7 @@ class AccountRepository(
 ) {
     fun login(email: String, password: String) = firebase.login(email, password)
 
-    fun register(account: AccountClass) = firebase.register(account)
+    fun register(account: AccountClass, subaccount:AccountClass.SubClass) = firebase.register(account, subaccount)
 
     fun currentUser() = firebase.currentUser()
 
