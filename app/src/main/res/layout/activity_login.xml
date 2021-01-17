@@ -12,11 +12,10 @@
 
 
     <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login_background"
-        tools:context=".LoginActivity">
+        tools:context=".ui.auth.LoginActivity">
 
 
 
@@ -44,9 +43,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/round_shape_input"
-                android:hint="@string/id"
+                android:hint="@string/email"
                 android:padding="10dp"
-                android:text="@={vm.et_username}"
+                android:text="@={viewmodel.email}"
                 android:textColor="@color/deepGray"
                 android:textColorHint="@color/deepGray"></EditText>
 
@@ -60,7 +59,7 @@
                 android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="10dp"
-                android:text="@={vm.et_password}"
+                android:text="@={viewmodel.password}"
                 android:textColor="@color/deepGray"
                 android:textColorHint="@color/deepGray"></EditText>
 
