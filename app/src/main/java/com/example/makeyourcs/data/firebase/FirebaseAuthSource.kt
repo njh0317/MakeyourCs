@@ -1,7 +1,5 @@
 package com.example.makeyourcs.data.firebase
 
-import android.accounts.Account
-import android.content.ContentValues
 import android.util.Log
 import com.example.makeyourcs.data.AccountClass
 import com.google.firebase.auth.FirebaseAuth
@@ -29,39 +27,26 @@ class FirebaseAuthSource {
         }
     }
 
-    fun findEmailbyUserID(userID: String):String?{
-        System.out.println("findEmailbyUserID")
-        var email : String?=null
-        firestore.collection("Account").whereEqualTo("userId",userID).get().addOnCompleteListener{task->
-            if(task.isSuccessful){
-                for(dc in task.result!!.documents){
-                    var account =dc.toObject(AccountClass::class.java)
-                    System.out.println(account)
-                    email = account?.email.toString()
-                }
-            }
-
-        }.addOnFailureListener { exception ->
-            Log.e("HHTT", "Error: " + exception.toString())
-        }
-
-        System.out.println("findEmailbyUserID")
-        return email
-    }
-
     fun register(account: AccountClass, subaccount:AccountClass.SubClass) = Completable.create { emitter ->
         System.out.println(account)
-
+        System.out.println(subaccount)
+        firestore.collection("Account").document(account.userId.toString()).set(account)
+        firestore.collection("Account")
+            .document(account.userId.toString())
+            .collection("SubAccount")
+            .document(account.sub_count.toString()).set(subaccount)
         firebaseAuth.createUserWithEmailAndPassword(account.email.toString(), account.pw.toString()).addOnCompleteListener {
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
-                    emitter.onComplete()
+
                     System.out.println("insert success")
-                    firestore.collection("Account").document(account.userId.toString()).set(account)
+//                    firestore.collection("Account").document(account.userId.toString()).set(account)
                     firestore.collection("Account")
                         .document(account.userId.toString())
                         .collection("SubAccount")
                         .document(account.sub_count.toString()).set(subaccount)
+
+                    emitter.onComplete()
                 }
                 else
                     emitter.onError(it.exception!!)

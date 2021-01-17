@@ -16,11 +16,7 @@ class AuthViewModel(
     //email and password for the input
     var email: String? = null
     var password: String? = null
-    var checkpassword: String?=null
     var id: String? = null
-    var year: Int? = null
-    var month: Int? = null
-    var day: Int? = null
     //auth listener
     var authListener: AuthListener? = null
 
