@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSelectedListener {
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        var homeFragment=HomeFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.main_content,homeFragment).commit()
+
         when(item.itemId){
             R.id.action_home ->{
                 var homeFragment=HomeFragment()
@@ -46,5 +50,8 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
+
+        //Set default screen
+        bottom_navigation.selectedItemId=R.id.action_home
     }
 }

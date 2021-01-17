@@ -76,6 +76,7 @@
             android:text="KNU CSE"
             android:textSize="20sp"></TextView>
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_recycler"
         android:layout_below="@+id/user_profile"

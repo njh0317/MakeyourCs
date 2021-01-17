@@ -16,33 +16,25 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(){
     private var userList = arrayListOf<ValueObject>(
-        ValueObject("사진1", "test3", "ic_1"),
-        ValueObject("사진2", "test3", "ic_2"),
-        ValueObject("사잔3", "test3", "ic_3"),
-        ValueObject("사진4", "test3", "ic_4"),
-        ValueObject("사진5", "test3", "ic_5"),
-        ValueObject("사진6", "test3",  "ic_6"),
-        ValueObject("사진7", "test3",  "ic_7"),
-        ValueObject("사진8", "test3",  "ic_8"),
-        ValueObject("사진9", "test3", "ic_9"),
-        ValueObject("사진10", "test3",  "ic_1"),
-        ValueObject("사진11", "test3",  "ic_5"),
-        ValueObject("사진12", "test3",  "ic_2"),
-        ValueObject("사진13", "test3",  "ic_3"),
-        ValueObject("사진14", "test3",  "ic_4"),
-        ValueObject("사진15", "test3",  "ic_9") )
+        ValueObject("1", "test3", "ic_1"),
+        ValueObject("2", "test3", "ic_2"),
+        ValueObject("3", "test3", "ic_3"),
+        ValueObject("4", "test3", "ic_4"),
+        ValueObject("5", "test3", "ic_5"),
+        ValueObject("6", "test3",  "ic_6"),
+        ValueObject("7", "test3",  "ic_7"),
+        ValueObject("8", "test3",  "ic_8"),
+        ValueObject("9", "test3", "ic_9"),
+        ValueObject("10", "test3",  "ic_10"),
+        ValueObject("11", "test3",  "ic_11"),
+        ValueObject("12", "test3",  "ic_1"),
+        ValueObject("13", "test3",  "ic_2"),
+        ValueObject("14", "test3",  "ic_3"),
+        ValueObject("15", "test3",  "ic_4") )
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view=LayoutInflater.from(activity).inflate(R.layout.fragment_home,container,false)
         Log.d("debug","it's in home fragment before setting adapter, layoutmanger")
-
-//        //Set the adapter
-//        val mAdapter = RecyclerFeedAdapter(view.context, userList)
-//        recycler_view.adapter = mAdapter
-//
-//        //Set the LayoutManager
-//        val staggeredGridLayoutManager = StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL)
-//        recycler_view.layoutManager = staggeredGridLayoutManager
 
         val mAdapter=RecyclerFeedAdapter(view.context,userList)
         val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
@@ -50,8 +42,6 @@ class HomeFragment : Fragment(){
         rview.adapter=mAdapter
         rview.layoutManager=lmanager
 
-
-        Log.d("debug","it's in home fragment after setting adapter, layoutmanger")
 
         return view;
     }
