@@ -24,13 +24,14 @@ class UserFragment : Fragment(){
         ValueObject("사진7", "test3",  "ic_7"),
         ValueObject("사진8", "test3",  "ic_8"),
         ValueObject("사진9", "test3", "ic_9"),
-        ValueObject("사진10", "test3",  "ic_10"),
-        ValueObject("사진11", "test3",  "ic_1"),
+        ValueObject("사진10", "test3",  "ic_1"),
+        ValueObject("사진11", "test3",  "ic_5"),
         ValueObject("사진12", "test3",  "ic_2"),
         ValueObject("사진13", "test3",  "ic_3"),
         ValueObject("사진14", "test3",  "ic_4"),
-        ValueObject("사진15", "test3",  "ic_5")
-    )
+        ValueObject("사진15", "test3",  "ic_9") )
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view=LayoutInflater.from(activity).inflate(R.layout.fragment_user,container,false)
 

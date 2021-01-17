@@ -16,9 +16,9 @@ class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_home ->{
-                Log.d("debugging","main activity")
                 var homeFragment=HomeFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.main_content,homeFragment).commit()
+
                 return true
             }
             R.id.action_search ->{
