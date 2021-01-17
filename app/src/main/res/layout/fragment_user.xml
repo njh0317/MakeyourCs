@@ -21,6 +21,7 @@
             android:textColor="@color/colorWhite"></Button>
 
         <ImageButton
+            android:id="@+id/setting"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
@@ -37,8 +38,8 @@
 
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_width="170dp"
-            android:layout_height="170dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/ic_account"
             android:layout_gravity="center">
         </ImageView>
@@ -56,7 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="ujjnue"
+            android:text="\@ujjnue"
             android:textSize="20sp">
         </TextView>
         <TextView
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="팔로워 257명 팔로잉 217"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_gravity="center">
         </TextView>
 

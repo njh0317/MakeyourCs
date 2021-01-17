@@ -14,10 +14,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(),BottomNavigationView.OnNavigationItemSelectedListener {
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-        var homeFragment= HomeFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.main_content,homeFragment).commit()
-
         when(item.itemId){
             R.id.action_home ->{
                 var homeFragment= HomeFragment()
