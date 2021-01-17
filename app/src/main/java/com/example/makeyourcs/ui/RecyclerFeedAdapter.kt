@@ -1,4 +1,4 @@
-package com.example.makeyourcs.adapter
+package com.example.makeyourcs.ui
 
 import android.content.Context
 import android.content.Intent
@@ -9,13 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.makeyourcs.DetailedActivity
 import com.example.makeyourcs.R
-import com.example.makeyourcs.ValueObject
 
-class RecyclerFeedAdapter(
-    private val context: Context, private val dataList: ArrayList<ValueObject>
-) : RecyclerView.Adapter<RecyclerFeedAdapter.ItemViewHolder>() {
+class RecyclerFeedAdapter(private val context: Context, private val dataList: ArrayList<ImageVo>)
+    : RecyclerView.Adapter<RecyclerFeedAdapter.ItemViewHolder>() {
 
     var mPosition = 0
 
@@ -24,10 +21,10 @@ class RecyclerFeedAdapter(
         private val userPhoto = itemView.findViewById<ImageView>(R.id.img)
         private val userName = itemView.findViewById<TextView>(R.id.info)
 
-        fun bind(dataVo: ValueObject, context: Context) {
-            if (dataVo.photo != "") {
+        fun bind(imagevo: ImageVo, context: Context) {
+            if (imagevo.photo != "") {
                 val resourceId =
-                    context.resources.getIdentifier(dataVo.photo, "drawable", context.packageName)
+                    context.resources.getIdentifier(imagevo.photo, "drawable", context.packageName)
 
                 if (resourceId > 0) {
                     userPhoto.setImageResource(resourceId)
@@ -39,7 +36,7 @@ class RecyclerFeedAdapter(
             }
 
             //TextView에 데이터 세팅
-            userName.text = dataVo.name
+            userName.text = imagevo.name
         }
     }
 

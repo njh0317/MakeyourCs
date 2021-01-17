@@ -1,7 +1,8 @@
-package com.example.makeyourcs
+package com.example.makeyourcs.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.makeyourcs.R
 import kotlinx.android.synthetic.main.activity_detailed.*
 
 class DetailedActivity : AppCompatActivity() {

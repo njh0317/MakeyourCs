@@ -1,4 +1,4 @@
-package com.example.makeyourcs.navigation
+package com.example.makeyourcs.ui.alarm
 
 import android.os.Bundle
 import android.view.LayoutInflater
