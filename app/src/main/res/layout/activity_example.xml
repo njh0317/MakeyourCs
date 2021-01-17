@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    >
-    <data>
-        <variable name="viewmodel"
-            type="com.example.makeyourcs.ui.auth.AuthViewModel"/>
-    </data>
-
-<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_background"
-    tools:context=".ui.auth.LoginActivity">
+    tools:context=".ui.ExampleActivity">
 
     <ImageView
         android:id="@+id/makeyourcs"
@@ -32,21 +25,19 @@
 
         <EditText
             android:id="@+id/et_username"
-            android:text="@={viewmodel.email}"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/round_shape_input"
-            android:hint="@string/email"
+            android:hint="@string/id"
             android:padding="10dp"
             android:textColor="@color/deepGray"
             android:textColorHint="@color/deepGray"></EditText>
 
         <EditText
             android:id="@+id/et_password"
-            android:text="@={viewmodel.password}"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_marginLeft="20dp"
@@ -60,7 +51,6 @@
 
         <Button
             android:id="@+id/login"
-            android:onClick="@{() -> viewmodel.login()}"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="20dp"
@@ -72,7 +62,6 @@
 
         <Button
             android:id="@+id/signup"
-            android:onClick="@{(v) -> viewmodel.goToSignup(v)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -83,4 +72,3 @@
 
 
 </RelativeLayout>
-</layout>
