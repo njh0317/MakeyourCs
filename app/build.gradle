@@ -40,6 +40,11 @@ android {
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 //firebase_setting-end
+
+//RecyclerView
+apply plugin: 'kotlin-kapt'
+//RecyclerView-end
+
 dependencies {
     //firebase_setting
     implementation platform('com.google.firebase:firebase-bom:26.2.0')
@@ -57,4 +62,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //livedata
     implementation 'androidx.appcompat:appcompat:1.1.0'
+    //RecyclerView
+    implementation 'com.android.support:design:29.0.0'
+    implementation 'com.android.support:support-v4:29.0.0'
 }

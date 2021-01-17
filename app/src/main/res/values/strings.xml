@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MakeyourCs</string>
 
+    <string name="cancel">취소</string>
+    <string name="next">다음</string>
+
     <!-- Sign In -->
     <string name="id">사용자 이름</string>
     <string name="password">비밀번호</string>
