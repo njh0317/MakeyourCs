@@ -2,9 +2,14 @@ package com.example.makeyourcs.ui.auth
 
 import android.content.Intent
 import android.view.View
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.ui.signup.Signup_bdayActivity
+import com.example.makeyourcs.ui.signup.Signup_emailActivity
+import com.example.makeyourcs.ui.signup.Signup_idActivity
+import com.example.makeyourcs.ui.signup.Signup_pwActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +20,11 @@ class AuthViewModel(
     //email and password for the input
     var email: String? = null
     var password: String? = null
-    var username: String? = null
+    var checkpassword: String?=null
+    var id: String? = null
+    var year: Int? = null
+    var month: Int? = null
+    var day: Int? = null
     //auth listener
     var authListener: AuthListener? = null
 
@@ -55,7 +64,9 @@ class AuthViewModel(
 
     //Doing same thing with signup
     fun signup() {
-        if (email.isNullOrEmpty() || password.isNullOrEmpty()|| username.isNullOrEmpty()) {
+        System.out.println("Signup!")
+
+        if (email.isNullOrEmpty() || password.isNullOrEmpty()|| id.isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
             return
         }
@@ -63,8 +74,11 @@ class AuthViewModel(
         val account = AccountClass()
         account.pw = password
         account.email = email
-        account.userId = username
-
+        account.userId = id
+        account.year = year
+        account.month = month
+        account.day = day
+        System.out.println(account)
         val disposable = repository.register(account)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -77,7 +91,7 @@ class AuthViewModel(
     }
 
     fun goToSignup(view: View) {
-        Intent(view.context, SignupActivity::class.java).also {
+        Intent(view.context, Signup_idActivity::class.java).also {
             view.context.startActivity(it)
         }
     }
@@ -87,6 +101,22 @@ class AuthViewModel(
             view.context.startActivity(it)
         }
     }
+    fun goToPw(view: View) {
+        Intent(view.context, Signup_pwActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
+    fun goToEmail(view: View) {
+        Intent(view.context, Signup_emailActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
+    fun goToBday(view: View) {
+        Intent(view.context, Signup_bdayActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
+
 
 
     //disposing the disposables

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
-        <import type="android.view.View"/>
-        <variable
-            name="vm"
-            type="com.example.makeyourcs.viewmodel.ViewModelCheckBday" />
+        <variable name="viewmodel"
+            type="com.example.makeyourcs.ui.auth.AuthViewModel"/>
     </data>
 
     <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Signup_idActivity">
+        tools:context=".ui.signup.Signup_idActivity">
 
 
         <LinearLayout
@@ -66,7 +64,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner"/>
+                android:datePickerMode="spinner"
+                android:year="@={viewmodel.year}"
+                android:month="@={viewmodel.month}"
+                android:day="@={viewmodel.day}"/>
 
             <android.widget.Button
                 android:layout_width="160dp"
@@ -77,7 +78,8 @@
                 android:text="가입"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:onClick="@{() -> viewmodel.signup()}"/>
 
         </LinearLayout>
     </RelativeLayout>

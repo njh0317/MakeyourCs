@@ -20,11 +20,11 @@
         </activity>
 
         <activity android:name=".Signup_profileActivity" />
-        <activity android:name=".Signup_celeActivity" />
-        <activity android:name=".Signup_bdayActivity" />
-        <activity android:name=".Signup_emailActivity" />
-        <activity android:name=".Signup_pwActivity" />
-        <activity android:name=".Signup_idActivity" >
+        <activity android:name=".ui.signup.Signup_celeActivity" />
+        <activity android:name=".ui.signup.Signup_bdayActivity" />
+        <activity android:name=".ui.signup.Signup_emailActivity" />
+        <activity android:name=".ui.signup.Signup_pwActivity" />
+        <activity android:name=".ui.signup.Signup_idActivity" >
 
 
         </activity>
