@@ -18,4 +18,12 @@
     <color name="colorGoogleSignInPressed">#b02513</color>
     <color name="colorEmailSignIn">#009688</color>
     <color name="colorEmailSignInPressed">#004D40</color>
+
+    <color name="black">#FF000000</color>
+    <color name="red">#fa4d4d</color>
+    <color name="orange">#FF9C00</color>
+
+    <color name="line_gray">#E6E6E6</color>
+    <color name="cursorColor">#F7D358</color>
+    <color name="id_gray">#333333</color>
 </resources>

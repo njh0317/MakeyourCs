@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">MakeyourCs</string>
 
+    <string name="cancel">취소</string>
+    <string name="next">다음</string>
+
     <!-- Sign In -->
     <string name="id">사용자 이름</string>
     <string name="password">비밀번호</string>
@@ -16,6 +19,12 @@
 
     <!-- Sign up -->
     <string name="signup">계정이 아직 없으신가요?</string>
+    <string name="signup_cele">
+        이제, 간단한 프로필 설정 후\n<b>MakeyourCs</b> 를 사용할 수 있습니다!
+    </string>
+    <string name="signup_email_dup">중복된 이메일 주소입니다. 다시 입력해 주세요.</string>
+    <string name="signup_email_form">이메일 형식에 맞지 않습니다. 다시 입력해 주세요.</string>
+
 
     <!-- Bottom Navigation View -->
     <string name="home">home</string>
