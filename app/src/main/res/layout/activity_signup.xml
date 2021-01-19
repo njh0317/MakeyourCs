@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    >
-<!--    <data>-->
-<!--        <variable name="viewmodel"-->
-<!--            type="com.example.makeyourcs.ui.auth.AuthViewModel"/>-->
-<!--    </data>-->
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="viewmodel"
+            type="com.example.makeyourcs.ui.auth.AuthViewModel" />
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,67 +19,233 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/makeyourcs"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            tools:ignore="NotSibling">
+            android:orientation="vertical">
 
-<!--            <EditText-->
-<!--                android:id="@+id/et_username"-->
-<!--                android:text="@={viewmodel.username}"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="55dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:background="@drawable/round_shape_input"-->
-<!--                android:hint="@string/id"-->
-<!--                android:padding="10dp"-->
-<!--                android:textColor="@color/deepGray"-->
-<!--                android:textColorHint="@color/deepGray"></EditText>-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text="화원가입"
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:textStyle="bold" />
 
-<!--            <EditText-->
-<!--                android:id="@+id/et_email"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="55dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:background="@drawable/round_shape_input"-->
-<!--                android:hint="@string/email"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="@={viewmodel.email}"-->
-<!--                android:textColor="@color/deepGray"-->
-<!--                android:textColorHint="@color/deepGray"></EditText>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
 
-<!--            <EditText-->
-<!--                android:id="@+id/et_password"-->
-<!--                android:text="@={viewmodel.password}"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="55dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:background="@drawable/round_shape_input"-->
-<!--                android:inputType="textPassword"-->
-<!--                android:padding="10dp"-->
-<!--                android:textColor="@color/deepGray"-->
-<!--                android:textColorHint="@color/deepGray"-->
-<!--                android:hint="@string/password"></EditText>-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="아이디"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
 
-<!--            <Button-->
-<!--                android:id="@+id/login"-->
-<!--                android:onClick="@{() -> viewmodel.signup()}"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginTop="50dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:background="@drawable/round_shape_button"-->
-<!--                android:text="@string/signup_complete"-->
-<!--                android:theme="@style/ButtonStyle"></Button>-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/border"
+                        android:hint="   아이디"
+                        android:inputType="text"
+                        android:paddingRight="35dip"
+                        android:text="@={viewmodel.id}"/>
+
+                    <android.widget.Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:onClick="@{() -> viewmodel.removetext(1)"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/btn_x"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="비밀번호"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/border"
+                        android:hint="   비밀번호"
+                        android:inputType="text"
+                        android:paddingRight="35dip"
+                        android:text="@={viewmodel.password}" />
+
+                    <android.widget.Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/btn_x"
+                        android:onClick="@{() -> viewmodel.removetext(2)"/>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/border"
+                        android:hint="   비밀번호 확인"
+                        android:inputType="text"
+                        android:paddingRight="35dip"
+                        android:text="@={viewmodel.checkpassword}"
+                        android:onClick="@{() -> viewmodel.removetext(3)"/>
+
+                    <android.widget.Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/btn_x" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="이메일"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/border"
+                        android:hint="  ex) MakeyourCs@gmail.com"
+                        android:inputType="text"
+                        android:paddingRight="35dip"
+                        android:text="@={viewmodel.email}" />
+
+                    <android.widget.Button
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/btn_x"
+                        android:onClick="@{() -> viewmodel.removetext(4)"/>
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:text="생일"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/border"
+                    android:hint="  ex)2021.01.19"
+                    android:inputType="text"
+                    android:paddingRight="35dip"
+                    android:text="@={viewmodel.birthday}"/>
+
+                <android.widget.Button
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/btn_x"
+                    android:onClick="@{() -> viewmodel.removetext(5)"/>
+
+            </LinearLayout>
+
+            <android.widget.Button
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/orangebtn_selector_img"
+                android:text="가입"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:onClick="@{() -> viewmodel.signup()}"/>
         </LinearLayout>
-
 
     </RelativeLayout>
 </layout>

@@ -7,7 +7,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivitySignupBdayBinding
-import com.example.makeyourcs.databinding.ActivitySignupIdBinding
 import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.ui.auth.AuthViewModel
 import com.example.makeyourcs.ui.auth.AuthViewModelFactory

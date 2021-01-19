@@ -2,6 +2,7 @@ package com.example.makeyourcs.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.CalendarView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -18,16 +19,17 @@ class SignupActivity : AppCompatActivity(), AuthListener, KodeinAware {
     private val factory : AuthViewModelFactory by instance()
 
     private lateinit var viewModel: AuthViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-//        val binding: ActivitySignupBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup)
-//        viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
-//        binding.viewmodel = viewModel
-//
-//        viewModel.authListener = this
+        val binding: ActivitySignupBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup)
+        viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
+        binding.viewmodel = viewModel
+
+        viewModel.authListener = this
+
+
     }
 
     override fun onStarted() {
@@ -44,6 +46,6 @@ class SignupActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onFailure(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "회원가입 실패", Toast.LENGTH_SHORT).show()
     }
 }

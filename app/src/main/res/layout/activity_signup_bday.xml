@@ -64,10 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner"
-                android:year="@={viewmodel.year}"
-                android:month="@={viewmodel.month}"
-                android:day="@={viewmodel.day}"/>
+                android:datePickerMode="spinner"/>
 
             <android.widget.Button
                 android:layout_width="160dp"
@@ -78,8 +75,7 @@
                 android:text="가입"
                 android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                android:textStyle="bold"
-                android:onClick="@{() -> viewmodel.signup()}"/>
+                android:textStyle="bold"/>
 
         </LinearLayout>
     </RelativeLayout>
