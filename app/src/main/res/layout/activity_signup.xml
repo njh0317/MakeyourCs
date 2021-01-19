@@ -4,7 +4,6 @@
     xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="com.example.makeyourcs.ui.auth.AuthViewModel" />
@@ -69,7 +68,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="40dp"
-                        android:onClick="@{() -> viewmodel.removetext(1)"
+                        android:onClick="@{() -> viewmodel.removeid()}"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"/>
                 </RelativeLayout>
@@ -116,7 +115,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
-                        android:onClick="@{() -> viewmodel.removetext(2)"/>
+                        android:onClick="@{() -> viewmodel.removepw()}"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -134,7 +133,7 @@
                         android:inputType="text"
                         android:paddingRight="35dip"
                         android:text="@={viewmodel.checkpassword}"
-                        android:onClick="@{() -> viewmodel.removetext(3)"/>
+                        android:onClick="@{() -> viewmodel.removecpw()}"/>
 
                     <android.widget.Button
                         android:layout_width="15dp"
@@ -189,7 +188,7 @@
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
-                        android:onClick="@{() -> viewmodel.removetext(4)"/>
+                        android:onClick="@{() -> viewmodel.removeemail()}"/>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -230,7 +229,7 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginRight="30dp"
                     android:background="@drawable/btn_x"
-                    android:onClick="@{() -> viewmodel.removetext(5)"/>
+                    android:onClick="@{() -> viewmodel.removebday()}"/>
 
             </LinearLayout>
 

@@ -23,14 +23,14 @@ class AuthViewModel(
 ): ViewModel() {
     //email and password for the input
 
-    var email = ObservableField<String>("")
-    var password = ObservableField<String>("")
-    var checkpassword = ObservableField<String>("")
-    var id = ObservableField<String>("")
+    var email = ObservableField<String>()
+    var password = ObservableField<String>()
+    var checkpassword = ObservableField<String>()
+    var id = ObservableField<String>()
     var year: Int? = null
     var month: Int? = null
     var day: Int? = null
-    var birthday = ObservableField<String>("")
+    var birthday = ObservableField<String>()
     //auth listener
     var authListener: AuthListener? = null
 
@@ -67,26 +67,39 @@ class AuthViewModel(
         disposables.add(disposable)
     }
 
-    fun removetext(idx: Int){
-        if(idx == 1)
-            id.set("")
-        else if(idx == 2)
-            password.set("")
-        else if(idx == 3)
-            password.set("")
-        else if(idx == 4)
-            email.set("")
-        else if(idx == 5)
-            birthday.set("")
+    fun removeid(){
+        id.set("")
+
     }
+    fun removepw(){
+        password.set("")
+
+    }
+    fun removecpw(){
+        checkpassword.set("")
+
+    }
+    fun removeemail(){
+        email.set("")
+    }
+    fun removebday(){
+        birthday.set("")
+    }
+
 
     //Doing same thing with signup
     fun signup() {
         System.out.println("Signup!")
 
 
-        if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()) {
+        if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()|| checkpassword.get().isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
+            return
+        }
+
+        if(password.get() != checkpassword.get())
+        {
+            authListener?.onFailure("Password not matched")
             return
         }
         //
