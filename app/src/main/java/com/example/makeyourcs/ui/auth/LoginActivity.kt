@@ -10,6 +10,8 @@ import com.example.makeyourcs.databinding.ActivityLoginBinding
 import com.example.makeyourcs.utils.startHomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -26,7 +28,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
             this,
             R.layout.activity_login
         )
-        auth = FirebaseAuth.getInstance();
+        auth = Firebase.auth
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this

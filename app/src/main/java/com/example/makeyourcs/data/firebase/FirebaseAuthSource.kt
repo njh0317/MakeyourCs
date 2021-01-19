@@ -28,7 +28,7 @@ class FirebaseAuthSource {
         firebaseAuth.signInWithEmailAndPassword(email!!, password).addOnCompleteListener {
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
-                    System.out.println(firebaseAuth.currentUser)
+//                    System.out.println("login : " + firebaseAuth.currentUser?.email)
                     emitter.onComplete()
                 }
                 else
@@ -58,6 +58,18 @@ class FirebaseAuthSource {
 
     fun currentUser() = firebaseAuth.currentUser
 
+    fun deleteUser() {
+        // [START delete_user]
+        val user = Firebase.auth.currentUser!!
+
+        user.delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "User account deleted.")
+                }
+            }
+        // [END delete_user]
+    }
     fun confirmID(userId:String, userPw:String) = Completable.create{ emitter ->
         val docRef = firestore.collection("Account").document(userId)
         docRef.get().addOnCompleteListener{
@@ -100,10 +112,10 @@ class FirebaseAuthSource {
     }
     fun observeUserData2() {
         System.out.println("observeUserData")
-        System.out.println(currentUser())
+        System.out.println("observeUserData2: " + currentUser()!!.email)
 
         try {
-            firestore.collection("Account").whereEqualTo("userId", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+            firestore.collection("Account").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)
                     return@addSnapshotListener

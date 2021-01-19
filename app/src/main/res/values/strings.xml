@@ -19,6 +19,7 @@
 
     <!-- Sign up -->
     <string name="signup">계정이 아직 없으신가요?</string>
+    <string name="reset">reset</string>
     <string name="signup_cele">
         이제, 간단한 프로필 설정 후\n<b>MakeyourCs</b> 를 사용할 수 있습니다!
     </string>
