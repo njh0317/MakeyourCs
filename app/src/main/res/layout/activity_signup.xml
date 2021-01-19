@@ -51,16 +51,18 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/et_username"
+                        android:text="@={viewmodel.id}"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="55dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/round_shape_input"
-                        android:hint="   아이디"
-                        android:inputType="text"
-                        android:paddingRight="35dip"
-                        android:text="@={viewmodel.id}" />
+                        android:hint="@string/id"
+                        android:padding="10dp"
+                        android:textColor="@color/deepGray"
+                        android:textColorHint="@color/deepGray"/>
 
                     <android.widget.Button
                         android:layout_width="15dp"
@@ -96,16 +98,18 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/et_password"
+                        android:text="@={viewmodel.password}"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="55dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/round_shape_input"
-                        android:hint="   비밀번호"
-                        android:inputType="text"
-                        android:paddingRight="35dip"
-                        android:text="@={viewmodel.password}" />
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="@color/deepGray"
+                        android:textColorHint="@color/deepGray"
+                        android:hint="@string/password"/>
 
                     <android.widget.Button
                         android:layout_width="15dp"
@@ -124,17 +128,19 @@
                     android:layout_height="wrap_content">
 
                     <EditText
+                        android:id="@+id/check_password"
+                        android:text="@={viewmodel.checkpassword}"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="55dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/round_shape_input"
-                        android:hint="   비밀번호 확인"
-                        android:inputType="text"
-                        android:onClick="@{() -> viewmodel.removecpw()}"
-                        android:paddingRight="35dip"
-                        android:text="@={viewmodel.checkpassword}" />
+                        android:inputType="textPassword"
+                        android:padding="10dp"
+                        android:textColor="@color/deepGray"
+                        android:textColorHint="@color/deepGray"
+                        android:hint="@string/check_password"/>
+
 
                     <android.widget.Button
                         android:layout_width="15dp"
@@ -144,6 +150,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="40dp"
                         android:layout_marginRight="30dp"
+                        android:onClick="@{() -> viewmodel.removecpw()}"
                         android:background="@drawable/btn_x" />
                 </RelativeLayout>
 
@@ -167,18 +174,19 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <EditText
+                        android:id="@+id/et_email"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="55dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/round_shape_input"
-                        android:hint="  ex) MakeyourCs@gmail.com"
-                        android:inputType="text"
-                        android:paddingRight="35dip"
-                        android:text="@={viewmodel.email}" />
+                        android:hint="@string/email_ex"
+                        android:padding="10dp"
+                        android:text="@={viewmodel.email}"
+                        android:textColor="@color/deepGray"
+                        android:textColorHint="@color/deepGray"/>
 
                     <android.widget.Button
                         android:layout_width="15dp"
