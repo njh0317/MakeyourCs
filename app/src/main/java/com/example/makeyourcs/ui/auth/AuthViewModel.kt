@@ -9,13 +9,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
-import com.example.makeyourcs.ui.signup.Signup_bdayActivity
-import com.example.makeyourcs.ui.signup.Signup_emailActivity
-import com.example.makeyourcs.ui.signup.Signup_idActivity
-import com.example.makeyourcs.ui.signup.Signup_pwActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import java.time.LocalDate
 import java.util.*
 
 class AuthViewModel(
@@ -77,7 +74,6 @@ class AuthViewModel(
     }
     fun removecpw(){
         checkpassword.set("")
-
     }
     fun removeemail(){
         email.set("")
@@ -86,35 +82,38 @@ class AuthViewModel(
         birthday.set("")
     }
 
-
     //Doing same thing with signup
     fun signup() {
-        System.out.println("Signup!")
-
-
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()|| checkpassword.get().isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
             return
         }
 
-        if(password.get() != checkpassword.get())
+        if(password.get() != checkpassword.get()) //패스워드 확인
         {
             authListener?.onFailure("Password not matched")
             return
         }
-        //
-        if ( !birthday.get().isNullOrEmpty()){
+
+        if (!birthday.get().isNullOrEmpty()){
             val arr = birthday?.get().toString().split(".")
             if (arr != null) {
                 year = Integer.parseInt(arr.get(0))
                 month = Integer.parseInt(arr.get(1))
                 day = Integer.parseInt(arr.get(2))
+                val b_cal = Calendar.getInstance()//birthday
+                val n_cal = Calendar.getInstance()//today
+                b_cal.set(Calendar.YEAR, year!!)
+                b_cal.set(Calendar.MONTH, month!!)
+                b_cal.set(Calendar.DATE, day!!)
+
+                if(b_cal.after(n_cal))
+                {
+                    authListener?.onFailure("Enter correct Birthday")
+                    return
+                }
             }
-
         }
-//        System.out.println("${id} ${password} ${email} ${year} ${month} ${day}")
-        //
-
         authListener?.onStarted()
         val account = AccountClass()
         account.pw = password.get().toString()
@@ -143,21 +142,6 @@ class AuthViewModel(
 
     fun goToLogin(view: View) {
         Intent(view.context, LoginActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-    fun goToPw(view: View) {
-        Intent(view.context, Signup_pwActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-    fun goToEmail(view: View) {
-        Intent(view.context, Signup_emailActivity::class.java).also {
-            view.context.startActivity(it)
-        }
-    }
-    fun goToBday(view: View) {
-        Intent(view.context, Signup_bdayActivity::class.java).also {
             view.context.startActivity(it)
         }
     }
