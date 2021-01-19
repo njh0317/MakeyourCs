@@ -1,13 +1,15 @@
 package com.example.makeyourcs.ui.auth
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivityLoginBinding
 import com.example.makeyourcs.utils.startHomeActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -16,13 +18,15 @@ import org.kodein.di.generic.instance
 class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     override val kodein by kodein()
     private val factory: AuthViewModelFactory by instance()
-
+    private lateinit var auth: FirebaseAuth
     private lateinit var viewModel: AuthViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this,
+        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(
+            this,
             R.layout.activity_login
         )
+        auth = FirebaseAuth.getInstance();
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this
@@ -36,6 +40,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onStart(){ //처음에
         super.onStart()
+        val currentUser = auth.currentUser
         viewModel.user?.let {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
             startHomeActivity()
@@ -52,6 +57,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         Toast.makeText(this, "로그인 실", Toast.LENGTH_SHORT).show()
         System.out.println(message)
     }
+
 //    fun readAccount(id:String)
 //    {
 //

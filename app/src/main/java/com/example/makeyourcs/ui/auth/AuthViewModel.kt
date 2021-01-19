@@ -67,13 +67,13 @@ class AuthViewModel(
         account.pw = password
         account.email = email
         account.userId = id
-        val subaccount = AccountClass.SubClass()
-        subaccount.group_name = "mongu"
-        subaccount.name="mongu"
-        subaccount.introduction="I am mongu"
+//        val subaccount = AccountClass.SubClass()
+//        subaccount.group_name = "mongu"
+//        subaccount.name="mongu"
+//        subaccount.introduction="I am mongu"
 
         System.out.println(account)
-        val disposable = repository.register(account, subaccount)
+        val disposable = repository.register(account)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

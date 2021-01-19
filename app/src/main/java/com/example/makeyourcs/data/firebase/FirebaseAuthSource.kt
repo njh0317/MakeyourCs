@@ -1,12 +1,20 @@
 package com.example.makeyourcs.data.firebase
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
 class FirebaseAuthSource {
+    val TAG = "FirebaseSource"
+    val userDataLiveData = MutableLiveData<AccountClass>()
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -19,33 +27,25 @@ class FirebaseAuthSource {
         Log.d("TAG", email)
         firebaseAuth.signInWithEmailAndPassword(email!!, password).addOnCompleteListener {
             if (!emitter.isDisposed) {
-                if (it.isSuccessful)
+                if (it.isSuccessful) {
+                    System.out.println(firebaseAuth.currentUser)
                     emitter.onComplete()
+                }
                 else
                     emitter.onError(it.exception!!)
             }
         }
     }
 
-    fun register(account: AccountClass, subaccount:AccountClass.SubClass) = Completable.create { emitter ->
+    fun register(account: AccountClass) = Completable.create { emitter ->
         System.out.println(account)
-        System.out.println(subaccount)
-        firestore.collection("Account").document(account.userId.toString()).set(account)
-        firestore.collection("Account")
-            .document(account.userId.toString())
-            .collection("SubAccount")
-            .document(account.sub_count.toString()).set(subaccount)
+        //https://inspirecoding.app/lessons/using-viewmodel/
+        firestore.collection("Account").document(account.email.toString()).set(account)
+
         firebaseAuth.createUserWithEmailAndPassword(account.email.toString(), account.pw.toString()).addOnCompleteListener {
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
-
                     System.out.println("insert success")
-//                    firestore.collection("Account").document(account.userId.toString()).set(account)
-                    firestore.collection("Account")
-                        .document(account.userId.toString())
-                        .collection("SubAccount")
-                        .document(account.sub_count.toString()).set(subaccount)
-
                     emitter.onComplete()
                 }
                 else
@@ -76,5 +76,50 @@ class FirebaseAuthSource {
         }
 
     }
+
+    fun observeUserData(userId: String) {
+        System.out.println("observeUserData")
+        try {
+            firestore.collection("Account").document(userId).addSnapshotListener{ documentSnapshot: DocumentSnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+                firebaseFirestoreException?.let {
+                    Log.e(TAG, firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+
+                val data = documentSnapshot?.toObject(AccountClass::class.java)
+
+                data?.let {
+                    Log.d(TAG, "post new value")
+                    System.out.println(data)
+                    userDataLiveData.postValue(data)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+    fun observeUserData2() {
+        System.out.println("observeUserData")
+        System.out.println(currentUser())
+
+        try {
+            firestore.collection("Account").whereEqualTo("userId", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                for (doc in value!!) {
+                    doc?.let {
+                        val data = it?.toObject(AccountClass::class.java)
+                        System.out.println(data)
+                        userDataLiveData.postValue(data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+
 
 }
