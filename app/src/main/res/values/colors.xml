@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#ededed</color>
     <color name="colorPrimaryDark">#e1e1e1</color>
     <color name="colorLightGray">#f1f1f1</color>
@@ -11,9 +12,18 @@
     <color name="signature">#f39c12</color>
     <color name="transparent">#00ff0000</color>
     <color name="deepGray">#5e5e5e</color>
+    <color name="colorBlack">#000000</color>
 
     <color name="colorGoogleSignIn">#d34836</color>
     <color name="colorGoogleSignInPressed">#b02513</color>
     <color name="colorEmailSignIn">#009688</color>
     <color name="colorEmailSignInPressed">#004D40</color>
+
+    <color name="black">#FF000000</color>
+    <color name="red">#fa4d4d</color>
+    <color name="orange">#FF9C00</color>
+
+    <color name="line_gray">#E6E6E6</color>
+    <color name="cursorColor">#F7D358</color>
+    <color name="id_gray">#333333</color>
 </resources>

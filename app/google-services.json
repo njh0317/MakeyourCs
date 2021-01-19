@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "133083826447",
+    "firebase_url": "https://makeyourcs-default-rtdb.firebaseio.com",
     "project_id": "makeyourcs",
     "storage_bucket": "makeyourcs.appspot.com"
   },
