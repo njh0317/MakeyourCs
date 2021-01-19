@@ -75,17 +75,6 @@
                 android:background="@drawable/round_shape_button"
                 android:text="@string/signup_complete"
                 android:theme="@style/ButtonStyle"></Button>
-            <Button
-                android:id="@+id/reset"
-                android:onClick="@{() -> viewmodel.newComment()}"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/round_shape_button"
-                android:text="@string/reset"
-                android:theme="@style/ButtonStyle"></Button>
 
         </LinearLayout>
 
