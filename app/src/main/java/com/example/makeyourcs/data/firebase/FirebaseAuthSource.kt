@@ -15,6 +15,7 @@ import io.reactivex.Completable
 class FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
+    val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -157,6 +158,48 @@ class FirebaseAuthSource {
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
+    }
+    fun delSubAccount(group_name:String) {
+        val subaccount = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("SubAccount")
+            .document(group_name)
+        val account = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+
+        firestore.runTransaction { transaction ->
+
+            val snapshot = transaction.get(account)
+            val newSubcount = Integer.parseInt(snapshot.get("sub_acount")!!.toString()) - 1
+            // Update the number of sub account
+            transaction.delete(subaccount)
+            transaction.update(account, "sub_account", newSubcount)
+        }
+            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+    }
+
+    fun observeAccountData() {
+        try {
+            firestore.collection("Account")
+                .document(currentUser()!!.email.toString())
+                .collection("SubAccount")
+                .addSnapshotListener{ value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                for (doc in value!!) {
+                    doc?.let {
+                        val data = it?.toObject(AccountClass.SubClass::class.java)
+                        System.out.println(data)
+                        accountDataLiveData.postValue(listOf(data))
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
     }
 
 

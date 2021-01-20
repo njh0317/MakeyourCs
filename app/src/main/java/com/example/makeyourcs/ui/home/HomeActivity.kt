@@ -30,13 +30,13 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.getUserData()
+        viewModel.getAccountData()
 //        updateUI()
         viewModel.userData.observe(this, Observer {
             binding.etUsername.text = it.userId
             binding.etEmail.text = it.email
             binding.subcount.text = it.sub_count.toString()
             binding.followingNum.text = it.following_num.toString()
-
             Log.d(TAG, it.toString())
         })
     }

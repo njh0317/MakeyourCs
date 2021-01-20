@@ -54,6 +54,7 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+                del_subaccount()
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
@@ -141,6 +142,10 @@ class AuthViewModel(
     fun sub_account() //TODO:부캐생성 예시
     {
         repository.setSubAccount(0, "mongu", "몽구","안녕하세요 몽구입니다.","default")
+    }
+    fun del_subaccount()
+    {
+        repository.delSubAccount("몽구")
     }
 
     fun goToSignup(view: View) {

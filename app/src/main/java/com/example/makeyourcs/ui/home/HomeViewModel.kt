@@ -18,6 +18,9 @@ class HomeViewModel(
     private var _userData = MutableLiveData<AccountClass>()
     val userData:LiveData<AccountClass>
         get()= _userData
+    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
+    val accountData:LiveData<List<AccountClass.SubClass>>
+        get()= _accountData
 
     var email: String? = null
     var id: String? = null
@@ -37,6 +40,12 @@ class HomeViewModel(
         _userData = data
     }
 
+    fun getAccountData() {
+        System.out.println("getAccountData")
+        var data = repository.observeAccountData()
+        System.out.println("getAccountData"+data.value)
+        _accountData = data
+    }
     fun logout(view: View){
         repository.logout()
         view.context.startLoginActivity()
