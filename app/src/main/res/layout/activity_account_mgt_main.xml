@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AccountManagementActivity">
+    tools:context=".ui.user.management.AccountMgtMainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,31 +44,15 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/AccountListview"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
-            android:dividerHeight="10dp"
-            android:divider="@android:color/transparent"/>
-
-        <android.widget.Button
-            android:id="@+id/plus_btn"
-            android:layout_width="60dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="40dp"
-            android:layout_gravity="center"
-            android:background="@drawable/plus_btn" />
-
-        <android.widget.Button
-            android:id="@+id/trash_btn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="80dp"
-            android:layout_gravity="center"
-            android:background="@drawable/trash_btn"/>
+            android:clipToPadding="false"
+            android:layout_marginTop="20dp"
+            tools:listitem="@layout/accountlist_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </LinearLayout>
-
 </RelativeLayout>
