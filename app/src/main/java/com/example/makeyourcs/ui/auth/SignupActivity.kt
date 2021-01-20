@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivitySignupBinding
+import com.example.makeyourcs.ui.home.HomeActivity
 import com.example.makeyourcs.utils.startHomeActivity
 import com.example.makeyourcs.utils.startLoginActivity
 import org.kodein.di.KodeinAware
@@ -32,10 +33,10 @@ class SignupActivity : AppCompatActivity(), AuthListener, KodeinAware {
     }
 
     override fun onStarted() {
-        Intent(this, LoginActivity::class.java).also {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
-        }
+//        Intent(this, HomeActivity::class.java).also {
+//            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//            startActivity(it)
+//        }
     }
 
     override fun onSuccess() {
