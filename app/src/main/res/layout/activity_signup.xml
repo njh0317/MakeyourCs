@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:text="화원가입"
+                android:text="@string/signup_title"
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold" />
@@ -41,12 +41,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="아이디"
+                    android:text="@string/id"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -54,10 +55,9 @@
                         android:id="@+id/et_username"
                         android:text="@={viewmodel.id}"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
                         android:background="@drawable/round_shape_input"
                         android:hint="@string/id"
                         android:padding="10dp"
@@ -70,7 +70,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
                         android:onClick="@{() -> viewmodel.removeid()}" />
@@ -88,12 +88,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:text="비밀번호"
+                    android:text="@string/password"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
+
                 <RelativeLayout
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -101,7 +103,7 @@
                         android:id="@+id/et_password"
                         android:text="@={viewmodel.password}"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/round_shape_input"
@@ -117,11 +119,22 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
                         android:onClick="@{() -> viewmodel.removepw()}" />
                 </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/pw_condition"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                 />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -131,7 +144,7 @@
                         android:id="@+id/check_password"
                         android:text="@={viewmodel.checkpassword}"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/round_shape_input"
@@ -148,11 +161,22 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="30dp"
                         android:onClick="@{() -> viewmodel.removecpw()}"
                         android:background="@drawable/btn_x" />
                 </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="@string/checkpw_condition"
+                    android:textColor="@color/red"
+                    android:textSize="14sp"
+                    android:visibility="invisible"
+                    />
 
             </LinearLayout>
 
@@ -172,15 +196,15 @@
                     android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <EditText
                         android:id="@+id/et_email"
                         android:layout_width="match_parent"
-                        android:layout_height="55dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:layout_marginBottom="10dp"
                         android:background="@drawable/round_shape_input"
                         android:hint="@string/email_ex"
                         android:padding="10dp"
@@ -194,7 +218,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
                         android:onClick="@{() -> viewmodel.removeemail()}" />
@@ -218,20 +242,21 @@
                     android:textStyle="bold" />
 
                 <RelativeLayout
+                    android:layout_marginTop="8dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
                     <EditText
+                        android:text="@={viewmodel.birthday}"
                         android:layout_width="match_parent"
-                        android:layout_height="45dp"
+                        android:layout_height="50dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="5dp"
                         android:layout_marginRight="20dp"
                         android:background="@drawable/round_shape_input"
-                        android:hint="  ex)2021.01.19"
                         android:inputType="text"
-                        android:paddingRight="35dip"
-                        android:text="@={viewmodel.birthday}" />
+                        android:padding="10dp"
+                        android:textColor="@color/deepGray"
+                        android:textColorHint="@color/deepGray"
+                        android:hint="@string/bday_ex"/>
 
                     <android.widget.Button
                         android:layout_width="15dp"
@@ -239,7 +264,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginRight="30dp"
                         android:background="@drawable/btn_x"
                         android:onClick="@{() -> viewmodel.removebday()}" />
@@ -250,7 +275,7 @@
                 android:layout_width="160dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="30dp"
                 android:background="@drawable/orangebtn_selector_img"
                 android:onClick="@{() -> viewmodel.signup()}"
                 android:text="가입"

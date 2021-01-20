@@ -5,13 +5,13 @@
     <string name="next">다음</string>
 
     <!-- Sign In -->
-    <string name="id">사용자 이름</string>
+    <string name="name">사용자 이름</string>
+    <string name="id">아이디</string>
     <string name="password">비밀번호</string>
     <string name="check_password">비밀번호 확인</string>
     <string name="signin">로그인</string>
     <string name="email">이메일</string>
-    <string name="email_ex">ex) MakeyourCs@gmail.com</string>
-    <string name="signup_complete">Membership success</string>
+
     <string name="signin_complete">Login success</string>
     <string name="signout">Signout</string>
     <string name="signout_success">Signout success</string>
@@ -21,11 +21,17 @@
 
     <!-- Sign up -->
     <string name="signup">계정이 아직 없으신가요?</string>
+    <string name="signup_title">회원가입</string>
     <string name="signup_cele">
         이제, 간단한 프로필 설정 후\n<b>MakeyourCs</b> 를 사용할 수 있습니다!
     </string>
     <string name="signup_email_dup">중복된 이메일 주소입니다. 다시 입력해 주세요.</string>
     <string name="signup_email_form">이메일 형식에 맞지 않습니다. 다시 입력해 주세요.</string>
+    <string name="email_ex">ex) MakeyourCs@gmail.com</string>
+    <string name="bday_ex">ex) 2021.01.19</string>
+    <string name="signup_complete">Membership success</string>
+    <string name="pw_condition">6~16자 영문 대 소문자, 숫자를 사용하세요.</string>
+    <string name="checkpw_condition">비밀번호가 일치하지 않습니다.</string>
 
 
     <!-- Bottom Navigation View -->
