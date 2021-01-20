@@ -12,7 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
 
-class FirebaseAuthSource {
+class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
     val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
@@ -74,6 +74,7 @@ class FirebaseAuthSource {
                 }
             }
         // [END delete_user]
+        //TODO: 사용자 부캐안에 게시글 삭제
     }
     fun userIdbyEmail() : String? {
         var userId:String? = null
