@@ -1,19 +1,14 @@
 package com.example.makeyourcs.ui.home
 
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
-import com.example.makeyourcs.data.firebase.FirebaseSource
+import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.utils.startLoginActivity
-import com.google.firebase.firestore.EventListener
 
-import com.google.firebase.firestore.QuerySnapshot
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
 
@@ -21,7 +16,17 @@ class HomeViewModel(
 ) : ViewModel() {
     val TAG = "HOMEVIEWMODEL"
     private var _userData = MutableLiveData<AccountClass>()
-    val userData:LiveData<AccountClass> = _userData
+    val userData:LiveData<AccountClass>
+        get()= _userData
+
+
+    var email: String? = null
+    var id: String? = null
+    var sub_count: Int? = null
+    var following_num: Int? = null
+    //auth listener
+    var authListener: AuthListener? = null
+
     val user by lazy {
         repository.currentUser()
     }
@@ -31,6 +36,9 @@ class HomeViewModel(
         var data = repository.observeUserData2()
         System.out.println("getUserData"+data.value)
         _userData = data
+    }
+
+    fun updateUI(){
     }
 
     fun logout(view: View){

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
     <data>
+        <import type="android.view.View" />
         <variable name="viewmodel"
             type="com.example.makeyourcs.ui.auth.AuthViewModel"/>
     </data>
@@ -34,7 +35,7 @@
                 android:hint="@string/id"
                 android:padding="10dp"
                 android:textColor="@color/deepGray"
-                android:textColorHint="@color/deepGray"></EditText>
+                android:textColorHint="@color/deepGray"/>
 
             <EditText
                 android:id="@+id/et_email"
@@ -48,7 +49,7 @@
                 android:padding="10dp"
                 android:text="@={viewmodel.email}"
                 android:textColor="@color/deepGray"
-                android:textColorHint="@color/deepGray"></EditText>
+                android:textColorHint="@color/deepGray"/>
 
             <EditText
                 android:id="@+id/et_password"
@@ -62,7 +63,7 @@
                 android:padding="10dp"
                 android:textColor="@color/deepGray"
                 android:textColorHint="@color/deepGray"
-                android:hint="@string/password"></EditText>
+                android:hint="@string/password"/>
 
             <Button
                 android:id="@+id/login"
@@ -74,7 +75,7 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/round_shape_button"
                 android:text="@string/signup_complete"
-                android:theme="@style/ButtonStyle"></Button>
+                android:theme="@style/ButtonStyle"/>
 
         </LinearLayout>
 

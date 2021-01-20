@@ -28,7 +28,6 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
             this,
             R.layout.activity_login
         )
-        auth = Firebase.auth
         viewModel = ViewModelProviders.of(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.authListener = this
@@ -42,7 +41,6 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onStart(){ //처음에
         super.onStart()
-        val currentUser = auth.currentUser
         viewModel.user?.let {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
             startHomeActivity()
@@ -56,7 +54,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     }
 
     override fun onFailure(message: String) {
-        Toast.makeText(this, "로그인 실", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
         System.out.println(message)
     }
 

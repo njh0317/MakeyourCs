@@ -40,7 +40,7 @@ class FirebaseAuthSource {
     fun register(account: AccountClass) = Completable.create { emitter ->
         System.out.println(account)
         //https://inspirecoding.app/lessons/using-viewmodel/
-        firestore.collection("Account").document(account.email.toString()).set(account)
+        firestore.collection("Account").document(account.userId.toString()).set(account)
 
         firebaseAuth.createUserWithEmailAndPassword(account.email.toString(), account.pw.toString()).addOnCompleteListener {
             if (!emitter.isDisposed) {

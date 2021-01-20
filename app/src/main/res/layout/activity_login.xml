@@ -5,20 +5,14 @@
     >
     <data>
         <import type="android.view.View" />
-
         <variable name="viewmodel"
             type="com.example.makeyourcs.ui.auth.AuthViewModel"/>
     </data>
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login_background"
         tools:context=".ui.auth.LoginActivity">
-
-
-
         <ImageView
             android:id="@+id/makeyourcs"
             android:layout_width="wrap_content"

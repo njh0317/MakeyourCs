@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivitySignupBinding
+import com.example.makeyourcs.utils.startHomeActivity
 import com.example.makeyourcs.utils.startLoginActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -39,7 +40,7 @@ class SignupActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onSuccess() {
         Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-        startLoginActivity()
+        startHomeActivity()
     }
 
     override fun onFailure(message: String) {
