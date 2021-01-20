@@ -33,7 +33,7 @@ class HomeViewModel(
 
     fun getUserData() {
         System.out.println("getUserData")
-        var data = repository.observeUserData2()
+        var data = repository.observeUserData()
         System.out.println("getUserData"+data.value)
         _userData = data
     }

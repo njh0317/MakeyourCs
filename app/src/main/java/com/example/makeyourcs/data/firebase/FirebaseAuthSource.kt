@@ -72,7 +72,7 @@ class FirebaseAuthSource {
     }
 
 
-    fun observeUserData1() {
+    fun observeUserData() {
         System.out.println("observeUserData")
         System.out.println("observeUserData2: " + currentUser()!!.email)
 
