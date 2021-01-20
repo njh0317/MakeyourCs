@@ -40,13 +40,11 @@ class AuthViewModel(
 
     //function to perform login
     fun login() {
-
         //validating email and password
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()) {
             authListener?.onFailure("Invalid email or password")
             return
         }
-
         //authentication started
         authListener?.onStarted()
 
@@ -134,6 +132,15 @@ class AuthViewModel(
                 authListener?.onFailure(it.message!!)
             })
         disposables.add(disposable)
+    }
+    fun origin_account() //TODO: SIGNUP 후 본캐생성 예시
+    {
+        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
+    }
+
+    fun sub_account() //TODO:부캐생성 예시
+    {
+        repository.setSubAccount(0, "mongu", "몽구","안녕하세요 몽구입니다.","default")
     }
 
     fun goToSignup(view: View) {

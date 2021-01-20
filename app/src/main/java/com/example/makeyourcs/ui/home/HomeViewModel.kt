@@ -19,7 +19,6 @@ class HomeViewModel(
     val userData:LiveData<AccountClass>
         get()= _userData
 
-
     var email: String? = null
     var id: String? = null
     var sub_count: Int? = null
