@@ -19,7 +19,6 @@ class AuthViewModel(
     private val repository: AccountRepository
 ): ViewModel() {
     //email and password for the input
-
     var email = ObservableField<String>()
     var password = ObservableField<String>()
     var checkpassword = ObservableField<String>()
@@ -28,6 +27,7 @@ class AuthViewModel(
     var month: Int? = null
     var day: Int? = null
     var birthday = ObservableField<String>()
+
     //auth listener
     var authListener: AuthListener? = null
 
@@ -116,12 +116,14 @@ class AuthViewModel(
         }
         authListener?.onStarted()
         val account = AccountClass()
+
         account.pw = password.get().toString()
         account.email = email.get().toString()
         account.userId = id.get().toString()
         account.year = year
         account.month = month
         account.day = day
+
         System.out.println(account)
         val disposable = repository.register(account)
             .subscribeOn(Schedulers.io())
@@ -145,7 +147,6 @@ class AuthViewModel(
             view.context.startActivity(it)
         }
     }
-
     //disposing the disposables
     override fun onCleared() {
         super.onCleared()

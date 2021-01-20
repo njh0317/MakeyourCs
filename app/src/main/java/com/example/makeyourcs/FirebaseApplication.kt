@@ -3,9 +3,7 @@ package com.example.makeyourcs
 import android.app.Application
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
-import com.example.makeyourcs.data.firebase.FirebaseSource
 import com.example.makeyourcs.ui.auth.AuthViewModelFactory
-import com.example.makeyourcs.ui.auth.LoginActivity
 import com.example.makeyourcs.ui.home.HomeViewModelFactory
 
 import org.kodein.di.Kodein
