@@ -39,18 +39,10 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
 
             Log.d(TAG, it.toString())
         })
-
     }
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-//        updateUI()
-        viewModel.getUserData()
-
     }
 
-    private fun setUserInfo() { //사용자별로 UI update 처리 함수
-        viewModel.getUserData()
-    }
 
 }

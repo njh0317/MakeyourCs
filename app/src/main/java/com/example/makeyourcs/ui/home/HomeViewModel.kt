@@ -38,9 +38,6 @@ class HomeViewModel(
         _userData = data
     }
 
-    fun updateUI(){
-    }
-
     fun logout(view: View){
         repository.logout()
         view.context.startLoginActivity()

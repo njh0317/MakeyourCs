@@ -70,47 +70,9 @@ class FirebaseAuthSource {
             }
         // [END delete_user]
     }
-    fun confirmID(userId:String, userPw:String) = Completable.create{ emitter ->
-        val docRef = firestore.collection("Account").document(userId)
-        docRef.get().addOnCompleteListener{
-            if (!emitter.isDisposed) {
-                if (it.isSuccessful){
-                    if (it != null) {
-                        emitter.onComplete()
-                    }
-                    else{
-                        //TODO:emitter 에 어떤 메시지 보내야하는지..
-                    }
-                }
-                else
-                    emitter.onError(it.exception!!)
-            }
-        }
 
-    }
 
-    fun observeUserData(userId: String) {
-        System.out.println("observeUserData")
-        try {
-            firestore.collection("Account").document(userId).addSnapshotListener{ documentSnapshot: DocumentSnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
-                firebaseFirestoreException?.let {
-                    Log.e(TAG, firebaseFirestoreException.toString())
-                    return@addSnapshotListener
-                }
-
-                val data = documentSnapshot?.toObject(AccountClass::class.java)
-
-                data?.let {
-                    Log.d(TAG, "post new value")
-                    System.out.println(data)
-                    userDataLiveData.postValue(data)
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user data", e)
-        }
-    }
-    fun observeUserData2() {
+    fun observeUserData1() {
         System.out.println("observeUserData")
         System.out.println("observeUserData2: " + currentUser()!!.email)
 
@@ -126,6 +88,29 @@ class FirebaseAuthSource {
                         System.out.println(data)
                         userDataLiveData.postValue(data)
                     }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+
+
+    fun observeUserData2(userId: String) {//예시
+        System.out.println("observeUserData")
+        try {
+            firestore.collection("Account").document(userId).addSnapshotListener{ documentSnapshot: DocumentSnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
+                firebaseFirestoreException?.let {
+                    Log.e(TAG, firebaseFirestoreException.toString())
+                    return@addSnapshotListener
+                }
+
+                val data = documentSnapshot?.toObject(AccountClass::class.java)
+
+                data?.let {
+                    Log.d(TAG, "post new value")
+                    System.out.println(data)
+                    userDataLiveData.postValue(data)
                 }
             }
         } catch (e: Exception) {
