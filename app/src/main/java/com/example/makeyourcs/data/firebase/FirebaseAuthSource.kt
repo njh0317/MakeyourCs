@@ -161,7 +161,8 @@ class   FirebaseAuthSource {
 
     }
     fun delSubAccount(group_name:String) {
-        val subaccount = firestore.collection("Account")
+        val subaccount = firestore
+            .collection("Account")
             .document(currentUser()!!.email.toString())
             .collection("SubAccount")
             .document(group_name)
@@ -171,7 +172,7 @@ class   FirebaseAuthSource {
         firestore.runTransaction { transaction ->
 
             val snapshot = transaction.get(account)
-            val newSubcount = Integer.parseInt(snapshot.get("sub_acount")!!.toString()) - 1
+            val newSubcount = Integer.parseInt(snapshot.get("sub_count")!!.toString()) - 1
             // Update the number of sub account
             transaction.delete(subaccount)
             transaction.update(account, "sub_account", newSubcount)

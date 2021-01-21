@@ -54,7 +54,6 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
-                del_subaccount()
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
