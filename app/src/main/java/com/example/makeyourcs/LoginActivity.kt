@@ -1,5 +1,6 @@
 package com.example.makeyourcs
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -7,11 +8,11 @@ import android.widget.Button
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Exception
 
-
+var postId : Int = 1;
 class LoginActivity : AppCompatActivity() {
-
     var firestore : FirebaseFirestore? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,10 @@ class LoginActivity : AppCompatActivity() {
         val loginButton : Button = findViewById(R.id.login)
         loginButton.setOnClickListener{
             makeAccount()
+        }
+        set_photo.setOnClickListener {
+            val nextIntent = Intent(this, StorageActivity::class.java)
+            startActivity(nextIntent)
         }
         val setButton : Button = findViewById(R.id.set_posting)
         setButton.setOnClickListener{
@@ -43,11 +48,11 @@ class LoginActivity : AppCompatActivity() {
     fun setPost()
     {
         var posting = PostClass()
-        posting.postId = 1 //난수로 시스템에서 아이디생성
-        posting.post_account = "sobin"
-        posting.content = "life without fxxx coding^^"
-        posting.first_pic = "../images/test.jpg"
-        posting.place_tag = "homesweethome"
+        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
+        posting.post_account = "dmlfid1348"
+        posting.content = "희루가기시러"
+        //posting.first_pic = "../images/test.jpg"
+        posting.place_tag = "huiru"
         try{
             firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
         }

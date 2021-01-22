@@ -2,10 +2,16 @@ package com.example.makeyourcs
 
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.makeyourcs.data.PostClass
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_storage.*
+import com.google.firebase.firestore.*
+import java.lang.Exception
+import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
 import android.content.Intent as Intent
@@ -14,6 +20,7 @@ class StorageActivity : AppCompatActivity() {
     val GALLERY = 0 //GALLERY의 역할
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_storage)
         System.out.println("come in")
         upload_photo.setOnClickListener{openAlbum()}
@@ -28,12 +35,33 @@ class StorageActivity : AppCompatActivity() {
     //TODOs
     //1. 유저피드에 올라갈 사진의 주인 리스트 뽑기 *****
     //2. 리스트에 따라 이미지 불러와서 시간순으로 소팅
+    fun setPhoto()
+    {
+        var firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+        var posting = PostClass()
+        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
+        posting.post_account = "sobinsobin"
+        posting.content = "life without fxxx coding^^"
+        posting.first_pic = "../images/test.jpg"
+        posting.place_tag = "homesweethome"
+        try{
+            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
+        }
+        catch(e: Exception){
+            Log.d("cannot upload", e.toString())
+        }
 
+    }
     fun uploadPhoto(photoUri: Uri){//뷰 모델 + 모델(각 기능 확인하기)
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
         //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
         var storageRef = FirebaseStorage.getInstance().reference.child("images").child(fileName)
+        var tmpid = 1;
+        var firestore = FirebaseFirestore.getInstance().collection("Post")?.document(tmpid.toString())?.update(mapOf(
+                "picture_url" to storageRef.toString()
+        ));
+
         //모델에서 다운로드
         storageRef.putFile(photoUri).addOnSuccessListener {
             Toast.makeText(this, "Upload photo completed", Toast.LENGTH_LONG).show()
