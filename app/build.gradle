@@ -42,6 +42,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
 //firebase_setting-end
+//to use data binding annotation
+apply plugin: 'kotlin-kapt'
 
 
 dependencies {
@@ -95,4 +97,7 @@ dependencies {
 
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    //to use data binding annotation
+    kapt "com.android.databinding:compiler:3.0.1"
 }
