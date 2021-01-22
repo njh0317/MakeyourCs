@@ -2,71 +2,70 @@ package com.example.makeyourcs.ui
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
+import android.view.DragAndDropPermissions
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
+import com.example.makeyourcs.databinding.FragmentHomeBinding
+import com.example.makeyourcs.databinding.ViewItemBinding
 
-class RecyclerFeedAdapter(private val context: Context, private val dataList: ArrayList<ImageVo>)
+class RecyclerFeedAdapter(private val dataList: ArrayList<ImageVo>)
     : RecyclerView.Adapter<RecyclerFeedAdapter.ItemViewHolder>() {
 
     var mPosition = 0
 
-    inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ItemViewHolder(private val binding: ViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        private val userPhoto = itemView.findViewById<ImageView>(R.id.img)
-        private val userName = itemView.findViewById<TextView>(R.id.info)
-
-        fun bind(imagevo: ImageVo, context: Context) {
-            if (imagevo.photo != "") {
-                val resourceId =
-                    context.resources.getIdentifier(imagevo.photo, "drawable", context.packageName)
-
-                if (resourceId > 0) {
-                    userPhoto.setImageResource(resourceId)
-                } else {
-                    userPhoto.setImageResource(R.mipmap.ic_launcher_round)
-                }
-            } else {
-                userPhoto.setImageResource(R.mipmap.ic_launcher_round)
+        fun bind(imgvo: ImageVo){
+            binding.apply{
+                imgitem=imgvo
             }
-
-            //TextView에 데이터 세팅
-            userName.text = imagevo.name
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
-        return ItemViewHolder(view)
+       // val view = LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
+        return ItemViewHolder(
+            DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context), R.layout.view_item, parent, false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(dataList[position], context)
-
-        holder.itemView.setOnClickListener { view ->
-            Toast.makeText(view.context, "$position 아이템 클릭!", Toast.LENGTH_SHORT).show()
-
-            // open another activity on item click
-            val intent = Intent(context, DetailedActivity::class.java)
-            intent.putExtra("image_name", dataList[position].photo) // put image data in Intent
-            context.startActivity(intent) // start Intent
+        val item=dataList[position]
+        holder.apply{
+            bind(item)
+            itemView.tag=item
         }
-
-        holder.itemView.setOnLongClickListener { view ->
-            Toast.makeText(view.context, "$position 아이템 롱클릭!", Toast.LENGTH_SHORT).show()
-            return@setOnLongClickListener true
-        }
+//        holder.bind(dataList[position], context)
+//
+//        holder.itemView.setOnClickListener { view ->
+//            Toast.makeText(view.context, "$position 아이템 클릭!", Toast.LENGTH_SHORT).show()
+//
+//            // open another activity on item click
+//            val intent = Intent(context, DetailedActivity::class.java)
+//            intent.putExtra("image_name", dataList[position].photo) // put image data in Intent
+//            context.startActivity(intent) // start Intent
+//        }
+//
+//        holder.itemView.setOnLongClickListener { view ->
+//            Toast.makeText(view.context, "$position 아이템 롱클릭!", Toast.LENGTH_SHORT).show()
+//            return@setOnLongClickListener true
+//        }
     }
 
     override fun getItemCount(): Int {
         return dataList.size
     }
-
 
 }

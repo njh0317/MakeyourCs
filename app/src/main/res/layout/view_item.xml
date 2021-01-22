@@ -1,35 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+<layout>
+    <data>
+        <variable
+            name="imgitem"
+            type="com.example.makeyourcs.ui.ImageVo"/>
+    </data>
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="1dp"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"
-        app:srcCompat="@mipmap/ic_launcher_round" ></ImageView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ImageView
-            android:layout_marginTop="3dp"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:src="@drawable/ic_favorite_border"></ImageView>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
 
         <TextView
-        android:id="@id/info"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:textColor="@color/deepGray"></TextView>
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="@{imgitem.name}"
+            android:textColor="@color/deepGray"></TextView>
 
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            app:imageDrawble="@{imgitem.photo}"
+            app:srcCompat="@mipmap/ic_launcher_round"></ImageView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ic_favorite_border"></ImageView>
+
+            <TextView
+                android:id="@id/info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:text="@{imgitem.likes}"
+                android:textColor="@color/deepGray"></TextView>
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>
