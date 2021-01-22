@@ -26,20 +26,21 @@ class UserFragment : Fragment(){
         var view=binding.root
         //   viewmodel=ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
-        val list = ArrayList<ImageVo>()
-        list.add(ImageVo("1", ContextCompat.getDrawable(context!!,R.drawable.ic_1)!!,"60"))
-        list.add(ImageVo("2", ContextCompat.getDrawable(context!!,R.drawable.ic_2)!!,"61"))
-        list.add(ImageVo("3", ContextCompat.getDrawable(context!!,R.drawable.ic_3)!!,"62"))
-        list.add(ImageVo("4", ContextCompat.getDrawable(context!!,R.drawable.ic_4)!!,"63"))
-        list.add(ImageVo("5", ContextCompat.getDrawable(context!!,R.drawable.ic_5)!!,"64"))
-        list.add(ImageVo("6", ContextCompat.getDrawable(context!!,R.drawable.ic_6)!!,"65"))
-        list.add(ImageVo("7", ContextCompat.getDrawable(context!!,R.drawable.ic_7)!!,"66"))
-        list.add(ImageVo("8", ContextCompat.getDrawable(context!!,R.drawable.ic_8)!!,"67"))
-        list.add(ImageVo("9", ContextCompat.getDrawable(context!!,R.drawable.ic_9)!!,"68"))
-        list.add(ImageVo("10", ContextCompat.getDrawable(context!!,R.drawable.ic_10)!!,"69"))
+        var userList = arrayListOf<ImageVo>(
+            ImageVo("1",  R.drawable.ic_1,"55"),
+            ImageVo("2",  R.drawable.ic_2,"55"),
+            ImageVo("3", R.drawable.ic_3,"55"),
+            ImageVo("4",  R.drawable.ic_4,"55"),
+            ImageVo("5",  R.drawable.ic_5,"55"),
+            ImageVo("6",  R.drawable.ic_6,"55"),
+            ImageVo("7",  R.drawable.ic_7,"55"),
+            ImageVo("8",  R.drawable.ic_8,"55"),
+            ImageVo("9",  R.drawable.ic_9,"55"),
+            ImageVo("10",  R.drawable.ic_10,"55")
+        )
 
         //recyclerview adapter, layoutmanger setting
-        val adapter= RecyclerFeedAdapter(list)
+        val adapter= RecyclerFeedAdapter(userList)
         binding.userRecycler.adapter=adapter
         val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.userRecycler.layoutManager=lmanager

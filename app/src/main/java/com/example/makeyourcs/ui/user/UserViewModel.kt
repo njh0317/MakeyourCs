@@ -1,4 +1,5 @@
-package com.example.makeyourcs.ui.home
+package com.example.makeyourcs.ui.user
+
 
 import android.media.Image
 import android.widget.ImageButton
@@ -11,7 +12,7 @@ import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.R
 import com.example.makeyourcs.ui.ImageVo
 
-class HomeViewModel:ViewModel() {
+class UserViewModel:ViewModel() {
 
     var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
     val _imgList = ArrayList<ImageVo>()

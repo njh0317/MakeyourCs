@@ -33,7 +33,6 @@ class RecyclerFeedAdapter(private val dataList: ArrayList<ImageVo>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-       // val view = LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
         return ItemViewHolder(
             DataBindingUtil.inflate(
                 LayoutInflater.from(parent.context), R.layout.view_item, parent, false

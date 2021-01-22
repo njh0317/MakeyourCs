@@ -28,7 +28,7 @@
             android:layout_margin="1dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            app:imageDrawble="@{imgitem.photo}"
+            app:imgRes="@{imgitem.photo}"
             app:srcCompat="@mipmap/ic_launcher_round"></ImageView>
 
         <LinearLayout
