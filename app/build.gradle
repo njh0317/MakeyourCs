@@ -26,20 +26,23 @@ android {
         }
     }
 
-
-//    compileOptions {
-//        sourceCompatibility JavaVersion.VERSION_1_8
-//        targetCompatibility JavaVersion.VERSION_1_8
-//    }
-//    kotlinOptions {
-//        jvmTarget = '1.8'
-//    }
     dataBinding { enabled = true }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
 }
+
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'kotlin-android-extensions'
+//firebase_setting-end
+
 
 dependencies {
     def lifecycle_version = "2.2.0"
@@ -89,4 +92,7 @@ dependencies {
 
     //viewModel-ktx
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    //RecyclerView
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

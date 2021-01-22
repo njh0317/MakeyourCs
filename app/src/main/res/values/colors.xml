@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<<<<<<< HEAD
 
+=======
+    <color name="black">#000000</color>
+>>>>>>> 14-userfeed_menu_accmgt
     <color name="colorPrimary">#ededed</color>
     <color name="colorPrimaryDark">#e1e1e1</color>
     <color name="colorLightGray">#f1f1f1</color>
@@ -19,6 +23,7 @@
     <color name="colorEmailSignIn">#009688</color>
     <color name="colorEmailSignInPressed">#004D40</color>
 
+<<<<<<< HEAD
     <color name="black">#FF000000</color>
     <color name="red">#fa4d4d</color>
     <color name="orange">#FF9C00</color>
@@ -26,4 +31,7 @@
     <color name="line_gray">#E6E6E6</color>
     <color name="cursorColor">#F7D358</color>
     <color name="id_gray">#333333</color>
+=======
+    <color name="line_gray">#E6E6E6</color>
+>>>>>>> 14-userfeed_menu_accmgt
 </resources>

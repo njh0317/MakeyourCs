@@ -10,14 +10,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
 
         <activity android:name=".ui.auth.LoginActivity">
+=======
+        <activity android:name=".ui.user.management.AccountMgtMainActivity">
+>>>>>>> 14-userfeed_menu_accmgt
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".Signup_profileActivity" />
         <activity android:name=".ui.signup.Signup_celeActivity" />
         <activity android:name=".ui.signup.Signup_bdayActivity" />
@@ -27,6 +32,11 @@
         <activity android:name=".ui.auth.SignupActivity"/>
         <activity android:name=".ui.home.HomeActivity" />
 
+=======
+        <activity android:name=".ui.user.management.NewAccountMgtActivity" />
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".MainActivity" />
+>>>>>>> 14-userfeed_menu_accmgt
     </application>
 
 </manifest>
