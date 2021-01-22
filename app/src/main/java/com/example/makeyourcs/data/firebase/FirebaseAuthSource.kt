@@ -263,6 +263,45 @@ class   FirebaseAuthSource {
         }
 
     }
+    fun acceptfollow(fromEmail:String, group_name_list:List<String>)
+    {
+//        val fromAccount = firestore.collection("Account")
+//            .document(fromEmail)
+//            .collection("Follow")
+//            .document(currentUser()!!.email.toString())
+//        val toAccount_waitlist = firestore.collection("Account")
+//            .document(currentUser()!!.email.toString())
+//            .collection("Follower_wait_list")
+//            .document(fromEmail)
+//        var toAccount_default = firestore.collection("Account")
+//            .document(currentUser()!!.email.toString())
+//            .collection("SubAccount")
+//            .document("default")
+//
+//        firestore.runTransaction { transaction ->
+//            transaction.delete(toAccount_waitlist) // waitlist 에서 삭제
+//            var default_sub_account = transaction.get(toAccount_default).toObject(AccountClass.SubClass::class.java)
+//            default_sub_account?.follower_num = default_sub_account?.follower_num
+//            default_sub_account?.follower[fromEmail] = true
+//            //follwer_list 에 추가 해야함
+//            transaction.update(toAccount_default, "follower_num", newfollower_num)
+//            for (group_name in group_name_list){
+//                var toAccount = firestore.collection("Account")
+//                    .document(currentUser()!!.email.toString())
+//                    .collection("SubAccount")
+//                    .document(group_name)
+//                snapshot = transaction.get(toAccount)
+//                newfollower_num = Integer.parseInt(snapshot.get("follower_num")!!.toString()) + 1
+//                transaction.update(toAccount, "follower_num", newfollower_num)
+//
+//            }
+//
+//        }
+//            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+//            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+//
+
+    }
 
 
 }
