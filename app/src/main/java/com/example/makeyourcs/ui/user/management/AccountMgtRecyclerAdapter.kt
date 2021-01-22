@@ -1,9 +1,10 @@
-//check
 package com.example.makeyourcs.ui.user.management
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
@@ -13,7 +14,7 @@ class AccountMgtRecyclerAdapter(private val items: ArrayList<AccountMgtItem>) :
     RecyclerView.Adapter<AccountMgtRecyclerAdapter.ViewHolder>(){
 
     // 보여줄 아이템 개수가 몇 개인지
-    override fun getItemCount() = items.size
+    override fun getItemCount(): Int = items.size
 
     // 생성된 View에 보여줄 데이터를 설정(set)해준다 -> View가 생성되면 호출된다.
     override fun onBindViewHolder(holder: AccountMgtRecyclerAdapter.ViewHolder, position: Int) {
@@ -39,6 +40,10 @@ class AccountMgtRecyclerAdapter(private val items: ArrayList<AccountMgtItem>) :
     // ViewHolder 단위 객체로 View의 데이터를 설정한다
     class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view : View = v
+
+//        private val accimg = view.findViewById<ImageView>(R.id.acc_image)
+//        private val accname = view.findViewById<TextView>(R.id.acc_name)
+
         fun bind(listener: View.OnClickListener, item:AccountMgtItem){
             view.acc_image.setImageDrawable(item.image)
             view.acc_name.text = item.name

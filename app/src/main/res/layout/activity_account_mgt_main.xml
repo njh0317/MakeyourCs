@@ -45,11 +45,10 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/account_recyclerView"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clipToPadding="false"
             android:layout_marginTop="20dp"
             tools:listitem="@layout/accountlist_item"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
