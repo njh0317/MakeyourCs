@@ -33,6 +33,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         viewModel.authListener = this
 
 
+
     }
 
     override fun onStarted() {//대기상태, 로그인시 로딩 같은거 넣으면 됨..!!
