@@ -13,22 +13,22 @@ import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
 
 class UserFragment : Fragment(){
-    private var userList = arrayListOf<ImageVo>(
-        ImageVo("1", "test3", "ic_1"),
-        ImageVo("2", "test3", "ic_2"),
-        ImageVo("3", "test3", "ic_3"),
-        ImageVo("4", "test3", "ic_4"),
-        ImageVo("5", "test3", "ic_5"),
-        ImageVo("6", "test3", "ic_6"),
-        ImageVo("7", "test3", "ic_7"),
-        ImageVo("8", "test3", "ic_8"),
-        ImageVo("9", "test3", "ic_9"),
-        ImageVo("10", "test3", "ic_10"),
-        ImageVo("11", "test3", "ic_11"),
-        ImageVo("12", "test3", "ic_1"),
-        ImageVo("13", "test3", "ic_2"),
-        ImageVo("14", "test3", "ic_3"),
-        ImageVo("15", "test3", "ic_4")
+    var userList = arrayListOf<ImageVo>(
+        ImageVo("1",  "ic_1"),
+        ImageVo("2",  "ic_2"),
+        ImageVo("3", "ic_3"),
+        ImageVo("4",  "ic_4"),
+        ImageVo("5",  "ic_5"),
+        ImageVo("6",  "ic_6"),
+        ImageVo("7",  "ic_7"),
+        ImageVo("8",  "ic_8"),
+        ImageVo("9",  "ic_9"),
+        ImageVo("10",  "ic_10"),
+        ImageVo("11",  "ic_11"),
+        ImageVo("12",  "ic_1"),
+        ImageVo("13",  "ic_2"),
+        ImageVo("14", "ic_3"),
+        ImageVo("15", "ic_4")
     )
 
 
