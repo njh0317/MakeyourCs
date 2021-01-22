@@ -1,6 +1,8 @@
 package com.example.makeyourcs.ui.home
 
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +20,9 @@ class HomeViewModel(
     private var _userData = MutableLiveData<AccountClass>()
     val userData:LiveData<AccountClass>
         get()= _userData
-
+    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
+    val accountData:LiveData<List<AccountClass.SubClass>>
+        get()= _accountData
 
     var email: String? = null
     var id: String? = null
@@ -36,6 +40,13 @@ class HomeViewModel(
         var data = repository.observeUserData()
         System.out.println("getUserData"+data.value)
         _userData = data
+    }
+
+    fun getAccountData() {
+        System.out.println("getAccountData")
+        var data = repository.observeAccountData()
+        System.out.println("getAccountData"+data.value)
+        _accountData = data
     }
 
     fun logout(view: View){

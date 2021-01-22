@@ -1,8 +1,10 @@
 package com.example.makeyourcs.ui.home
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,6 +25,7 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
     val TAG = "HOMEACTIVITY"
     private lateinit var viewModel: HomeViewModel
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -30,13 +33,13 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
         viewModel.getUserData()
+        viewModel.getAccountData()
 //        updateUI()
         viewModel.userData.observe(this, Observer {
             binding.etUsername.text = it.userId
             binding.etEmail.text = it.email
             binding.subcount.text = it.sub_count.toString()
             binding.followingNum.text = it.following_num.toString()
-
             Log.d(TAG, it.toString())
         })
     }
