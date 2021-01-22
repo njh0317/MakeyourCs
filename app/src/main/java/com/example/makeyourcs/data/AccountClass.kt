@@ -26,7 +26,7 @@ data class AccountClass(var userId:String? = null,
     data class FollowClass(var to_account:String? = null,
                            var to_account_sub:Map<String, Boolean> = HashMap()
     )
-    data class Follow_wait_list(var from_account:String? = null,
+    data class Follower_wait_list(var from_account:String? = null,
                            var follow_date: LocalDateTime? = null
 
     )

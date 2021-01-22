@@ -22,7 +22,7 @@ class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
     val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
-
+    val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -217,7 +217,7 @@ class   FirebaseAuthSource {
         from.to_account = toEmail
         from.to_account_sub = hashMapOf("default" to FALSE)
 
-        val to = AccountClass.Follow_wait_list()
+        val to = AccountClass.Follower_wait_list()
         to.follow_date = LocalDateTime.now()
         to.from_account = currentUser()!!.email.toString()
 
@@ -236,6 +236,31 @@ class   FirebaseAuthSource {
         }
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+
+    fun observefollowerWaitList()
+    {
+        try {
+            firestore.collection("Account")
+                .document(currentUser()!!.email.toString())
+                .collection("Follower_wait_list")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountClass.Follower_wait_list::class.java)
+                            System.out.println(data)
+                            followerWaitlistLiveData.postValue(listOf(data))
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
+        }
 
     }
 

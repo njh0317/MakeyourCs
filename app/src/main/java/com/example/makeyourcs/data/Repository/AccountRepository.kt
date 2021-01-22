@@ -41,8 +41,17 @@ class AccountRepository(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun follow(toEmail:String) //follow 신청시 상대 Account 의 FollowWaitList 에 들어가게 되는 함수
-        =firestore.follow(toEmail)
+    fun follow(toEmail:String) //follow 신청시 상대 Account 의 FollowWaitList 에 들어가게 되는 함수 호출시 Requires API 선언해야함
+       =firestore.follow(toEmail)
+
+    fun observefollowerWaitList(): MutableLiveData<List<AccountClass.Follower_wait_list>> // 팔로워 신청 대기 리스트
+    {
+        firestore.observeAccountData()
+        var data = firestore.followerWaitlistLiveData
+        return data
+    }
+
+
 
 
 
