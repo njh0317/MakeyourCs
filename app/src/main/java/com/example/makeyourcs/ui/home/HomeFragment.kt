@@ -1,25 +1,17 @@
 package com.example.makeyourcs.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentHomeBinding
-import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
-import javax.crypto.spec.PSource
 
 class HomeFragment : Fragment(){
 

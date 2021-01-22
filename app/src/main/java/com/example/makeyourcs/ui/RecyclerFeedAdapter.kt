@@ -1,27 +1,15 @@
 package com.example.makeyourcs.ui
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.Drawable
-import android.view.DragAndDropPermissions
+
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
-import com.example.makeyourcs.databinding.FragmentHomeBinding
 import com.example.makeyourcs.databinding.ViewItemBinding
 
 class RecyclerFeedAdapter(private val dataList: ArrayList<ImageVo>)
     : RecyclerView.Adapter<RecyclerFeedAdapter.ItemViewHolder>() {
-
-    var mPosition = 0
 
     inner class ItemViewHolder(private val binding: ViewItemBinding) : RecyclerView.ViewHolder(binding.root) {
 

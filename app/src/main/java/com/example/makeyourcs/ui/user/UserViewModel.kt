@@ -1,12 +1,5 @@
 package com.example.makeyourcs.ui.user
 
-
-import android.media.Image
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.R
