@@ -203,30 +203,4 @@ class   FirebaseAuthSource {
             Log.e(TAG, "Error getting user data", e)
         }
     }
-
-
-
-    fun observeUserData2(userId: String) {//예시
-        System.out.println("observeUserData")
-        try {
-            firestore.collection("Account").document(userId).addSnapshotListener{ documentSnapshot: DocumentSnapshot?, firebaseFirestoreException: FirebaseFirestoreException? ->
-                firebaseFirestoreException?.let {
-                    Log.e(TAG, firebaseFirestoreException.toString())
-                    return@addSnapshotListener
-                }
-
-                val data = documentSnapshot?.toObject(AccountClass::class.java)
-
-                data?.let {
-                    Log.d(TAG, "post new value")
-                    System.out.println(data)
-                    userDataLiveData.postValue(data)
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user data", e)
-        }
-    }
-
-
 }

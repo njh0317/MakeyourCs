@@ -25,9 +25,10 @@ class AccountRepository(
     fun setOriginAccount(name:String, introduction:String, imageurl:String) //본캐 정보 저장
         = firestore.setOriginAccount(name, introduction, imageurl)
 
-    fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부 정보 저장
+    fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부캐 정보 저장
             = firestore.setSubAccount(subaccount_num, name, group_name, introduction, imageurl)
-    fun delSubAccount(group_name:String) //부 정보 저장
+
+    fun delSubAccount(group_name:String) //부캐 정보 삭제
             = firestore.delSubAccount(group_name)
 
     fun observeAccountData(): MutableLiveData<List<AccountClass.SubClass>> // 계정 정보 가져오기

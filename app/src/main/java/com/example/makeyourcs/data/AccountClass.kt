@@ -1,5 +1,8 @@
 package com.example.makeyourcs.data
 
+import java.util.*
+import kotlin.collections.HashMap
+
 data class AccountClass(var userId:String? = null,
                         var email:String? = null,
                         var pw:String? = null,
@@ -13,13 +16,17 @@ data class AccountClass(var userId:String? = null,
                         var name:String? = null,
                         var introduction:String? = null,
                         var post_number:Int? = 0,
-                        var following_num:Int? = 0,
+                        var follower_num:Int? = 0,
                         var back_color:String? = "#ffffff",
                         var profile_pic_url:String? = null,
                         var group_name:String? = "",
-                        var follower:Map<String, Boolean> = HashMap())
+                        var follower:Map<String, Boolean> = HashMap()
+    )
     data class FollowClass(var to_account:String? = null,
                            var to_account_sub:Map<Int, Boolean> = HashMap()
+    )
+    data class Follow_wait_list(var from_account:String? = null,
+                           var follow_date:Date? = null
 
     )
 }
