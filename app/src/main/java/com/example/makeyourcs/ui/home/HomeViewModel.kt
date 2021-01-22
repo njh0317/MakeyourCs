@@ -1,6 +1,8 @@
 package com.example.makeyourcs.ui.home
 
+import android.os.Build
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -46,6 +48,7 @@ class HomeViewModel(
         System.out.println("getAccountData"+data.value)
         _accountData = data
     }
+
     fun logout(view: View){
         repository.logout()
         view.context.startLoginActivity()

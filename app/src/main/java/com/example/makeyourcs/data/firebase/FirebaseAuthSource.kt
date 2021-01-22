@@ -1,6 +1,8 @@
 package com.example.makeyourcs.data.firebase
 
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.google.firebase.auth.FirebaseAuth
@@ -11,6 +13,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
 import io.reactivex.Completable
+import java.lang.Boolean.FALSE
+import java.time.LocalDate
+import java.time.LocalDate.now
+import java.time.LocalDateTime
 
 class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
@@ -203,4 +209,35 @@ class   FirebaseAuthSource {
             Log.e(TAG, "Error getting user data", e)
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun follow(toEmail:String)
+    {
+        val from = AccountClass.FollowClass()
+        from.to_account = toEmail
+        from.to_account_sub = hashMapOf("default" to FALSE)
+
+        val to = AccountClass.Follow_wait_list()
+        to.follow_date = LocalDateTime.now()
+        to.from_account = currentUser()!!.email.toString()
+
+        val fromAccount = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("Follow")
+            .document(toEmail)
+        val toAccount = firestore.collection("Account")
+            .document(toEmail)
+            .collection("Follower_wait_list")
+            .document(currentUser()!!.email.toString())
+
+        firestore.runBatch { batch ->
+            batch.set(toAccount, to)
+            batch.set(fromAccount, from)
+        }
+            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+
+
 }

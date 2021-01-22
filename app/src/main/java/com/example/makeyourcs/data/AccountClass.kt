@@ -1,5 +1,6 @@
 package com.example.makeyourcs.data
 
+import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -23,10 +24,10 @@ data class AccountClass(var userId:String? = null,
                         var follower:Map<String, Boolean> = HashMap()
     )
     data class FollowClass(var to_account:String? = null,
-                           var to_account_sub:Map<Int, Boolean> = HashMap()
+                           var to_account_sub:Map<String, Boolean> = HashMap()
     )
     data class Follow_wait_list(var from_account:String? = null,
-                           var follow_date:Date? = null
+                           var follow_date: LocalDateTime? = null
 
     )
 }

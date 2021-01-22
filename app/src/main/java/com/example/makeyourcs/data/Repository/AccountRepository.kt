@@ -1,5 +1,7 @@
 package com.example.makeyourcs.data.Repository
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
@@ -37,6 +39,12 @@ class AccountRepository(
         var data = firestore.accountDataLiveData
         return data
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun follow(toEmail:String) //follow 신청시 상대 Account 의 FollowWaitList 에 들어가게 되는 함수
+        =firestore.follow(toEmail)
+
+
 
 
 
