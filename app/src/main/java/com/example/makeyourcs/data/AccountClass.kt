@@ -22,4 +22,5 @@ data class AccountClass(var userId:String? = null,
                            var to_account_sub:Map<Int, Boolean> = HashMap()
 
     )
+
 }

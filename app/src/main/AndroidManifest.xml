@@ -18,12 +18,7 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".Signup_profileActivity" />
-        <activity android:name=".ui.signup.Signup_celeActivity" />
-        <activity android:name=".ui.signup.Signup_bdayActivity" />
-        <activity android:name=".ui.signup.Signup_emailActivity" />
-        <activity android:name=".ui.signup.Signup_pwActivity" />
-        <activity android:name=".ui.signup.Signup_idActivity" />
+        <activity android:name=".StorageActivity"></activity>
         <activity android:name=".ui.auth.SignupActivity"/>
         <activity android:name=".ui.home.HomeActivity" />
 
