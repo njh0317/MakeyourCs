@@ -29,6 +29,7 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+
         val binding: ActivityHomeBinding = DataBindingUtil.setContentView(this, R.layout.activity_home)
         viewModel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
         binding.viewmodel = viewModel
@@ -42,10 +43,11 @@ class HomeActivity : AppCompatActivity(), KodeinAware {
             binding.followingNum.text = it.following_num.toString()
             Log.d(TAG, it.toString())
         })
+
+        Log.d(TAG, viewModel.accountData.value.toString())
     }
     public override fun onStart() {
         super.onStart()
     }
-
 
 }
