@@ -14,9 +14,12 @@ import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentSearchBinding
 import com.example.makeyourcs.ui.home.HomeViewModel
 import com.example.makeyourcs.ui.home.HomeViewModelFactory
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 
- class SearchFragment : Fragment(),KodeinAware{
-    override val kodein by kodein()
+ class SearchFragment(override val kodein: Kodein) : Fragment(), KodeinAware {
+
     private val factory : HomeViewModelFactory by instance()
     val TAG = "SEARCHFRAGMENT"
     private lateinit var viewModel: SearchViewModel
