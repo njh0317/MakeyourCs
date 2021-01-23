@@ -116,7 +116,7 @@
 
             <Button
                 android:id="@+id/newAccountBtn"
-                android:onClick="@{(view) -> viewmodel.goToUserFeedAccountMgt(view)"
+                android:onClick="@{(view) -> viewmodel.goToUserFeedAccountMgt(view)}"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"

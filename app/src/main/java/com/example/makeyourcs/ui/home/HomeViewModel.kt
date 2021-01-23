@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.auth.AuthListener
+import com.example.makeyourcs.ui.auth.SignupActivity
 import com.example.makeyourcs.ui.user.management.AccountMgtMainActivity
 import com.example.makeyourcs.utils.startAccountMgtMainActivity
 import com.example.makeyourcs.utils.startLoginActivity
@@ -77,6 +78,9 @@ class HomeViewModel(
     }
 
     fun goToUserFeedAccountMgt(view: View) { // 왜 안돼 !
-        view.context.startAccountMgtMainActivity()
+//        view.context.startAccountMgtMainActivity()
+        Intent(view.context, AccountMgtMainActivity::class.java).also {
+            view.context.startActivity(it)
+        }
     }
 }
