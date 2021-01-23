@@ -1,11 +1,28 @@
 package com.example.makeyourcs.ui.user
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.R
+import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.ImageVo
+import com.example.makeyourcs.ui.auth.AuthListener
 
-class UserViewModel:ViewModel() {
+class UserViewModel(
+    private val repository: AccountRepository
+) :ViewModel() {
+    val TAG = "USERVIEWMODEL"
+    private var _userData = MutableLiveData<AccountClass>()
+    val userData: LiveData<AccountClass>
+        get()= _userData
+
+    var email: String? = null
+    var id: String? = null
+    var sub_count: Int? = null
+    var following_num: Int? = null
+    //auth listener
+    var authListener: AuthListener? = null
 
     var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
     val _imgList = ArrayList<ImageVo>()
@@ -24,4 +41,15 @@ class UserViewModel:ViewModel() {
 
         imgList.postValue(_imgList)
     }
+    val user by lazy {
+        repository.currentUser()
+    }
+
+    fun getUserData() {
+        System.out.println("getUserData")
+        var data = repository.observeUserData()
+        System.out.println("getUserData"+data.value)
+        _userData = data
+    }
+
 }

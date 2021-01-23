@@ -21,14 +21,16 @@ class HomeViewModel(
     val userData: LiveData<AccountClass>
         get()= _userData
 
-    var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
-    val _imgList = ArrayList<ImageVo>()
     var email: String? = null
     var id: String? = null
     var sub_count: Int? = null
     var following_num: Int? = null
     //auth listener
     var authListener: AuthListener? = null
+
+
+    var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
+    val _imgList = ArrayList<ImageVo>()
 
     init{
         _imgList.add(ImageVo("1", R.drawable.ic_1,"60"))

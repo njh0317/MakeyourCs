@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewmodel"
+            type="com.example.makeyourcs.ui.user.UserViewModel"/>
+    </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -50,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="은주 한"
+                android:text="aaaa"
                 android:textSize="30sp"></TextView>
 
             <TextView
@@ -58,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="\@ujjnue"
+                android:text="aaaa"
                 android:textSize="20sp"></TextView>
 
             <TextView
@@ -66,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="팔로워 257명 팔로잉 217"
+                android:text="aaaaaa}"
                 android:textSize="15sp"></TextView>
 
             <TextView

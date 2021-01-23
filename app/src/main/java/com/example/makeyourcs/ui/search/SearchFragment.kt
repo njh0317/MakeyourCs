@@ -1,4 +1,4 @@
-package com.example.makeyourcs.ui.serach
+package com.example.makeyourcs.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

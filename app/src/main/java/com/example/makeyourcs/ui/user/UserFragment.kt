@@ -16,16 +16,36 @@ import com.example.makeyourcs.databinding.FragmentHomeBinding
 import com.example.makeyourcs.databinding.FragmentUserBinding
 import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
+import com.example.makeyourcs.ui.home.HomeViewModel
+import com.example.makeyourcs.ui.home.HomeViewModelFactory
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.kcontext
 
-class UserFragment : Fragment(){
+abstract class InjectionFragment : Fragment(), KodeinAware {
+    final override val kodeinContext = kcontext<Fragment>(this)
+    final override val kodein: Kodein by kodein()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        kodeinTrigger?.trigger()
+    }
+}
+
+class UserFragment : InjectionFragment(){
+    private val factory : UserViewModelFactory by instance()
     lateinit var binding: FragmentUserBinding
     lateinit var viewmodel:UserViewModel
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_user, container, false)
         var view=binding.root
-        viewmodel= ViewModelProviders.of(this).get(UserViewModel::class.java)
+        viewmodel= ViewModelProviders.of(this, factory).get(UserViewModel::class.java)
+        binding.viewmodel=viewmodel
 
         //recyclerview adapter, layoutmanger setting
         val adapter= RecyclerFeedAdapter(view.context, viewmodel._imgList)
@@ -34,5 +54,7 @@ class UserFragment : Fragment(){
         binding.userRecycler.layoutManager=lmanager
 
         return view
+
+
     }
 }
