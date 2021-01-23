@@ -21,17 +21,14 @@ import org.kodein.di.generic.kcontext
 
 
 abstract class InjectionFragment : Fragment(), KodeinAware {
-
     final override val kodeinContext = kcontext<Fragment>(this)
     final override val kodein: Kodein by kodein()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         kodeinTrigger?.trigger()
     }
 }
-
 
 class HomeFragment : InjectionFragment(){
     private val factory : HomeViewModelFactory by instance()
@@ -45,7 +42,7 @@ class HomeFragment : InjectionFragment(){
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
         var view=binding.root
         viewmodel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
-
+        binding.viewmodel=viewmodel
 
         //recyclerview adapter, layoutmanger setting
         val adapter= RecyclerFeedAdapter(view.context, viewmodel._imgList)

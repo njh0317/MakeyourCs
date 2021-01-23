@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <import type="android.view.View" />
+        <variable name="viewmodel"
+            type="com.example.makeyourcs.ui.home.HomeViewModel"/>
+    </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -22,6 +27,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:src="@drawable/makeyourcs_round"></ImageView>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/logout"
+                    android:onClick="@{(v) -> viewmodel.logout(v)}"
+                    android:background="@drawable/round_shape_button"
+                    android:text="@string/logout"
+                    android:theme="@style/ButtonStyle"></Button>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 

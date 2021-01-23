@@ -1,6 +1,8 @@
 package com.example.makeyourcs.ui.home
 
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -55,6 +57,7 @@ class HomeViewModel(
     }
 
     fun logout(view: View){
+        Log.d("logout","logouttttt")
         repository.logout()
         view.context.startLoginActivity()
     }

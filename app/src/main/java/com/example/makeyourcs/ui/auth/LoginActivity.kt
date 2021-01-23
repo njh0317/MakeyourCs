@@ -1,21 +1,14 @@
 package com.example.makeyourcs.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivityLoginBinding
-import com.example.makeyourcs.ui.DetailedActivity
-import com.example.makeyourcs.ui.MainActivity
-import com.example.makeyourcs.utils.startHomeActivity
+import com.example.makeyourcs.utils.startMainActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -47,13 +40,13 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         super.onStart()
         viewModel.user?.let {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-            startHomeActivity()
+            startMainActivity()
         }
     }
 
     override fun onSuccess() {//로그인 성공시
         Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-        startHomeActivity()
+        startMainActivity()
     }
 
     override fun onFailure(message: String) {
