@@ -83,6 +83,50 @@
                 android:theme="@style/ButtonStyle"
                 tools:ignore="MissingConstraints"/>
 
+
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:inputType="text"-->
+<!--                android:text="@={viewmodel.subName}"-->
+<!--                android:hint="부캐명"/>-->
+
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:inputType="text"-->
+<!--                android:text="@={viewmodel.groupName}"-->
+<!--                android:hint="그룹명"/>-->
+
+<!--            <EditText-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginRight="10dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:inputType="text"-->
+<!--                android:text="@={viewmodel.subIntroduce}"-->
+<!--                android:hint="소개"/>-->
+
+            <Button
+                android:id="@+id/newAccountBtn"
+                android:onClick="@{(view) -> viewmodel.goToUserFeedAccountMgt(view)"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/round_shape_button"
+                android:text="계정 관리"
+                android:theme="@style/ButtonStyle"
+                tools:ignore="MissingConstraints"/>
+
         </LinearLayout>
     </RelativeLayout>
 </layout>
