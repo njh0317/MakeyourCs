@@ -24,4 +24,5 @@ class HomeViewModel:ViewModel() {
 
         imgList.postValue(_imgList)
     }
+
 }

@@ -27,7 +27,7 @@ class HomeFragment : Fragment(){
 
 
         //recyclerview adapter, layoutmanger setting
-        val adapter= RecyclerFeedAdapter(viewmodel._imgList)
+        val adapter= RecyclerFeedAdapter(view.context, viewmodel._imgList)
         binding.recyclerView.adapter=adapter
         val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.recyclerView.layoutManager=lmanager
