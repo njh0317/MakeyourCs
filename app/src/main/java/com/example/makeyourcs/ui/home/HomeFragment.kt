@@ -12,8 +12,29 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentHomeBinding
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
+import org.kodein.di.generic.kcontext
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.kcontext
 
-class HomeFragment : Fragment(){
+
+abstract class InjectionFragment : Fragment(), KodeinAware {
+
+    final override val kodeinContext = kcontext<Fragment>(this)
+    final override val kodein: Kodein by kodein()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        kodeinTrigger?.trigger()
+    }
+}
+
+
+class HomeFragment : InjectionFragment(){
+    private val factory : HomeViewModelFactory by instance()
 
     lateinit var binding:FragmentHomeBinding
     lateinit var viewmodel:HomeViewModel
@@ -23,7 +44,7 @@ class HomeFragment : Fragment(){
 
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_home, container, false)
         var view=binding.root
-        viewmodel=ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        viewmodel = ViewModelProviders.of(this, factory).get(HomeViewModel::class.java)
 
 
         //recyclerview adapter, layoutmanger setting

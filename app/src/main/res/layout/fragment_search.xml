@@ -1,88 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-    <data>
-        <import type="android.view.View" />
-        <variable name="viewmodel"
-            type="com.example.makeyourcs.ui.serach.SearchViewModel"/>
-    </data>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#cc3366">
+    <!-- Search -->
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/login_background"
-        tools:context=".ui.search.searchFragment">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/makeyourcs"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            tools:ignore="NotSibling">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="mainpage!" />
-
-            <TextView
-                android:id="@+id/et_username"
-                android:text="@{viewmodel.id}"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:padding="10dp"
-                android:background="@drawable/round_shape_input" />
-
-            <TextView
-                android:id="@+id/et_email"
-                android:text="@{viewmodel.email}"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:padding="10dp"
-                android:background="@drawable/round_shape_input" />
-
-            <TextView
-                android:id="@+id/subcount"
-                android:text="@{String.valueOf(viewmodel.sub_count)}"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:padding="10dp"
-                android:background="@drawable/round_shape_input" />
-            <TextView
-                android:id="@+id/following_num"
-                android:text="@{String.valueOf(viewmodel.following_num)}"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:padding="10dp"
-                android:background="@drawable/round_shape_input" />
-
-            <Button
-                android:id="@+id/logout"
-                android:onClick="@{(v) -> viewmodel.logout(v)}"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginRight="20dp"
-                android:background="@drawable/round_shape_button"
-                android:text="@string/logout"
-                android:theme="@style/ButtonStyle"
-                tools:ignore="MissingConstraints"/>
-
-        </LinearLayout>
-    </RelativeLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>
