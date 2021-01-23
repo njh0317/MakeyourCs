@@ -11,21 +11,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ui.auth.LoginActivity">
+        <activity android:name=".ui.auth.LoginActivity"/>
+        <activity android:name=".ui.DetailedActivity"></activity>
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
 
             </intent-filter>
         </activity>
-        <activity android:name=".Signup_profileActivity" />
-        <activity android:name=".ui.signup.Signup_celeActivity" />
-        <activity android:name=".ui.signup.Signup_bdayActivity" />
-        <activity android:name=".ui.signup.Signup_emailActivity" />
-        <activity android:name=".ui.signup.Signup_pwActivity" />
-        <activity android:name=".ui.signup.Signup_idActivity" />
         <activity android:name=".ui.auth.SignupActivity"/>
-        <activity android:name=".ui.home.HomeActivity" />
 
     </application>
 

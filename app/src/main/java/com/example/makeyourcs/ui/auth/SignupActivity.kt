@@ -1,17 +1,13 @@
 package com.example.makeyourcs.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.CalendarView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivitySignupBinding
-import com.example.makeyourcs.ui.home.HomeActivity
 import com.example.makeyourcs.utils.startHomeActivity
-import com.example.makeyourcs.utils.startLoginActivity
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
