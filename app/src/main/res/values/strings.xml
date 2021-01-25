@@ -4,7 +4,7 @@
     <!-- Account -->
     <string name="cancel">취소</string>
     <string name="next">다음</string>
-
+    <string name="select_follower">새 계정을 보여 줄 팔로워를 추가해보세요.</string>
     <!-- Sign In -->
     <string name="name">사용자 이름</string>
     <string name="id">아이디</string>

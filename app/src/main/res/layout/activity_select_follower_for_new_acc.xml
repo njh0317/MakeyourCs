@@ -32,10 +32,30 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dp"
                 android:background="@android:color/transparent"
-                android:text="확인"
+                android:text="완료"
                 android:textColor="@color/signature"
                 android:textSize="20sp" />
         </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/line_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/select_follower"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            android:background="@color/background_gray"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_gray" />
 
 
     </LinearLayout>
