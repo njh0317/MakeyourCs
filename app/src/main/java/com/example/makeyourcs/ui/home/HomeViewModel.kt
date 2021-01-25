@@ -59,6 +59,8 @@ class HomeViewModel(
         var data = repository.observeAccountData()
         System.out.println("getAccountData " + data.value)
         _accountData = data
+        
+
     }
 
     fun logout(view: View) {

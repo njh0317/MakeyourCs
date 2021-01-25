@@ -188,6 +188,7 @@ class   FirebaseAuthSource {
     }
 
     fun observeAccountData() {
+        var subaccountlist : ArrayList<AccountClass.SubClass> = arrayListOf()
         try {
             firestore.collection("Account")
                 .document(currentUser()!!.email.toString())
@@ -197,13 +198,14 @@ class   FirebaseAuthSource {
                     Log.w(TAG, "Listen failed.", e)
                     return@addSnapshotListener
                 }
+                    subaccountlist.clear()
                 for (doc in value!!) {
                     doc?.let {
                         val data = it?.toObject(AccountClass.SubClass::class.java)
-                        System.out.println(data)
-                        accountDataLiveData.postValue(listOf(data))
+                        subaccountlist.add(data)
                     }
                 }
+                    accountDataLiveData.postValue(subaccountlist)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
@@ -299,7 +301,7 @@ class   FirebaseAuthSource {
 //        }
 //            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
 //            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
-//
+
 
     }
 

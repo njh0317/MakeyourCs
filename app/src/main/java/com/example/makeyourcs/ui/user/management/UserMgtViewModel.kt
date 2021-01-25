@@ -51,6 +51,7 @@ class UserMgtViewModel (
     fun getAccountData() {
         System.out.println("getAccountData")
         var data = repository.observeAccountData()
+        System.out.println(data)
         System.out.println("getAccountData "+data.value)
         _accountData = data
     }
