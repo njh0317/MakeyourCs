@@ -65,7 +65,8 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/plus_btn"
-                android:textColor="@color/colorWhite"/>
+                android:textColor="@color/colorWhite"
+                android:onClick="@{(view) -> viewmodel.goToAddNewAccount(view)}"/>
 
         </LinearLayout>
     </RelativeLayout>

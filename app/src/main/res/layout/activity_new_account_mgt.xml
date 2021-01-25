@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewmodel"
             type="com.example.makeyourcs.ui.user.management.UserMgtViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.user.management.NewAccountMgtActivity">
@@ -38,18 +40,20 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
+                    android:onClick="@{(v) -> viewmodel.setNewAccount(v)}"
                     android:text="확인"
                     android:textColor="@color/signature"
-                    android:textSize="20sp"
-                    android:onClick="@{(v) -> viewmodel.newAccount(v)"/>
+                    android:textSize="20sp" />
             </RelativeLayout>
 
+
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
-                android:text="\@사용자ID"
+                android:text="new id"
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
@@ -57,7 +61,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/profile_oval" />
 
             <Button
@@ -97,7 +101,7 @@
                     android:layout_marginLeft="30dp"
                     android:hint="부캐명"
                     android:inputType="text"
-                    android:text="@={viewmodel.subName}"/>
+                    android:text="@={viewmodel.subName}" />
             </LinearLayout>
 
             <LinearLayout
@@ -121,7 +125,7 @@
                     android:layout_marginLeft="30dp"
                     android:hint="그룹명(상대방에게 보이지 않음)"
                     android:inputType="text"
-                    android:text="@={viewmodel.groupName}"/>
+                    android:text="@={viewmodel.groupName}" />
             </LinearLayout>
 
             <LinearLayout
@@ -145,7 +149,7 @@
                     android:layout_marginLeft="30dp"
                     android:hint="소개"
                     android:inputType="text"
-                    android:text="@={viewmodel.subIntroduce}"/>
+                    android:text="@={viewmodel.subIntroduce}" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

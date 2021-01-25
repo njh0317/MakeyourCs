@@ -18,13 +18,14 @@ import com.example.makeyourcs.utils.startLoginActivity
 
 
 class HomeViewModel(
-
     private val repository: AccountRepository
 ) : ViewModel() {
     val TAG = "HOMEVIEWMODEL"
+
     private var _userData = MutableLiveData<AccountClass>()
     val userData: LiveData<AccountClass>
         get() = _userData
+
     private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
     val accountData: LiveData<List<AccountClass.SubClass>>
         get() = _accountData
@@ -66,21 +67,23 @@ class HomeViewModel(
     }
 
     fun newAccount(view: View) {
+        System.out.println("new subAccount!!")
+        var data = repository.observeUserData()
+
         repository.setSubAccount(
-            sub_count!!,
+            data.value?.sub_count!!,
             subName.get().toString(),
             groupName.get().toString(),
             subIntroduce.get().toString(),
             "default"
         )
-        System.out.println("new subAccount!!")
-
+        view.context.startAccountMgtMainActivity()
     }
 
-    fun goToUserFeedAccountMgt(view: View) { // 왜 안돼 !
-//        view.context.startAccountMgtMainActivity()
-        Intent(view.context, AccountMgtMainActivity::class.java).also {
-            view.context.startActivity(it)
-        }
+    fun goToUserFeedAccountMgt(view: View) {
+        view.context.startAccountMgtMainActivity()
+//        Intent(view.context, AccountMgtMainActivity::class.java).also {
+//            view.context.startActivity(it)
+//        }
     }
 }

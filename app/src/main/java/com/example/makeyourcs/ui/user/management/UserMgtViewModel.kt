@@ -11,6 +11,7 @@ import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.ui.auth.SignupActivity
+import com.example.makeyourcs.utils.startAccountMgtMainActivity
 
 class UserMgtViewModel (
     private val repository: AccountRepository
@@ -55,9 +56,17 @@ class UserMgtViewModel (
     }
 
     fun setNewAccount(view: View){
-        repository.setSubAccount(sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
         System.out.println("new subAccount!!")
-        Log.d("UserMgtViewModel", "new Account!!")
+        var data = repository.observeUserData()
+//        System.out.println("sub_count:"+data.value?.sub_count!!+" subName:"+subName.get().toString()+" groupName:"+groupName.get().toString()+" subIntro:"+subIntroduce.get().toString())
+        repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
+
+        view.context.startAccountMgtMainActivity()
     }
 
+    fun goToAddNewAccount(view: View) {
+        Intent(view.context, NewAccountMgtActivity::class.java).also {
+            view.context.startActivity(it)
+        }
+    }
 }

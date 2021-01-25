@@ -83,46 +83,54 @@
                 android:theme="@style/ButtonStyle"
                 tools:ignore="MissingConstraints"/>
 
+<!--            <EditText-->
+<!--                android:layout_width="260dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:hint="부캐명"-->
+<!--                android:inputType="text"-->
+<!--                android:text="@={viewmodel.subName}"/>-->
 
 <!--            <EditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_width="260dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:hint="그룹명"-->
 <!--                android:inputType="text"-->
-<!--                android:text="@={viewmodel.subName}"-->
-<!--                android:hint="부캐명"/>-->
+<!--                android:text="@={viewmodel.groupName}"/>-->
 
 <!--            <EditText-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_width="260dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:hint="소개"-->
 <!--                android:inputType="text"-->
-<!--                android:text="@={viewmodel.groupName}"-->
-<!--                android:hint="그룹명"/>-->
+<!--                android:text="@={viewmodel.subIntroduce}"/>-->
 
-<!--            <EditText-->
+<!--            <Button-->
+<!--                android:id="@+id/newAccountBtn"-->
+<!--                android:onClick="@{(v) -> viewmodel.newAccount(v)}"-->
 <!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="10dp"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:inputType="text"-->
-<!--                android:text="@={viewmodel.subIntroduce}"-->
-<!--                android:hint="소개"/>-->
-
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:background="@drawable/orangebtn_selector_img"-->
+<!--                android:text="계정 관리"-->
+<!--                android:theme="@style/ButtonStyle"-->
+<!--                tools:ignore="MissingConstraints"/>-->
             <Button
                 android:id="@+id/newAccountBtn"
-                android:onClick="@{(view) -> viewmodel.goToUserFeedAccountMgt(view)}"
+                android:onClick="@{(v) -> viewmodel.goToUserFeedAccountMgt(v)}"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/round_shape_button"
+                android:background="@drawable/orangebtn_selector_img"
                 android:text="계정 관리"
                 android:theme="@style/ButtonStyle"
                 tools:ignore="MissingConstraints"/>

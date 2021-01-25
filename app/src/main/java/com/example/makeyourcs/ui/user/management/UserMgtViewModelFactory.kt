@@ -3,7 +3,7 @@ package com.example.makeyourcs.ui.user.management
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.makeyourcs.data.Repository.AccountRepository
-import com.example.makeyourcs.ui.home.HomeViewModel
+import com.example.makeyourcs.ui.user.management.UserMgtViewModel
 
 @Suppress("UNCHECKED_CAST")
 class UserMgtViewModelFactory (
