@@ -26,12 +26,6 @@ class UserMgtViewModel (
     val accountData: LiveData<List<AccountClass.SubClass>>
         get()= _accountData
 
-//    val sublist = MutableLiveData<ArrayList<AccountMgtItem>>()
-//    var _sublist = ArrayList<AccountMgtItem>()
-
-    private val list = ArrayList<AccountMgtItem>()
-    private val _subList = MutableLiveData<ArrayList<AccountMgtItem>>()
-    val subList: LiveData<ArrayList<AccountMgtItem>> = _subList
 
     var email: String? = null
     var id: String? = null
@@ -46,47 +40,19 @@ class UserMgtViewModel (
     //auth listener
     var authListener: AuthListener? = null
 
-    init{
-        var data = repository.observeAccountData()
-        var account = data.value?.iterator()
-
-        if(account != null){
-            while(account.hasNext()){
-                Log.d("account","in Account")
-                list.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
-//                list.add(AccountMgtItem((R.drawable.profile_oval)!!, account.next().name.toString()))
-            }
-        }
-        _subList.value = list
-    }
-
 //    init{
+////        var initlist = ArrayList<AccountMgtItem>()
 //        var data = repository.observeAccountData()
 //        var account = data.value?.iterator()
 //
 //        if(account != null){
 //            while(account.hasNext()){
-//                Log.d("account","in Account")
-//                _sublist.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
+////                Log.d("account","in Account")
+//                list.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
 ////                list.add(AccountMgtItem((R.drawable.profile_oval)!!, account.next().name.toString()))
 //            }
 //        }
-//        sublist.postValue(_sublist)
-//    }
-
-//    fun updateSubList(){
-//        var data = repository.observeAccountData()
-//        var account = data.value?.iterator()
-//
-//        if(account != null){
-//            while(account.hasNext()){
-//                Log.d("account","in Account")
-//                _sublist.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
-////                list.add(AccountMgtItem((R.drawable.profile_oval)!!, account.next().name.toString()))
-//            }
-//        }
-//
-//        sublist.postValue(_sublist)
+//        liveData.postValue(list)
 //    }
 
     val user by lazy {
@@ -107,21 +73,21 @@ class UserMgtViewModel (
         _accountData = data
     }
 
-    fun getAccountList(): MutableLiveData<List<AccountClass.SubClass>> {
+    fun getAccountList(): MutableLiveData<List<AccountClass.SubClass>> { // accountmgtmain activity는 이 메소드를 observe
         var data = repository.observeAccountData()
         return data
     }
 
-    fun getItemList(): ArrayList<AccountMgtItem>{
+    fun getItemList(): ArrayList<AccountMgtItem>{ // 위 메소드로 전달받은 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
         var itemlist = ArrayList<AccountMgtItem>()
         var data = repository.observeAccountData()
-        var account = data.value?.iterator()
+        //data.value?.sortedBy { it.sub_num }
 
+        var account = data.value?.iterator()
         if(account != null){
             while(account.hasNext()){
                 Log.d("account","in Account")
                 itemlist.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
-//                list.add(AccountMgtItem((R.drawable.profile_oval)!!, account.next().name.toString()))
             }
         }
         return itemlist
@@ -130,26 +96,10 @@ class UserMgtViewModel (
     fun AddNewAccount(view: View){
         System.out.println("new subAccount!!")
         var data = repository.observeUserData()
-//        System.out.println("sub_count:"+data.value?.sub_count!!+" subName:"+subName.get().toString()+" groupName:"+groupName.get().toString()+" subIntro:"+subIntroduce.get().toString())
         repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
-        list.add(AccountMgtItem(R.drawable.profile_oval, subName.get().toString()))
-        _subList.value = list
-        System.out.println("!! _subList update")
-        System.out.println("_subList: " + _subList.value!!)
         view.context.startAccountMgtMainActivity()
     }
 
-//    fun recycleritemList(){
-//        var sublist = mutableListOf<>()
-//        var list = accountData.value
-//        var account = list?.iterator()
-//
-//        if(account != null){
-//            while(account.hasNext()){
-//
-//            }
-//        }
-//    }
 
     fun goToAddNewAccount(view: View) {
         Intent(view.context, NewAccountMgtActivity::class.java).also {

@@ -193,6 +193,7 @@ class   FirebaseAuthSource {
             firestore.collection("Account")
                 .document(currentUser()!!.email.toString())
                 .collection("SubAccount")
+                .orderBy("sub_num")
                 .addSnapshotListener{ value, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)
