@@ -1,5 +1,6 @@
 package com.example.makeyourcs.ui.user.management
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +12,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.AccountlistItemBinding
 import kotlinx.android.synthetic.main.accountlist_item.view.*
-
-class AccountMgtRecyclerAdapter(private val items: ArrayList<AccountMgtItem>) :
+//private val items: ArrayList<AccountMgtItem>
+class AccountMgtRecyclerAdapter() :
     RecyclerView.Adapter<AccountMgtRecyclerAdapter.ViewHolder>(){
-
+    private var sitems: ArrayList<AccountMgtItem> = arrayListOf()
     // 보여줄 아이템 개수가 몇 개인지
-    override fun getItemCount(): Int = items.size
+//**    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int{
+        return sitems.size
+    }
 
     // 생성된 View에 보여줄 데이터를 설정(set)해준다 -> View가 생성되면 호출된다.
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
+//        val item = items[position]
+        val item = sitems[position]
         holder.apply{
             bind(item)
             itemView.tag = item
@@ -49,4 +54,11 @@ class AccountMgtRecyclerAdapter(private val items: ArrayList<AccountMgtItem>) :
             }
         }
     }
+
+    fun setItems(items: ArrayList<AccountMgtItem>){
+        Log.d("RECYCLERADAPTER", "!!setItems")
+        this.sitems = items
+        this.notifyDataSetChanged()
+    }
+
 }

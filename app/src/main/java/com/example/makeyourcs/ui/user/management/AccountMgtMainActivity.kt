@@ -22,7 +22,7 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account_mgt_main)
+//        setContentView(R.layout.activity_account_mgt_main)
 
         val binding: ActivityAccountMgtMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_account_mgt_main)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
@@ -30,31 +30,35 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware {
         viewModel.getUserData()
         viewModel.getAccountData()
 
-//        val accounts = viewModel.accountData.value
-//        val account = accounts?.iterator()
-//        if (account != null) {
-//            while(account.hasNext())
-//                System.out.println("here!! " + account.next())
-//            println("size: " + accounts.size)
-////                System.out.println("in AccountMgtMainActivity : " + viewModel.accountData)
-//        }
-        var list = ArrayList<AccountMgtItem>()
+        val adapter = AccountMgtRecyclerAdapter()
+        binding.accountRecyclerView.adapter = adapter
 
-        viewModel.userData.observe(this, Observer {
-            list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, it.userId.toString()+" (본 계정)"))
+        viewModel.getAccountList().observe(this, Observer {
+            Log.d("livedata","in observer")
+            adapter.setItems(viewModel.getItemList())
+//            val adapter = AccountMgtRecyclerAdapter(viewModel.subList.value!!)
+//            binding.accountRecyclerView.adapter = adapter
         })
 
-        viewModel.accountData.observe(this, Observer {
-            list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, it.get(0).name.toString()))
-        })
+//        viewModel.accountData.observe(this, Observer {
+//
+////            System.out.println("list size: " + it.size)
+//            var account = it.iterator()
+//            if(account != null){
+//                while(account.hasNext()){
+//                    list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, account.next().name.toString()))
+//                }
+//            }
+////            list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, it.get(0).name.toString()))
+//        })
 
 //        list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, getString(R.string.accname1)))
 //        list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, getString(R.string.accname2)))
 //        list.add(AccountMgtItem(getDrawable(R.drawable.profile_oval)!!, getString(R.string.accname3)))
 
-        val adapter = AccountMgtRecyclerAdapter(list)
+//        val adapter = AccountMgtRecyclerAdapter(viewModel._sublist)
 
-        binding.accountRecyclerView.adapter = adapter
+//        binding.accountRecyclerView.adapter = adapter
         Log.d("ACCOUNTMGTMAIN", "in func")
 //        account_recyclerView.adapter = adapter
     }

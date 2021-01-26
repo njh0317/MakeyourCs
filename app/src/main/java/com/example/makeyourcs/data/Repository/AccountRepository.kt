@@ -37,6 +37,7 @@ class AccountRepository(
     {
         firestore.observeAccountData()
         var data = firestore.accountDataLiveData
+        System.out.println("repository : "+data.value)
         return data
     }
 

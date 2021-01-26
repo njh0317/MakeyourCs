@@ -40,7 +40,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="15dp"
                     android:background="@android:color/transparent"
-                    android:onClick="@{(v) -> viewmodel.setNewAccount(v)}"
+                    android:onClick="@{(v) -> viewmodel.AddNewAccount(v)}"
                     android:text="확인"
                     android:textColor="@color/signature"
                     android:textSize="20sp" />
