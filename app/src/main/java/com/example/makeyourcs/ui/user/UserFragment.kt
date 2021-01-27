@@ -1,35 +1,18 @@
 package com.example.makeyourcs.ui.user
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.makeyourcs.R
-import com.example.makeyourcs.databinding.FragmentHomeBinding
 import com.example.makeyourcs.databinding.FragmentUserBinding
-import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
-import com.example.makeyourcs.ui.home.HomeViewModel
-import com.example.makeyourcs.ui.home.HomeViewModelFactory
 import com.example.makeyourcs.ui.home.InjectionFragment
-import org.kodein.di.Kodein
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.androidXModule
-import org.kodein.di.android.x.kodein
-import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
-import org.kodein.di.generic.kcontext
-import org.kodein.di.generic.singleton
 
 
 class UserFragment : InjectionFragment(){
@@ -63,8 +46,18 @@ class UserFragment : InjectionFragment(){
 //            Log.d(TAG, it.toString())
 //        })
 
-
+        binding.setting.setOnClickListener { view ->
+            showDialog()
+            //val intent = Intent(context, DetailedActivity::class.java)
+            //startActivity(intent) // start Intent
+        }
         return view
+    }
+
+    private fun showDialog(){
+        val newFragment = SettingDialogFragment()
+        newFragment.show(getFragmentManager()!!, "dialog")
 
     }
+
 }

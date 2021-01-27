@@ -17,7 +17,6 @@
     <string name="signout_success">Signout success</string>
     <string name="signout_fail">Signout fail</string>
     <string name="signout_fail_null">Please enter your email and password</string>
-    <string name="logout">Logout</string>
 
     <!-- Sign up -->
     <string name="signup">계정이 아직 없으신가요?</string>
@@ -42,8 +41,15 @@
     <string name="favorite">Favorite</string>
     <string name="account">Account</string>
 
-    <!-- My Feed -->
+    <!-- User Feed -->
     <string name="change_sub_char">계정변경</string>
+
+    <!-- More menu in User Feed -->
+    <string name="settings">설정</string>
+    <string name="accountmgt">계정 관리</string>
+    <string name="editprofile">프로필 편집</string>
+    <string name="archive">아카이브</string>
+    <string name="logout">로그아웃</string>
 
 
     <!-- Account -->
@@ -75,4 +81,6 @@
     <!-- etc -->
     <item name="visible" type="id" />
     <item name="masked" type="id" />
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

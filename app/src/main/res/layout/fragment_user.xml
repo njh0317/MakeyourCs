@@ -55,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="한은주"
                 android:textSize="30sp"></TextView>
 
             <TextView
@@ -62,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:text="\@ujjnue"
                 android:textSize="20sp"></TextView>
 
             <TextView
@@ -69,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="aaa"
+                android:text="팔로워 255명 팔로잉 216"
                 android:textSize="15sp"></TextView>
 
             <TextView
@@ -77,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="aaaa"
+                android:text="KNU CSE"
                 android:textSize="20sp"></TextView>
         </LinearLayout>
 
