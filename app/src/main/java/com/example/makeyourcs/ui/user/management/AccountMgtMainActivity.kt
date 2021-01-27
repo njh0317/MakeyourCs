@@ -30,7 +30,7 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware {
         binding.viewmodel = viewModel
 
         viewModel.getAccountList().observe(this, Observer{
-            Log.d("GETACCOUNTLIST", "change!!")
+//            Log.d("GETACCOUNTLIST", "change!!")
             var newAdapter = AccountMgtRecyclerAdapter(viewModel.getItemList())
             binding.accountRecyclerView.adapter = newAdapter
         })

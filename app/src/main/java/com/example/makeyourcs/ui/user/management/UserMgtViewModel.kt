@@ -86,7 +86,7 @@ class UserMgtViewModel (
         var account = data.value?.iterator()
         if(account != null){
             while(account.hasNext()){
-                Log.d("account","in Account")
+//                Log.d("account","in Account")
                 itemlist.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
             }
         }
