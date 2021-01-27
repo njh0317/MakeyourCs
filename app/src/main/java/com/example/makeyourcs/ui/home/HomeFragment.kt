@@ -21,8 +21,8 @@ import org.kodein.di.generic.kcontext
 
 
 abstract class InjectionFragment : Fragment(), KodeinAware {
-    final override val kodeinContext = kcontext<Fragment>(this)
-    final override val kodein: Kodein by kodein()
+    override val kodeinContext = kcontext<Fragment>(this)
+    override val kodein: Kodein by kodein()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
