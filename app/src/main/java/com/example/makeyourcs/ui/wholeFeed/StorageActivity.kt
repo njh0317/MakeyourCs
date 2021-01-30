@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import com.example.makeyourcs.R
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 
@@ -15,28 +16,55 @@ import java.util.*
 
 
 class StorageActivity : AppCompatActivity() {
-//    private var binding: ActivityViewModelBinding? = null
-//    private var viewModel: CounterViewModel? = null
     val GALLERY = 0 //GALLERY의 역할
-
+    val firebaseStorage = FirebaseStorage.getInstance();
+    private val firestore: FirebaseFirestore by lazy{
+        FirebaseFirestore.getInstance()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_storage)
-//        binding.setActivity(this)
-//        //ViewModel 가져오기
-//        viewModel = ViewModelProviders.of(this).get(wholeFeedViewModel::class.java)
-//        viewModel.counter.observe(this, object : Observer<?>() {
-//            fun onChanged(imageUri: Uri) {
-//                //UI 업데이트
-//                binding.album_imageview.setImage("$imageUri ")
-//            }
-//        })
-//
-//        binding.countTextView.setText(viewModel.counter.toString() + " ")
+        setContentView(R.layout.activity_storage)
         upload_photo.setOnClickListener{openAlbum()}
         //delete_photo.setOnClickListener{ deletePhoto() }
     }
+    fun uploadPhoto(photoUri: Uri) {
+//        val DocRef = firestore
+//            .collection("Account")
+//            .document(currentUser()!!.email.toString())
+//            .collection("SubAccount")
+//            .document(group_name)
+//
+//        firestore.runTransaction { transaction ->
+//            val snapshot = transaction.get(DocRef)
+//
+//            // Note: this could be done without a transaction
+//            //       by updating the population using FieldValue.increment()
+//            transaction.update(DocRef, "introduction", introduction)
+//            transaction.update(DocRef, "name", name)
+//            transaction.update(DocRef, "profile_pic_url", imageurl)
+//
+//            // Success
+//            null
+//        }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+//            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+//
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
+        //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
 
+        var storageRef = firebaseStorage.reference.child("images/"+fileName)
+        var tmpid = 0;
+        System.out.println("photoUri"+photoUri)
+        firestore.collection("Post")?.document("0")?.collection("pictureClass").document("0")?.update(
+            mapOf(
+                "pictureUri" to photoUri.toString()
+            )
+        );
+        //모델에서 다운로드
+        storageRef.putFile(photoUri).addOnSuccessListener {
+            Log.d("1", "Upload photo completed")
+        }
+    }
 
     fun openAlbum(){  //저장된 사진을 공유...추후 사진 바로 찍어서 올리는 함수 추가 예정
         var intent = Intent(Intent.ACTION_PICK)
@@ -57,7 +85,7 @@ class StorageActivity : AppCompatActivity() {
             album_imageview.setImageURI(photoUri)
 
             //TODO:repository 에 접근해서 함수 호출로 수정
-//            uploadPhoto(photoUri)
+            uploadPhoto(photoUri)
         }
     }
 }
