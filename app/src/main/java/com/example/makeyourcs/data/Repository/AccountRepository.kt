@@ -14,6 +14,7 @@ class AccountRepository(
     fun currentUser() = firestore.currentUser()
 
     fun logout() = firestore.logout()
+
     fun observeUserData(): MutableLiveData<AccountClass>
     {
         firestore.observeUserData()

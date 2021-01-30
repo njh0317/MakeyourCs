@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
+import com.example.makeyourcs.ui.wholeFeed.StorageActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import java.lang.Exception

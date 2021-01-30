@@ -18,7 +18,7 @@
 
             </intent-filter>
         </activity>
-        <activity android:name=".StorageActivity"></activity>
+        <activity android:name=".ui.wholeFeed.StorageActivity"></activity>
         <activity android:name=".ui.auth.SignupActivity"/>
         <activity android:name=".ui.home.HomeActivity" />
 

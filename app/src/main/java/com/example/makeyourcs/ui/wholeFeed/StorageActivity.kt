@@ -1,37 +1,46 @@
-package com.example.makeyourcs
+package com.example.makeyourcs.ui.wholeFeed
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.data.PostClass
+import com.example.makeyourcs.postId
+import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_storage.*
-import com.google.firebase.firestore.*
-import java.lang.Exception
-import java.lang.reflect.Array.set
 import java.text.SimpleDateFormat
 import java.util.*
-import android.content.Intent as Intent
+
 
 class StorageActivity : AppCompatActivity() {
+    private var binding: ActivityViewModelBinding? = null
+    private var viewModel: CounterViewModel? = null
     val GALLERY = 0 //GALLERY의 역할
-    override fun onCreate(savedInstanceState: Bundle?){
-        super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_storage)
-        System.out.println("come in")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_storage)
+        binding.setActivity(this)
+        //ViewModel 가져오기
+        viewModel = ViewModelProviders.of(this).get(wholeFeedViewModel::class.java)
+        viewModel.counter.observe(this, object : Observer<?>() {
+            fun onChanged(imageUri: Uri) {
+                //UI 업데이트
+                binding.album_imageview.setImage("$imageUri ")
+            }
+        })
+
+        binding.countTextView.setText(viewModel.counter.toString() + " ")
         upload_photo.setOnClickListener{openAlbum()}
-//        delete_photo.setOnClickListener{ deletePhoto() }
+        //delete_photo.setOnClickListener{ deletePhoto() }
     }
-    fun openAlbum(){  //저장된 사진을 공유...추후 사진 바로 찍어서 올리는 함수 추가 예정
-        var intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, GALLERY)
-    //그냥 startActivityForResult(intent)해도 되지만, 액티비티 구별을 위하여 requestCode 쓰려면 startActivityForResult
-    }
+
+
     //TODOs
     //1. 유저피드에 올라갈 사진의 주인 리스트 뽑기 *****
     //2. 리스트에 따라 이미지 불러와서 시간순으로 소팅
@@ -47,7 +56,7 @@ class StorageActivity : AppCompatActivity() {
         try{
             firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
         }
-        catch(e: Exception){
+        catch (e: Exception){
             Log.d("cannot upload", e.toString())
         }
 
@@ -58,9 +67,11 @@ class StorageActivity : AppCompatActivity() {
         //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
         var storageRef = FirebaseStorage.getInstance().reference.child("images").child(fileName)
         var tmpid = 1;
-        var firestore = FirebaseFirestore.getInstance().collection("Post")?.document(tmpid.toString())?.update(mapOf(
+        var firestore = FirebaseFirestore.getInstance().collection("Post")?.document(tmpid.toString())?.update(
+            mapOf(
                 "picture_url" to storageRef.toString()
-        ));
+            )
+        );
 
         //모델에서 다운로드
         storageRef.putFile(photoUri).addOnSuccessListener {
@@ -68,12 +79,18 @@ class StorageActivity : AppCompatActivity() {
         }
 
     }
-//    fun deletePhoto(){ //추후 delete하는 Activity에 추가
-//        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
-//            .addOnSuccessListener{
-//                Toast.makeText(this, "Delete photo completed", Toast.LENGTH_LONG).show()
-//            }
-//    }
+    fun deletePhoto(){ //추후 delete하는 Activity에 추가
+        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
+            .addOnSuccessListener{
+                Toast.makeText(this, "Delete photo completed", Toast.LENGTH_LONG).show()
+            }
+    }
+    fun openAlbum(){  //저장된 사진을 공유...추후 사진 바로 찍어서 올리는 함수 추가 예정
+        var intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, GALLERY)
+        //그냥 startActivityForResult(intent)해도 되지만, 액티비티 구별을 위하여 requestCode 쓰려면 startActivityForResult
+    }
     //onCreate ->startActivityForResult -> (setResult) -> onActivityResult
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         super.onActivityResult(requestCode, resultCode, data)

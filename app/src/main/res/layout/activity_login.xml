@@ -70,45 +70,42 @@
                 android:theme="@style/ButtonStyle"
                ></Button>
 
-<!--=======-->
-<!--        <Button-->
-<!--            android:id="@+id/signup"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginRight="20dp"-->
-<!--            android:background="@color/transparent"-->
-<!--            android:text="@string/signup"></Button>-->
+        <Button
+            android:id="@+id/signup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/transparent"
+            android:text="@string/signup"></Button>
 
-<!--        <Button-->
-<!--            android:id="@+id/set_photo"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginRight="20dp"-->
-<!--            android:background="@color/transparent"-->
-<!--            android:text="set photo"></Button>-->
+        <Button
+            android:id="@+id/set_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/transparent"
+            android:text="set photo"></Button>
 
-<!--        <Button-->
-<!--            android:id="@+id/set_posting"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginRight="20dp"-->
-<!--            android:background="@color/transparent"-->
-<!--            android:text="set posting"></Button>-->
+        <Button
+            android:id="@+id/set_posting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/transparent"
+            android:text="set posting"></Button>
 
-<!--        <Button-->
-<!--            android:id="@+id/get_posting"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginLeft="20dp"-->
-<!--            android:layout_marginRight="20dp"-->
-<!--            android:background="@color/transparent"-->
-<!--            android:text="get posting"></Button>-->
+        <Button
+            android:id="@+id/get_posting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/transparent"
+            android:text="get posting"></Button>
 
-<!--    </LinearLayout>-->
-<!--&gt;>>>>>> 10-postClass-->
 
             <Button
                 android:id="@+id/signup_bt"

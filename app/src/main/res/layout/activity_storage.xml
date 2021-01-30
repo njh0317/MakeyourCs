@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    tools:context=".StorageActivity">
+    tools:context=".ui.wholeFeed.StorageActivity">
     <ImageView
         android:background="@android:color/darker_gray"
         android:id="@+id/album_imageview"
