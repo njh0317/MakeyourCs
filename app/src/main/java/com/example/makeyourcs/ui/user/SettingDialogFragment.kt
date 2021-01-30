@@ -24,7 +24,7 @@ import org.kodein.di.generic.instance
 
 class SettingDialogFragment: DialogFragment() {
 
-    private val sharedViewModel: UserViewModel by viewModels(ownerProducer = { requireParentFragment() })
+    private val viewmodel: UserViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -48,7 +48,7 @@ class SettingDialogFragment: DialogFragment() {
         }
         view.logout.setOnClickListener{
             Toast.makeText(context,"로그아웃 입니다",Toast.LENGTH_SHORT).show()
-            sharedViewModel.logout(view)
+            viewmodel.logout(view)
         }
         view.cancel_button.setOnClickListener {
             dismiss()

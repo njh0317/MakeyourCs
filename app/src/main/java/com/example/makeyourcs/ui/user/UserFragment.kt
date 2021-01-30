@@ -26,8 +26,6 @@ class UserFragment : InjectionFragment(){
     lateinit var binding: FragmentUserBinding
     lateinit var viewmodel:UserViewModel
 
-    private val sharedViewModel: UserViewModel by viewModels(ownerProducer = { this })
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
