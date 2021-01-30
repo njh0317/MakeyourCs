@@ -31,8 +31,7 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
                 return true
             }
             R.id.action_search ->{
-                var searchFragment=
-                    SearchFragment()
+                var searchFragment= SearchFragment()
                 supportFragmentManager.beginTransaction().replace(R.id.main_content,searchFragment).commit()
                 return true
             }
