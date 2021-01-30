@@ -19,11 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.DetailedActivity"/>
-        <activity android:name=".ui.MainActivity">
-        </activity>
+<!--        <activity android:name=".ui.wholeFeed.StorageActivity"></activity>-->
         <activity android:name=".ui.auth.SignupActivity"/>
+        <activity android:name=".ui.DetailedActivity"/>
+        <activity android:name=".ui.MainActivity"/>
+
         <activity android:name=".ui.user.management.AccountMgtMainActivity"></activity>
         <activity android:name=".ui.user.management.NewAccountMgtActivity"></activity>
     </application>
