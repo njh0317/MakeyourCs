@@ -169,8 +169,8 @@ class FirebaseAuthSource {
     }
 
     fun deletePhoto(){ //추후 delete하는 Activity에 추가
-        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
-        Toast.makeText(this, "Delete photo completed", Toast.LENGTH_LONG).show()
+//        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
+
     }
 
 
@@ -194,6 +194,43 @@ class FirebaseAuthSource {
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
         }
+    }
+    fun setPost()
+    {
+        var posting = PostClass()
+        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
+        posting.post_account = "dmlfid1348"
+        posting.content = "희루가기시러"
+        //posting.first_pic = "../images/test.jpg"
+        posting.place_tag = "huiru"
+        try{
+            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
+        }
+        catch(e: java.lang.Exception){
+            Log.d("cannot upload", e.toString())
+        }
+
+    }
+    fun getPost(postId:Int)
+    {
+        try{
+            firestore?.collection("Post")?.document(postId.toString())?.get()?.addOnCompleteListener{task->
+                if(task.isSuccessful){
+                    val posting = PostClass()
+                    posting.postId = task.result!!["postId"].toString().toInt()
+                    posting.post_account = task.result!!["post_account"].toString()
+                    posting.content = task.result!!["content"].toString()
+                    posting.first_pic = task.result!!["first_pic"].toString()
+
+                    System.out.println(posting)
+                }
+
+            }
+        }catch(e: java.lang.Exception)
+        {
+            Log.d("cannot get", e.toString())
+        }
+
     }
 
 

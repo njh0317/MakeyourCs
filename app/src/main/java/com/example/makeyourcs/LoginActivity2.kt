@@ -46,41 +46,5 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-    fun setPost()
-    {
-        var posting = PostClass()
-        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
-        posting.post_account = "dmlfid1348"
-        posting.content = "희루가기시러"
-        //posting.first_pic = "../images/test.jpg"
-        posting.place_tag = "huiru"
-        try{
-            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
-        }
-        catch(e: Exception){
-            Log.d("cannot upload", e.toString())
-        }
 
-    }
-    fun getPost(postId:Int)
-    {
-        try{
-            firestore?.collection("Post")?.document(postId.toString())?.get()?.addOnCompleteListener{task->
-                if(task.isSuccessful){
-                    val posting = PostClass()
-                    posting.postId = task.result!!["postId"].toString().toInt()
-                    posting.post_account = task.result!!["post_account"].toString()
-                    posting.content = task.result!!["content"].toString()
-                    posting.first_pic = task.result!!["first_pic"].toString()
-
-                    System.out.println(posting)
-                }
-
-            }
-        }catch(e:Exception)
-        {
-            Log.d("cannot get", e.toString())
-        }
-
-    }
 }
