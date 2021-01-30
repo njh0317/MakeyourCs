@@ -8,7 +8,6 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
-import com.example.makeyourcs.postId
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -242,7 +241,7 @@ class   FirebaseAuthSource {
 
     fun setPhoto() {
         var posting = PostClass()
-        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
+        posting.postId = 1 //난수로 시스템에서 아이디생성
         posting.post_account = "sobinsobin"
         posting.content = "life without fxxx coding^^"
         posting.first_pic = "../images/test.jpg"
@@ -289,7 +288,7 @@ class   FirebaseAuthSource {
     fun setPost()
     {
         var posting = PostClass()
-        postId++.also { posting.postId = it } //난수로 시스템에서 아이디생성
+        posting.postId = 1//난수로 시스템에서 아이디생성
         posting.post_account = "dmlfid1348"
         posting.content = "희루가기시러"
         //posting.first_pic = "../images/test.jpg"

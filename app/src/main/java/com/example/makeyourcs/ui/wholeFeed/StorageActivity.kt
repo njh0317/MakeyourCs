@@ -6,10 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProviders
-import com.example.makeyourcs.data.PostClass
-import com.example.makeyourcs.postId
+
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_storage.*
@@ -60,7 +57,7 @@ class StorageActivity : AppCompatActivity() {
             album_imageview.setImageURI(photoUri)
 
             //TODO:repository 에 접근해서 함수 호출로 수정
-            uploadPhoto(photoUri)
+//            uploadPhoto(photoUri)
         }
     }
 }
