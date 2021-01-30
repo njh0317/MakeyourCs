@@ -86,10 +86,6 @@ class HomeViewModel(
 
     }
 
-    fun logout(view: View) {
-        repository.logout()
-        view.context.startLoginActivity()
-    }
 
     fun newAccount(view: View) {
         System.out.println("new subAccount!!")

@@ -1,5 +1,6 @@
 package com.example.makeyourcs.ui.user
 
+import android.app.Application
 import android.view.View
 import android.app.Dialog
 import android.content.Context
@@ -10,13 +11,15 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentSettingdlgBinding
 import com.example.makeyourcs.ui.user.management.AccountMgtMainActivity
 import kotlinx.android.synthetic.main.fragment_settingdlg.view.*
 
 class SettingDialogFragment: DialogFragment() {
-
+  // private var viewmodel:UserViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -51,3 +54,4 @@ class SettingDialogFragment: DialogFragment() {
         return SettingDialogFragment()
     }
 }
+

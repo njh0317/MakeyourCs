@@ -1,5 +1,6 @@
 package com.example.makeyourcs.ui.user
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.auth.AuthListener
+import com.example.makeyourcs.utils.startLoginActivity
 
 class UserViewModel(
     private val repository: AccountRepository
@@ -52,4 +54,9 @@ class UserViewModel(
         _userData = data
     }
 
+
+    fun logout(view: View) {
+        repository.logout()
+        view.context.startLoginActivity()
+    }
 }

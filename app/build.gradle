@@ -105,4 +105,8 @@ dependencies {
 
     //to use data binding annotation
     kapt "com.android.databinding:compiler:3.0.1"
+
+    //by viewmodels()
+    implementation 'androidx.activity:activity-ktx:1.1.0'
+    implementation 'androidx.fragment:fragment-ktx:1.2.5'
 }
