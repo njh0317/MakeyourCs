@@ -13,7 +13,10 @@
     <string name="signin">로그인</string>
     <string name="email">이메일</string>
 
+
     <string name="signin_complete">Login success</string>
+    <string name="signin_fail">입력된 정보가 올바르지 않습니다.</string>
+    <string name="retry">다시시도</string>
     <string name="signout">Signout</string>
     <string name="signout_success">Signout success</string>
     <string name="signout_fail">Signout fail</string>

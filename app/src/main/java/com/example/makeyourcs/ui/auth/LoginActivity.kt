@@ -2,6 +2,7 @@ package com.example.makeyourcs.ui.auth
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
@@ -51,8 +52,10 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     }
 
     override fun onFailure(message: String) {
-        Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
-        System.out.println(message)
+        var loginfailalert = AlertDialog.Builder(this)
+        loginfailalert.setMessage("입력된 정보가 올바르지 않습니다.")
+        loginfailalert.setPositiveButton("다시시도",null)
+        loginfailalert.show()
     }
 
 }

@@ -69,21 +69,6 @@ class HomeViewModel(
         repository.currentUser()
     }
 
-    fun getUserData() {
-        System.out.println("getUserData")
-        var data = repository.observeUserData()
-        System.out.println("getUserData" + data.value)
-        _userData = data
-    }
-
-
-    fun getAccountData() {
-        System.out.println("getAccountData")
-        var data = repository.observeAccountData()
-        System.out.println("getAccountData " + data.value)
-        _accountData = data
-    }
-
     fun newAccount(view: View) {
         System.out.println("new subAccount!!")
         var data = repository.observeUserData()
