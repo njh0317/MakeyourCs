@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -12,6 +15,7 @@ import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentUserBinding
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
 import com.example.makeyourcs.ui.home.InjectionFragment
+import kotlinx.android.synthetic.main.fragment_settingdlg.*
 import org.kodein.di.generic.instance
 
 
@@ -55,9 +59,9 @@ class UserFragment : InjectionFragment(){
     }
 
     private fun showDialog(){
-        val newFragment = SettingDialogFragment()
-        newFragment.show(getFragmentManager()!!, "dialog")
-
+        val dialog = SettingDialogFragment()
+        dialog.show(fragmentManager!!, "SettingDialogFragment")
     }
+
 
 }

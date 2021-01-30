@@ -1,57 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/alert_white_border"
+<layout>
 
-    android:id="@+id/more_menu"
-    android:padding="16dp"
-    android:orientation="vertical">
-
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/more_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/accountmgt"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:padding="15dp"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/editprofile"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:padding="15dp"
-        ></TextView>
+        android:layout_height="match_parent"
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/archive"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:padding="15dp"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/logout"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:padding="15dp"
-        ></TextView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        android:textSize="20dp"
-        android:textColor="@color/red"
-        android:background="@color/colorWhite"
-        android:padding="15dp"
-        android:gravity="center"
-        ></TextView>
+        android:background="@drawable/alert_white_border"
+        android:orientation="vertical"
+        android:padding="16dp">
 
+        <TextView
+            android:id="@+id/account_mgt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/accountmgt"
+            android:textSize="20dp"></TextView>
 
+        <TextView
+            android:id="@+id/profile_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/editprofile"
+            android:textSize="20dp"></TextView>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/archive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/archive"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/logout"
+            android:textSize="20dp"></TextView>
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/cancel"
+            android:textColor="@color/red"
+            android:textSize="20dp"></TextView>
+
+    </LinearLayout>
+</layout>
