@@ -4,6 +4,7 @@ import android.accounts.Account
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -36,24 +37,7 @@ class UserMgtViewModel (
     var subName = ObservableField<String>()
     var groupName = ObservableField<String>()
     var subIntroduce = ObservableField<String>()
-
-    //auth listener
     var authListener: AuthListener? = null
-
-//    init{
-////        var initlist = ArrayList<AccountMgtItem>()
-//        var data = repository.observeAccountData()
-//        var account = data.value?.iterator()
-//
-//        if(account != null){
-//            while(account.hasNext()){
-////                Log.d("account","in Account")
-//                list.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
-////                list.add(AccountMgtItem((R.drawable.profile_oval)!!, account.next().name.toString()))
-//            }
-//        }
-//        liveData.postValue(list)
-//    }
 
     val user by lazy {
         repository.currentUser()
@@ -87,23 +71,31 @@ class UserMgtViewModel (
         if(account != null){
             while(account.hasNext()){
 //                Log.d("account","in Account")
-                itemlist.add(AccountMgtItem(R.drawable.profile_oval, account.next().name.toString()))
+                var now = account.next()
+                itemlist.add(AccountMgtItem(R.drawable.profile_oval, now.name.toString(), now.group_name.toString()))
             }
         }
         return itemlist
     }
 
     fun AddNewAccount(view: View){
-        System.out.println("new subAccount!!")
+//        System.out.println("new subAccount!!")
         var data = repository.observeUserData()
         repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
         view.context.startAccountMgtMainActivity()
     }
 
+    fun DeleteAccount(view: View, delGroup: String){
+        Toast.makeText(view.context, "Cliked", Toast.LENGTH_SHORT).show()
+//        repository.delSubAccount()
+    }
 
     fun goToAddNewAccount(view: View) {
         Intent(view.context, NewAccountMgtActivity::class.java).also {
             view.context.startActivity(it)
         }
+    }
+    fun tempDelete(view: View){
+        Toast.makeText(view.context, "deleting!!!!!", Toast.LENGTH_SHORT).show()
     }
 }

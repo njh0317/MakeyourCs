@@ -35,13 +35,15 @@ class AccountMgtRecyclerAdapter(var data: ArrayList<AccountMgtItem>) :
                if(position == 0){
                    tv.text = item.name + " (본 계정)"
                }else{
-                   tv.text = item.name
+                   tv.text = item.name + " (" + item.groupname + ")"
                }
                img.setImageResource(item.image)
-//               tv.text = item.name
-//               Log.e("Img&TextSet", tv.text.toString())
            }
+
+
        }
+
+
     }
 
     // 보여줄 아이템 개수만큼 View를 생성한다 -> RecyclerView가 초기화될 때 호출된다.
