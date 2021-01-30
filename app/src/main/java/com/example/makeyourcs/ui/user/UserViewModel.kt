@@ -19,6 +19,10 @@ class UserViewModel(
     val userData: LiveData<AccountClass>
         get()= _userData
 
+    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
+    val accountData: LiveData<List<AccountClass.SubClass>>
+        get() = _accountData
+
     var email: String? = null
     var id: String? = null
     var sub_count: Int? = null
@@ -50,10 +54,16 @@ class UserViewModel(
     fun getUserData() {
         System.out.println("getUserData")
         var data = repository.observeUserData()
-        System.out.println("getUserData"+data.value)
+        System.out.println("getUserData "+data.value)
         _userData = data
     }
 
+    fun getAccountData() {
+        System.out.println("getAccountData")
+        var data = repository.observeAccountData()
+        System.out.println("getAccountData " + data.value)
+        _accountData = data
+    }
 
     fun logout(view: View) {
         repository.logout()

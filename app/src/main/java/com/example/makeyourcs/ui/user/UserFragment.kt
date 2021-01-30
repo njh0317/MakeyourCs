@@ -1,6 +1,8 @@
 package com.example.makeyourcs.ui.user
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -40,29 +43,30 @@ class UserFragment : InjectionFragment(){
         val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         binding.userRecycler.layoutManager=lmanager
 
+        //observer
         viewmodel.getUserData()
+        viewmodel.userData.observe(viewLifecycleOwner, Observer {
+            binding.profileUsername.text="@"+it.userId
+            binding.profileFollowing.text="팔로잉 "+it.following_num.toString()
+        })
 
-//        viewmodel.userData.observe(this, Observer {
-//            //binding.profileName.text
-//            binding.profileUsername = it.userId
-//            binding.subcount.text = it.sub_count.toString()
-//            binding.followingNum.text = it.following_num.toString()
-//
-//            Log.d(TAG, it.toString())
-//        })
+        viewmodel.getAccountData()
+        viewmodel.accountData.observe(viewLifecycleOwner, Observer {
+            binding.profileName.text=it[0].name
+            binding.profileIntro.text=it[0].introduction
+            binding.profileFollower.text="팔로워 " + it[0].follower_num.toString()
+        })
 
-        binding.setting.setOnClickListener { view ->
+        //setting button listener
+        binding.setting.setOnClickListener {
             showDialog()
-            //val intent = Intent(context, DetailedActivity::class.java)
-            //startActivity(intent) // start Intent
+
         }
         return view
     }
 
     private fun showDialog(){
         val dialog = SettingDialogFragment()
-        dialog.show(childFragmentManager, "SettingDialogFragment")
+        dialog.show(childFragmentManager, null)
     }
-
-
 }

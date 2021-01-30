@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="한은주"
+                android:text="(name)"
                 android:textSize="30sp"></TextView>
 
             <TextView
@@ -63,23 +63,42 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="\@ujjnue"
+                android:text="(username)"
                 android:textSize="20sp"></TextView>
 
-            <TextView
-                android:id="@+id/profile_follow"
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="팔로워 255명 팔로잉 216"
-                android:textSize="15sp"></TextView>
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/profile_follower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="(follower)"
+                    android:textSize="15sp"
+                    android:paddingRight="5dp"
+                    ></TextView>
+                <TextView
+                    android:id="@+id/profile_following"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="(following)"
+                    android:paddingLeft="5dp"
+                    android:textSize="15sp"></TextView>
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/profile_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="KNU CSE"
+                android:text="(introduction)"
                 android:textSize="20sp"></TextView>
         </LinearLayout>
 
