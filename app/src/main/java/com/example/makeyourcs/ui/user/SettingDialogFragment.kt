@@ -13,17 +13,23 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentSettingdlgBinding
+import com.example.makeyourcs.ui.home.InjectionFragment
 import com.example.makeyourcs.ui.user.management.AccountMgtMainActivity
+import com.squareup.okhttp.internal.Internal.instance
 import kotlinx.android.synthetic.main.fragment_settingdlg.view.*
+import org.kodein.di.generic.instance
 
 class SettingDialogFragment: DialogFragment() {
-  // private var viewmodel:UserViewModel by viewModels()
+
+    private val sharedViewModel: UserViewModel by viewModels(ownerProducer = { requireParentFragment() })
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val view = inflater.inflate(R.layout.fragment_settingdlg, container, false)
+
         isCancelable=true
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         //dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
@@ -42,6 +48,7 @@ class SettingDialogFragment: DialogFragment() {
         }
         view.logout.setOnClickListener{
             Toast.makeText(context,"로그아웃 입니다",Toast.LENGTH_SHORT).show()
+            sharedViewModel.logout(view)
         }
         view.cancel_button.setOnClickListener {
             dismiss()

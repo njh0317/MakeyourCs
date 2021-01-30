@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -24,6 +25,8 @@ class UserFragment : InjectionFragment(){
     private val factory : UserViewModelFactory by instance()
     lateinit var binding: FragmentUserBinding
     lateinit var viewmodel:UserViewModel
+
+    private val sharedViewModel: UserViewModel by viewModels(ownerProducer = { this })
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -60,7 +63,7 @@ class UserFragment : InjectionFragment(){
 
     private fun showDialog(){
         val dialog = SettingDialogFragment()
-        dialog.show(fragmentManager!!, "SettingDialogFragment")
+        dialog.show(childFragmentManager, "SettingDialogFragment")
     }
 
 
