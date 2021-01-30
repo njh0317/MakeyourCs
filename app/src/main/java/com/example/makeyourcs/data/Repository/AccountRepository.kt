@@ -2,6 +2,7 @@ package com.example.makeyourcs.data.Repository
 
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 
 class AccountRepository(

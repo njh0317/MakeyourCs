@@ -120,9 +120,9 @@ class AuthViewModel(
         account.pw = password.get().toString()
         account.email = email.get().toString()
         account.userId = id.get().toString()
-        account.year = year
-        account.month = month
-        account.day = day
+//        account.year = year
+//        account.month = month
+//        account.day = day
 
         System.out.println(account)
         val disposable = repository.register(account)

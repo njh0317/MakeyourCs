@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import io.reactivex.Completable
+import kotlinx.android.synthetic.main.activity_storage.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -81,6 +82,35 @@ class FirebaseAuthSource {
         // [END delete_user]
     }
 
+    fun observeUserData() {
+        System.out.println("observeUserData")
+        System.out.println("observeUserData2: " + currentUser()!!.email)
+
+        try {
+            firestore.collection("Account").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                for (doc in value!!) {
+                    doc?.let {
+                        val data = it?.toObject(AccountClass::class.java)
+                        System.out.println(data)
+                        userDataLiveData.postValue(data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+
+
+
+
+
+
+    //TODO:게시글 파트
     fun uploadPhoto(photoUri: Uri) {
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
@@ -114,28 +144,6 @@ class FirebaseAuthSource {
 
     }
 
-    fun observeUserData() {
-        System.out.println("observeUserData")
-        System.out.println("observeUserData2: " + currentUser()!!.email)
-
-        try {
-            firestore.collection("Account").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-                for (doc in value!!) {
-                    doc?.let {
-                        val data = it?.toObject(AccountClass::class.java)
-                        System.out.println(data)
-                        userDataLiveData.postValue(data)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user data", e)
-        }
-    }
 
     fun observePostData() {
         System.out.println("observePostData")
@@ -158,6 +166,11 @@ class FirebaseAuthSource {
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
         }
+    }
+
+    fun deletePhoto(){ //추후 delete하는 Activity에 추가
+        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
+        Toast.makeText(this, "Delete photo completed", Toast.LENGTH_LONG).show()
     }
 
 

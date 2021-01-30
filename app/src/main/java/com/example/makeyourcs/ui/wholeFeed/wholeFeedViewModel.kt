@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_storage.*
 class wholeFeedViewModel (private val repository: PostRepository): ViewModel() {
     var img = ObservableField<Uri>()
 
-    var post by lazy{
+    val post by lazy{
         repository.currentUser()
     }
     fun showImg(){
