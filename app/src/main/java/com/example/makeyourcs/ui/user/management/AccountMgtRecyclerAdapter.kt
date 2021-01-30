@@ -19,6 +19,7 @@ class AccountMgtRecyclerAdapter(var data: ArrayList<AccountMgtItem>) :
     ){
         var img = itemView.acc_image
         var tv = itemView.acc_name
+
     }
 
     // 보여줄 아이템 개수가 몇 개인지
@@ -38,11 +39,9 @@ class AccountMgtRecyclerAdapter(var data: ArrayList<AccountMgtItem>) :
                    tv.text = item.name + " (" + item.groupname + ")"
                }
                img.setImageResource(item.image)
+
            }
-
-
        }
-
 
     }
 
