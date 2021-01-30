@@ -7,7 +7,7 @@ import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import com.google.firebase.storage.FirebaseStorage
 
 class PostRepository (
-    private val firestore: FirebaseAuthSource, private val firebaseStorage: FirebaseStorage
+    private val firestore: FirebaseAuthSource
 ) {
 
     fun setPhoto() = firestore.setPhoto()

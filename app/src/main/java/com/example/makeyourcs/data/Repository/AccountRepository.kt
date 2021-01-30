@@ -21,4 +21,12 @@ class AccountRepository(
         var data = firestore.userDataLiveData
         return data
     }
+
+    fun observePostData(): MutableLiveData<PostClass>
+    {
+        firestore.observePostData()
+        var data = firestore.postDataLiveData
+        return data
+    }
+
 }

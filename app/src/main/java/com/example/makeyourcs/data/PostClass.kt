@@ -9,7 +9,8 @@ data class PostClass(var postId: Int? = 0,
                      var first_pic:String? = null,
                      var is_stored:Boolean? = false,
                      var place_tag:String? = null,
-                     var post_data:String? = null) {
+                     var post_data:String? = null)
+{
     data class PictureClass(var order:Int? = 0,
                             var picture_url:String? = null){
         data class TagClass(var tagged_id:String? = null,

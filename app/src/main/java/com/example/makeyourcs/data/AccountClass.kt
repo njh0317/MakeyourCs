@@ -4,11 +4,7 @@ data class AccountClass(var userId:String? = null,
                         var email:String? = null,
                         var pw:String? = null,
                         var sub_count:Int? = 0,
-                        var following_num:Int? = 0,
-                        var year:Int? = 2021,
-                        var month:Int? = 1,
-                        var day:Int? = 1)
-{
+                        var following_num:Int? = 0) {
     data class SubClass(var sub_num:Int? = 0,
                         var name:String? = null,
                         var introduction:String? = null,

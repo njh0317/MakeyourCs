@@ -67,9 +67,9 @@ class StorageActivity : AppCompatActivity() {
         //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
         var storageRef = FirebaseStorage.getInstance().reference.child("images").child(fileName)
         var tmpid = 1;
-        var firestore = FirebaseFirestore.getInstance().collection("Post")?.document(tmpid.toString())?.update(
+        var firestore = FirebaseFirestore.getInstance().collection("Post")?.document(tmpid.toString())?.collection("pictureClass").document(tmpid.toString())?update(
             mapOf(
-                "picture_url" to storageRef.toString()
+                "pictureUri" to photoUri.toString()
             )
         );
 
