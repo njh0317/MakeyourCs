@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="accountItem"
+            type="com.example.makeyourcs.ui.user.management.AccountMgtItem" />
+
+        <variable
+            name="viewmodel"
+            type="com.example.makeyourcs.ui.user.management.UserMgtViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/background_accountmgt_item"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:onClick="@{accountItem::onClickListener}">
+
+        <ImageView
+            android:id="@+id/acc_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="10dp"
+            app:imageDrawable="@{accountItem.image}"/>
+
+        <TextView
+            android:id="@+id/acc_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{accountItem.name}"
+            android:textColor="@color/black"
+            android:textSize="19sp" />
+
+    </LinearLayout>
+
+</layout>

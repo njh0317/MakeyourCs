@@ -30,6 +30,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         viewModel.authListener = this
 
 
+
     }
 
     override fun onStarted() {//대기상태, 로그인시 로딩 같은거 넣으면 됨..!!
@@ -54,48 +55,4 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         System.out.println(message)
     }
 
-//    fun readAccount(id:String)
-//    {
-//
-//        try{
-//            firestore?.collection("Account")?.document(id)?.get()?.addOnCompleteListener{task->
-//                if(task.isSuccessful){
-//                    val account = AccountClass()
-//                    account.email = task.result!!["email"].toString()
-//                    account.pw = task.result!!["pw"].toString()
-//                    account.userId = task.result!!["userId"].toString()
-//                    account.following_num=task.result!!["following_num"].toString().toInt()
-//                    account.sub_count = task.result!!["sub_count"].toString().toInt()
-//
-//                    System.out.println(account)
-//                }
-//
-//            }
-//        }catch(e:Exception)
-//        {
-//
-//        }
-//
-//    }
-//    fun makeAccount(id:String, pw:String)
-//    {
-//
-//        val account = AccountClass()
-//        account.email = id+"@gmail.com"
-//        account.pw = pw
-//        account.userId = id
-//
-//        try {
-//            firestore?.collection("Account")?.document(account.userId!!)?.set(account)
-//        } catch(e:Exception)
-//        {
-//            Log.d("Errortag", e.toString())
-//
-//        }
-//
-//    }
-//    fun login(id:String, pw:String)
-//    {
-//
-//    }
 }

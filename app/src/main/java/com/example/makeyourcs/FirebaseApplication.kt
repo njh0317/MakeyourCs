@@ -6,7 +6,7 @@ import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import com.example.makeyourcs.ui.auth.AuthViewModelFactory
 import com.example.makeyourcs.ui.home.HomeViewModelFactory
 import com.example.makeyourcs.ui.user.UserViewModelFactory
-
+import com.example.makeyourcs.ui.user.management.UserMgtViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -25,5 +25,6 @@ class FirebaseApplication : Application(), KodeinAware{
         bind<AuthViewModelFactory>() with provider { AuthViewModelFactory(instance()) }
         bind<HomeViewModelFactory>() with provider { HomeViewModelFactory(instance())}
         bind<UserViewModelFactory>() with provider {UserViewModelFactory(instance())}
+        bind<UserMgtViewModelFactory>() with provider { UserMgtViewModelFactory(instance())}
     }
 }
