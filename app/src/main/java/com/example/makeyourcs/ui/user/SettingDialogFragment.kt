@@ -3,6 +3,7 @@ package com.example.makeyourcs.ui.user
 import android.view.View
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentSettingdlgBinding
+import com.example.makeyourcs.ui.user.management.AccountMgtMainActivity
 import kotlinx.android.synthetic.main.fragment_settingdlg.view.*
 
 class SettingDialogFragment: DialogFragment() {
@@ -26,6 +28,8 @@ class SettingDialogFragment: DialogFragment() {
 
         view.account_mgt.setOnClickListener{
             Toast.makeText(context,"계정관리 입니다",Toast.LENGTH_SHORT).show()
+            val intent = Intent(context, AccountMgtMainActivity::class.java)
+            startActivity(intent) // start Intent
         }
         view.profile_edit.setOnClickListener{
             Toast.makeText(context,"프로필 편집 입니다",Toast.LENGTH_SHORT).show()
