@@ -7,9 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.makeyourcs.R
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
@@ -19,7 +17,7 @@ import com.example.makeyourcs.utils.startAccountMgtMainActivity
 
 class UserMgtViewModel (
     private val repository: AccountRepository
-): ViewModel(){
+): ViewModel() {
     val TAG = "HOMEVIEWMODEL"
     private var _userData = MutableLiveData<AccountClass>()
     val userData: LiveData<AccountClass>
@@ -110,4 +108,6 @@ class UserMgtViewModel (
     fun tempDelete(view: View){
         Toast.makeText(view.context, "deleting!!!!!", Toast.LENGTH_SHORT).show()
     }
+
+
 }
