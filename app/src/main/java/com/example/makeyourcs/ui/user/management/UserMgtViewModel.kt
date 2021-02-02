@@ -78,9 +78,11 @@ class UserMgtViewModel (
         return itemlist
     }
 
+
     fun AddNewAccount(view: View){
 //        System.out.println("new subAccount!!")
         var data = repository.observeUserData()
+
         repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
         view.context.startAccountMgtMainActivity()
     }
@@ -91,8 +93,13 @@ class UserMgtViewModel (
     }
 
     fun goToAddNewAccount(view: View) {
-        Intent(view.context, NewAccountMgtActivity::class.java).also {
-            view.context.startActivity(it)
+        var data = repository.observeUserData()
+        if(data.value?.sub_count == 3){
+            Toast.makeText(view.context, "부캐는 최대 3개까지 생성할 수 있습니다.", Toast.LENGTH_SHORT).show()
+        }else{
+            Intent(view.context, NewAccountMgtActivity::class.java).also {
+                view.context.startActivity(it)
+            }
         }
     }
     fun tempDelete(view: View){

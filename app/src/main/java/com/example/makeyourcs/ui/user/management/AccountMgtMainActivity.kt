@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -24,13 +25,24 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account_mgt_main)
+//        setContentView(R.layout.activity_account_mgt_main)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_account_mgt_main)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
         binding.viewmodel = viewModel
 
-        viewModel.getAccountList().observe(this, Observer{
-//            Log.d("GETACCOUNTLIST", "change!!")
+//        viewModel.getAccountList().observe(this, Observer{
+////            Log.d("GETACCOUNTLIST", "change!!")
+//            var newAdapter = AccountMgtRecyclerAdapter(viewModel.getItemList())
+//            newAdapter.setItemClickListener(object: AccountMgtRecyclerAdapter.ItemClickListener{
+//                override fun onClick(view: View, position: Int) {
+//                    Log.d("accmgtMainActivity", "${position}번 리스트 선택")
+//                }
+//            })
+//            binding.accountRecyclerView.adapter = newAdapter
+//        })
+
+        viewModel.getAccountList().observe(this, Observer {
+//            Log.d("GetItemList", "change!!")
             var newAdapter = AccountMgtRecyclerAdapter(viewModel.getItemList())
             binding.accountRecyclerView.adapter = newAdapter
         })

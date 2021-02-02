@@ -7,10 +7,6 @@
             name="accountItem"
             type="com.example.makeyourcs.ui.user.management.AccountMgtItem" />
 
-        <variable
-            name="viewmodel"
-            type="com.example.makeyourcs.ui.user.management.UserMgtViewModel" />
-
     </data>
 
     <LinearLayout
@@ -19,8 +15,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/background_accountmgt_item"
         android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        android:onClick="@{accountItem::onClickListener}">
+        tools:ignore="MissingConstraints">
 
         <ImageView
             android:id="@+id/acc_image"
