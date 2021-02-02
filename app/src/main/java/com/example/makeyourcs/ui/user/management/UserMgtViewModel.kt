@@ -1,6 +1,7 @@
 package com.example.makeyourcs.ui.user.management
 
 import android.accounts.Account
+import android.app.AlertDialog
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -95,7 +96,11 @@ class UserMgtViewModel (
     fun goToAddNewAccount(view: View) {
         var data = repository.observeUserData()
         if(data.value?.sub_count == 3){
-            Toast.makeText(view.context, "부캐는 최대 3개까지 생성할 수 있습니다.", Toast.LENGTH_SHORT).show()
+            val informSubCount = AlertDialog.Builder(view.context)
+            informSubCount.setMessage("부캐는 최대 3개까지 생성할 수 있습니다.")
+            informSubCount.setPositiveButton("확인", null)
+            informSubCount.show()
+//            Toast.makeText(view.context, "부캐는 최대 3개까지 생성할 수 있습니다.", Toast.LENGTH_SHORT).show()
         }else{
             Intent(view.context, NewAccountMgtActivity::class.java).also {
                 view.context.startActivity(it)
