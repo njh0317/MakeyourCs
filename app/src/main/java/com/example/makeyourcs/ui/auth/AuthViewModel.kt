@@ -2,6 +2,7 @@ package com.example.makeyourcs.ui.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -127,6 +128,7 @@ class AuthViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+
                 authListener?.onSuccess()
             }, {
                 authListener?.onFailure(it.message!!)
@@ -163,5 +165,6 @@ class AuthViewModel(
         super.onCleared()
         disposables.dispose()
     }
+
 
 }

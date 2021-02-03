@@ -1,22 +1,24 @@
 package com.example.makeyourcs.data.firebase
 
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
 import io.reactivex.Completable
 import java.lang.Boolean.FALSE
-import java.time.LocalDate
-import java.time.LocalDate.now
+import java.lang.Boolean.TRUE
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
@@ -29,6 +31,9 @@ class   FirebaseAuthSource {
     private val firestore: FirebaseFirestore by lazy{
         FirebaseFirestore.getInstance()
     }
+    private val firestorage: FirebaseStorage by lazy{
+        FirebaseStorage.getInstance()
+    }
 
 
     fun login(email: String, password: String) = Completable.create { emitter ->
@@ -36,7 +41,6 @@ class   FirebaseAuthSource {
         firebaseAuth.signInWithEmailAndPassword(email!!, password).addOnCompleteListener {
             if (!emitter.isDisposed) {
                 if (it.isSuccessful) {
-//                    System.out.println("login : " + firebaseAuth.currentUser?.email)
                     emitter.onComplete()
                     userIdbyEmail()
                 }
@@ -120,13 +124,17 @@ class   FirebaseAuthSource {
         }
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl:String) { //TODO: 사진 url :default
+    fun setOriginAccount(name:String, introduction:String, imageurl:Uri) { //TODO: 사진 url :default
         val OriginAccount = AccountClass.SubClass()
         OriginAccount.name = name
         OriginAccount.introduction = introduction
         OriginAccount.sub_num = 0
-        OriginAccount.group_name = "default"
-        OriginAccount.profile_pic_url = imageurl
+        OriginAccount.group_name = "본 계정"
+        OriginAccount.profile_pic_url = "default"
+
+        if(imageurl.toString() != "default"){
+            OriginAccount.profile_pic_url = uploadprofile(imageurl).toString()
+        }
 
 
         firestore.collection("Account")
@@ -244,6 +252,7 @@ class   FirebaseAuthSource {
 
     fun observefollowerWaitList()
     {
+        var followerwaitlist : ArrayList<AccountClass.Follower_wait_list> = arrayListOf()
         try {
             firestore.collection("Account")
                 .document(currentUser()!!.email.toString())
@@ -256,55 +265,137 @@ class   FirebaseAuthSource {
                     for (doc in value!!) {
                         doc?.let {
                             val data = it?.toObject(AccountClass.Follower_wait_list::class.java)
-                            System.out.println(data)
-                            followerWaitlistLiveData.postValue(listOf(data))
+                            followerwaitlist.add(data)
+
                         }
                     }
+                    followerWaitlistLiveData.postValue(followerwaitlist)
                 }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting follower wait list", e)
         }
 
     }
+    fun make_map(group_name_list:List<String>): HashMap<String, Boolean> {
+        val hashMap:HashMap<String,Boolean> = HashMap<String, Boolean>() //define empty hashmap
+
+        for(group in group_name_list)
+        {
+            hashMap.put(group, TRUE)
+        }
+        return hashMap
+    }
+    fun notacceptfollow(fromEmail:String)
+    {
+        val toAccount_waitlist = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("Follower_wait_list")
+            .document(fromEmail)
+
+        val fromAccount = firestore.collection("Account")
+            .document(fromEmail)
+            .collection("Follow")
+            .document(currentUser()!!.email.toString())
+
+        firestore.runTransaction { transaction ->
+            transaction.delete(toAccount_waitlist) // waitlist 에서 삭제
+            transaction.delete(fromAccount)
+        }
+            .addOnSuccessListener { Log.d(TAG, "accept follow Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+
+    }
     fun acceptfollow(fromEmail:String, group_name_list:List<String>)
     {
-//        val fromAccount = firestore.collection("Account")
-//            .document(fromEmail)
-//            .collection("Follow")
-//            .document(currentUser()!!.email.toString())
-//        val toAccount_waitlist = firestore.collection("Account")
-//            .document(currentUser()!!.email.toString())
-//            .collection("Follower_wait_list")
-//            .document(fromEmail)
-//        var toAccount_default = firestore.collection("Account")
-//            .document(currentUser()!!.email.toString())
-//            .collection("SubAccount")
-//            .document("default")
-//
-//        firestore.runTransaction { transaction ->
-//            transaction.delete(toAccount_waitlist) // waitlist 에서 삭제
-//            var default_sub_account = transaction.get(toAccount_default).toObject(AccountClass.SubClass::class.java)
-//            default_sub_account?.follower_num = default_sub_account?.follower_num
-//            default_sub_account?.follower[fromEmail] = true
-//            //follwer_list 에 추가 해야함
-//            transaction.update(toAccount_default, "follower_num", newfollower_num)
-//            for (group_name in group_name_list){
-//                var toAccount = firestore.collection("Account")
-//                    .document(currentUser()!!.email.toString())
-//                    .collection("SubAccount")
-//                    .document(group_name)
-//                snapshot = transaction.get(toAccount)
-//                newfollower_num = Integer.parseInt(snapshot.get("follower_num")!!.toString()) + 1
-//                transaction.update(toAccount, "follower_num", newfollower_num)
-//
-//            }
-//
-//        }
-//            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
-//            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+        val hashmap = make_map(group_name_list)
+        val toAccount_waitlist = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("Follower_wait_list")
+            .document(fromEmail)
+
+        val fromAccount = firestore.collection("Account")
+            .document(fromEmail)
+            .collection("Follow")
+            .document(currentUser()!!.email.toString())
+
+        val follower_list : ArrayList<AccountClass.SubClass> = arrayListOf()
+        firestore.runTransaction { transaction ->
+            for (group_name in group_name_list){
+                var toAccount = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                val snapshot = transaction.get(toAccount)
+                val data = snapshot?.toObject(AccountClass.SubClass::class.java)
+                if (data != null) {
+                    follower_list.add(data)
+                }
+            }
+            transaction.delete(toAccount_waitlist) // waitlist 에서 삭제
+            transaction.update(fromAccount, "to_account_sub", hashmap)
+
+            var check_num = 0
+            for (group_name in group_name_list){
+                val toAccount = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                follower_list[check_num].follower.put(fromEmail, true)
+                follower_list[check_num].follower_num = follower_list[check_num].follower_num?.plus(
+                    1
+                )
+                transaction.set(toAccount, follower_list[check_num])
+                check_num += 1
+            }
+        }
+            .addOnSuccessListener { Log.d(TAG, "accept follow Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
 
     }
 
+
+    fun modifiedprofile(group_name:String, name:String, introduction:String, imageurl:String)
+    {
+        val DocRef = firestore
+            .collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("SubAccount")
+            .document(group_name)
+
+        firestore.runTransaction { transaction ->
+            transaction.update(DocRef, "introduction", introduction)
+            transaction.update(DocRef, "name", name)
+            transaction.update(DocRef, "profile_pic_url", imageurl)
+            // Success
+            null
+        }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+
+    fun uploadprofile(filepath:Uri):Uri? {
+        var downloadUri: Uri? = null
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
+        var storageRef = firestorage.reference.child("profile/" + fileName)
+        var uploadTask = storageRef.putFile(filepath)
+        val urlTask = uploadTask.continueWithTask { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            storageRef.downloadUrl
+        }.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                downloadUri = task.result
+            } else {
+                Log.w(TAG, "uploadprofile failure")
+            }
+        }
+        return downloadUri
+    }
 
 }

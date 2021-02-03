@@ -1,5 +1,6 @@
 package com.example.makeyourcs.data.Repository
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -24,7 +25,7 @@ class AccountRepository(
         return data
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl:String) //본캐 정보 저장
+    fun setOriginAccount(name:String, introduction:String, imageurl: Uri) //본캐 정보 저장
         = firestore.setOriginAccount(name, introduction, imageurl)
 
     fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부캐 정보 저장
@@ -37,7 +38,6 @@ class AccountRepository(
     {
         firestore.observeAccountData()
         var data = firestore.accountDataLiveData
-//        System.out.println("repository : "+data.value)
         return data
     }
 
@@ -51,4 +51,14 @@ class AccountRepository(
         var data = firestore.followerWaitlistLiveData
         return data
     }
+
+    fun modifiedprofile(group_name:String, name:String, introduction:String, imageurl:String) //프로필 수정
+        =firestore.modifiedprofile(group_name, name, introduction, imageurl)
+
+    fun acceptfollow(fromEmail:String, group_name_list:List<String>) //팔로우 신청 수락 (fromEmail로 부터 온 팔로우 신청, group_name_list 를 보여주기로 선택)
+        =firestore.acceptfollow(fromEmail, group_name_list)
+
+    fun notacceptfollow(fromEmail:String) //팔로우 신청 거절, follow waitlist 로부터 삭제
+        =firestore.notacceptfollow(fromEmail)
+
 }
