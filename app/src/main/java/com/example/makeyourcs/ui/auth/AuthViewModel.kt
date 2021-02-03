@@ -2,6 +2,7 @@ package com.example.makeyourcs.ui.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.View
@@ -58,6 +59,7 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+                repository.imageurl("IMAGE_20210203_220411_.png")
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
@@ -83,8 +85,12 @@ class AuthViewModel(
     fun removebday(){
         birthday.set("")
     }
-
+    fun setimage(uri :Uri)
+    {
+        repository.uploadprofile(uri)
+    }
     //Doing same thing with signup
+
     fun signup() {
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()|| checkpassword.get().isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
@@ -167,6 +173,5 @@ class AuthViewModel(
         super.onCleared()
         disposables.dispose()
     }
-
 
 }

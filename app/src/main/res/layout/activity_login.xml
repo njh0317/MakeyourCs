@@ -81,6 +81,15 @@
                 android:text="@string/signup"
                 android:onClick="@{(v) -> viewmodel.goToSignup(v)}"
                 ></Button>
+            <Button
+                android:id="@+id/photo_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:text="사진 선택"
+                ></Button>
         </LinearLayout>
 
     </RelativeLayout>

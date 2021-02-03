@@ -73,4 +73,16 @@ class AccountRepository(
     fun notacceptfollow(fromEmail:String) //팔로우 신청 거절, follow waitlist 로부터 삭제
         =firestore.notacceptfollow(fromEmail)
 
+    fun uploadprofile(filepath:Uri)
+    {
+        var data = firestore.uploadprofile(filepath)
+        System.out.println("url : "+ data.toString())
+    }
+
+    fun imageurl(imagename: String)
+    {
+        firestore.imageurl(imagename)
+        System.out.println("imageurl : "+ firestore.profileimageurl)
+    }
+
 }

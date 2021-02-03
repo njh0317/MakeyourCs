@@ -37,6 +37,7 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
                 return true
             }
             R.id.action_add_photo ->{
+
                 return true
             }
             R.id.action_favorite_alarm ->{

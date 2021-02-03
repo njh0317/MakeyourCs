@@ -17,7 +17,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.kcontext
 import org.kodein.di.android.x.kodein
-import org.kodein.di.generic.kcontext
+
 
 
 abstract class InjectionFragment : Fragment(), KodeinAware {
@@ -52,4 +52,9 @@ class HomeFragment : InjectionFragment(){
 
         return view
     }
+
+
+
+
+
 }
