@@ -9,10 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.AccountlistItemBinding
+import com.example.makeyourcs.generated.callback.OnClickListener
 import com.example.makeyourcs.ui.DetailedActivity
 import kotlinx.android.synthetic.main.accountlist_item.view.*
 
-class AccountMgtRecyclerAdapter(private val data: ArrayList<AccountMgtItem>) :
+class AccountMgtRecyclerAdapter(
+    private val data: ArrayList<AccountMgtItem>,
+    private val listener: OnItemClickListener
+) :
     RecyclerView.Adapter<AccountMgtRecyclerAdapter.MyViewHolder>(){
 
 //    inner class MyViewHolder constructor(parent: ViewGroup) : RecyclerView.ViewHolder(
@@ -21,9 +25,25 @@ class AccountMgtRecyclerAdapter(private val data: ArrayList<AccountMgtItem>) :
 //        var img = itemView.acc_image
 //        var tv = itemView.acc_name
 //    }
-    class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
+    View.OnClickListener{
         val img = itemView.acc_image
         var tv = itemView.acc_name
+
+        init{
+            itemView.setOnClickListener { this }
+        }
+
+        override fun onClick(v: View?) {
+            val position = adapterPosition
+            if(position != RecyclerView.NO_POSITION){
+                listener.onItemClick(position)
+            }
+        }
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(position: Int)
     }
 
     // 보여줄 아이템 개수가 몇 개인지
