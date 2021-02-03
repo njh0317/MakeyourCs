@@ -2,9 +2,11 @@ package com.example.makeyourcs.ui.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.ObservableField
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -40,6 +42,7 @@ class AuthViewModel(
     }
 
     //function to perform login
+    @RequiresApi(Build.VERSION_CODES.O)
     fun login() {
         //validating email and password
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()) {
@@ -128,7 +131,6 @@ class AuthViewModel(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-
                 authListener?.onSuccess()
             }, {
                 authListener?.onFailure(it.message!!)

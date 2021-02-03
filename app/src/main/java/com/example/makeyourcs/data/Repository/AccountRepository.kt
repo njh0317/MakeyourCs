@@ -25,7 +25,7 @@ class AccountRepository(
         return data
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl: Uri) //본캐 정보 저장
+    fun setOriginAccount(name:String, introduction:String, imageurl: String) //본캐 정보 저장
         = firestore.setOriginAccount(name, introduction, imageurl)
 
     fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부캐 정보 저장

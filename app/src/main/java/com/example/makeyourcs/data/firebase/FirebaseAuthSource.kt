@@ -127,7 +127,7 @@ class   FirebaseAuthSource {
         }
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl:Uri) { //TODO: 사진 url :default
+    fun setOriginAccount(name:String, introduction:String, imageurl:String) { //TODO: 사진 url :default
         val OriginAccount = AccountClass.SubClass()
         OriginAccount.name = name
         OriginAccount.introduction = introduction
@@ -135,9 +135,9 @@ class   FirebaseAuthSource {
         OriginAccount.group_name = "본 계정"
         OriginAccount.profile_pic_url = "default"
 
-        if(imageurl.toString() != "default"){
-            OriginAccount.profile_pic_url = uploadprofile(imageurl).toString()
-        }
+//        if(imageurl.toString() != "default"){
+//            OriginAccount.profile_pic_url = uploadprofile(imageurl).toString()
+//        }
 
 
         firestore.collection("Account")
