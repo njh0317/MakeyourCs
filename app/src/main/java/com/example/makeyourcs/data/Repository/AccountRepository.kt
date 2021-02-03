@@ -46,7 +46,7 @@ class AccountRepository(
         var data = firestore.accountDataLiveData
         return data
     }
-    fun observefollowList():MutableLiveData<List<AccountClass.FollowClass>>
+    fun observefollowList():MutableLiveData<List<AccountClass.FollowClass>> //followlist 추가
     {
         firestore.observefollowList()
         var data = firestore.followlistLiveData
