@@ -46,6 +46,12 @@ class AccountRepository(
         var data = firestore.accountDataLiveData
         return data
     }
+    fun observefollowList():MutableLiveData<List<AccountClass.FollowClass>>
+    {
+        firestore.observefollowList()
+        var data = firestore.followlistLiveData
+        return data
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun follow(toEmail:String) //follow 신청시 상대 Account 의 FollowWaitList 에 들어가게 되는 함수 호출시 Requires API 선언해야함

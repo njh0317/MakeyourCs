@@ -26,7 +26,8 @@ class   FirebaseAuthSource {
     val accountsDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
     val accountDataLiveData = MutableLiveData<AccountClass.SubClass>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
-    val followerlistLiveData = MutableLiveData<List<AccountClass.SubClass>>()
+    val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -302,6 +303,32 @@ class   FirebaseAuthSource {
         }
 
     }
+    fun observefollowList()
+    {
+        var followlist : ArrayList<AccountClass.FollowClass> = arrayListOf()
+        try {
+            firestore.collection("Account")
+                .document(currentUser()!!.email.toString())
+                .collection("Follow")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountClass.FollowClass::class.java)
+                            followlist.add(data)
+
+                        }
+                    }
+                    followlistLiveData.postValue(followlist)
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
+        }
+
+    }
     fun make_map(group_name_list:List<String>): HashMap<String, Boolean> {
         val hashMap:HashMap<String,Boolean> = HashMap<String, Boolean>() //define empty hashmap
 
@@ -380,6 +407,7 @@ class   FirebaseAuthSource {
 
 
     }
+
 
     fun modifiedprofile(group_name:String, name:String, introduction:String, imageurl:String)
     {
