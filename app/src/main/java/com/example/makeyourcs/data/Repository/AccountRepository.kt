@@ -34,9 +34,15 @@ class AccountRepository(
     fun delSubAccount(group_name:String) //부캐 정보 삭제
             = firestore.delSubAccount(group_name)
 
-    fun observeAccountData(): MutableLiveData<List<AccountClass.SubClass>> // 계정 정보 가져오기
+    fun observeAccountData(): MutableLiveData<List<AccountClass.SubClass>> // 모든 계정 정보 가져오기
     {
-        firestore.observeAccountData()
+        firestore.observeAccountsData()
+        var data = firestore.accountsDataLiveData
+        return data
+    }
+    fun observeoneAccountData(group_name: String) : MutableLiveData<AccountClass.SubClass> //group_name 에 해당하는 부캐 계정 정보
+    {
+        firestore.observeoneAccountData(group_name)
         var data = firestore.accountDataLiveData
         return data
     }
@@ -47,7 +53,7 @@ class AccountRepository(
 
     fun observefollowerWaitList(): MutableLiveData<List<AccountClass.Follower_wait_list>> // 나에게 온 팔로워 신청 대기 리스트
     {
-        firestore.observeAccountData()
+        firestore.observefollowerWaitList()
         var data = firestore.followerWaitlistLiveData
         return data
     }

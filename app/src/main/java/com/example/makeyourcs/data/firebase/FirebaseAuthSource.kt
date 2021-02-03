@@ -23,8 +23,10 @@ import kotlin.collections.HashMap
 class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
-    val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
+    val accountsDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
+    val accountDataLiveData = MutableLiveData<AccountClass.SubClass>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
+    val followerlistLiveData = MutableLiveData<List<AccountClass.SubClass>>()
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -194,8 +196,32 @@ class   FirebaseAuthSource {
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
     }
+    fun observeoneAccountData(group_name: String)
+    {
+        try{
+            firestore.collection("Account")
+                .document(currentUser()!!.email.toString())
+                .collection("SubAccount")
+                .document(group_name)
+                .addSnapshotListener{value, e ->
+                    if(e!=null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    value?.let{
+                        val data = it?.toObject(AccountClass.SubClass::class.java)
+                        accountDataLiveData.postValue(data)
+                    }
 
-    fun observeAccountData() {
+                }
+        }catch(e: Exception)
+        {
+            Log.e(TAG, "Error getting one account data", e)
+        }
+
+    }
+    fun observeAccountsData() {
         var subaccountlist : ArrayList<AccountClass.SubClass> = arrayListOf()
         try {
             firestore.collection("Account")
@@ -214,7 +240,7 @@ class   FirebaseAuthSource {
                         subaccountlist.add(data)
                     }
                 }
-                    accountDataLiveData.postValue(subaccountlist)
+                    accountsDataLiveData.postValue(subaccountlist)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
@@ -355,7 +381,6 @@ class   FirebaseAuthSource {
 
     }
 
-
     fun modifiedprofile(group_name:String, name:String, introduction:String, imageurl:String)
     {
         val DocRef = firestore
@@ -397,5 +422,6 @@ class   FirebaseAuthSource {
         }
         return downloadUri
     }
+
 
 }
