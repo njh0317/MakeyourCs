@@ -476,6 +476,4 @@ class   FirebaseAuthSource {
             }
         }
     }
-
-
 }
