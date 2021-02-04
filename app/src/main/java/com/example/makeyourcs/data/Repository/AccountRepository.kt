@@ -67,12 +67,12 @@ class AccountRepository(
     //    val now: Long = System.currentTimeMillis()
     //    val date = Date(now)
 
-    fun observeyourpostpergroup(group_name: String, toEmail: String, option:Int):MutableLiveData<List<AccountPostClass.PostIdClass>>
+    fun observepostpergroup(group_name: String, toEmail: String, option:Int):MutableLiveData<List<AccountPostClass.PostIdClass>>
     //선택된 group 에 해당하는 post 리스트를 보여줍니다.
     //내 피드 게시글의 경우에는 option : 0, toEmail : "default" 로 호출합니다.
     //상대 피드 게시글의 경우에는 option : 1, toEmail : 상대 이메일
     {
-        firestore.observeyourpostpergroup(group_name, toEmail, option)
+        firestore.observepostpergroup(group_name, toEmail, option)
         var data = firestore.postlist
         return data
     }

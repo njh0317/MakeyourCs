@@ -462,13 +462,7 @@ class   FirebaseAuthSource {
             }
         }
     }
-
-    fun observemypostpergroup(group_name: String)
-    {
-
-
-    }
-    fun observeyourpostpergroup(group_name: String, toEmail: String, option : Int)
+    fun observepostpergroup(group_name: String, toEmail: String, option : Int)
     {
         var checkEmail = toEmail
         if(option == 0){
@@ -499,9 +493,5 @@ class   FirebaseAuthSource {
             {
                 Log.d("cannot get", e.toString())
             }
-
-
     }
-
-
 }
