@@ -17,12 +17,12 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyclerAdapter.OnItemClickListener {
+class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyclerAdapter.OnItemClickListener{
     override val kodein by kodein()
     private val factory: UserMgtViewModelFactory by instance()
     lateinit var viewModel: UserMgtViewModel
     lateinit var binding: ActivityAccountMgtMainBinding
-//    lateinit var adapter: AccountMgtRecyclerAdapter
+    lateinit var adapter: AccountMgtRecyclerAdapter
     private var mBtn : Button? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -32,28 +32,29 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         binding = DataBindingUtil.setContentView(this, R.layout.activity_account_mgt_main)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
         binding.viewmodel = viewModel
-
         mBtn = findViewById(R.id.back_button) as Button
         mBtn!!.setOnClickListener(View.OnClickListener {
             if(it.id == R.id.back_button){
                 super.onBackPressed()
 
             } })
-
-        viewModel.getAccountList().observe(this, Observer {
-//            Log.d("GetItemList", "change!!")
-            var newAdapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
-            binding.accountRecyclerView.adapter = newAdapter
+        viewModel.getAccountData()
+        viewModel.accountData.observe(this, Observer {
+            adapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
+            binding.accountRecyclerView.adapter = adapter
         })
 
         Log.d("ACCOUNTMGTMAIN", "in func")
 
     }
-
     override fun onItemClick(position: Int) {
         Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
-        Log.d("click", "click!!")
-        val clickedItem = viewModel.getItemList()[position]
+        System.out.println("Clicked!! $position")
+    }
+
+    override fun onLongClick(position: Int) {
+        Toast.makeText(this, "Item $position long clicked", Toast.LENGTH_SHORT).show()
+        System.out.println("Clicked!! $position")
     }
 
     public override fun onStart() {
