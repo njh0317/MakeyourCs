@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
+import java.util.*
 
 class AccountRepository(
     private val firestore: FirebaseAuthSource
@@ -58,5 +59,9 @@ class AccountRepository(
         var data = firestore.postDataLiveData
         return data
     }
+
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
+        =firestore.uploadpostpergroup(group_name_list, postId, postDate)
+
 
 }

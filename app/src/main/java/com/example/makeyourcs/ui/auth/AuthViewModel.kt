@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 class AuthViewModel(
@@ -54,6 +55,9 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+                val now: Long = System.currentTimeMillis()
+                val date = Date(now)
+                repository.uploadpostpergroup(listOf("본 계정", "algo"), 3, date)
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback

@@ -7,6 +7,7 @@ import android.net.Uri
 
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.AccountPostClass
 import com.example.makeyourcs.data.PostClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -414,6 +415,49 @@ class   FirebaseAuthSource {
 //            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
 
+    }
+
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
+    {
+        val post_num_list : ArrayList<Int> = arrayListOf()
+        firestore.runTransaction{ transaction ->
+            //group 별 게시글 개수 가져오기
+            for(group_name in group_name_list)
+            {
+                var check_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                val snapshot = transaction.get(check_post_num)
+                val data = snapshot?.toObject(AccountClass.SubClass::class.java)
+                if (data != null) {
+                    data.post_number?.let { post_num_list.add(it) }
+                }
+            }
+            var check = 0
+            for(group_name in group_name_list)
+            {
+                var post = AccountPostClass.PostIdClass()
+                post.order_in_feed = post_num_list[check]+1
+                post.post_id = postId
+                post.posting_date = postDate
+
+                var AccountPost = firestore.collection("AccountPost")
+                    .document(currentUser()!!.email.toString())
+                    .collection(group_name)
+                    .document(postId.toString())
+
+                transaction.set(AccountPost, post)
+
+                var update_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                transaction.update(update_post_num, "post_number", post.order_in_feed)
+
+                check+=1
+            }
+        }
     }
 
 
