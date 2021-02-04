@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.AccountPostClass
 import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import java.util.*
@@ -65,6 +66,16 @@ class AccountRepository(
     //TODO:Date 타입 호출할때 다음 코드 참고
     //    val now: Long = System.currentTimeMillis()
     //    val date = Date(now)
+
+    fun observeyourpostpergroup(group_name: String, toEmail: String, option:Int):MutableLiveData<List<AccountPostClass.PostIdClass>>
+    //선택된 group 에 해당하는 post 리스트를 보여줍니다.
+    //내 피드 게시글의 경우에는 option : 0, toEmail : "default" 로 호출합니다.
+    //상대 피드 게시글의 경우에는 option : 1, toEmail : 상대 이메일
+    {
+        firestore.observeyourpostpergroup(group_name, toEmail, option)
+        var data = firestore.postlist
+        return data
+    }
 
 
 

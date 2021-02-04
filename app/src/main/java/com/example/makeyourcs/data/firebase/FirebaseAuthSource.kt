@@ -31,6 +31,9 @@ class   FirebaseAuthSource {
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val postDataLiveData = MutableLiveData<PostClass>()
 
+    val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
+    val postlist2 : MutableList<AccountPostClass.PostIdClass> = arrayListOf()
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -458,6 +461,46 @@ class   FirebaseAuthSource {
                 check+=1
             }
         }
+    }
+
+    fun observemypostpergroup(group_name: String)
+    {
+
+
+    }
+    fun observeyourpostpergroup(group_name: String, toEmail: String, option : Int)
+    {
+        var checkEmail = toEmail
+        if(option == 0){
+            checkEmail = currentUser()!!.email.toString()
+        }
+        var posts : ArrayList<AccountPostClass.PostIdClass> = arrayListOf()
+        try{
+            firestore?.collection("AccountPost")
+                .document(checkEmail)
+                .collection(group_name)
+                .orderBy("order_in_feed")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    posts.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountPostClass.PostIdClass::class.java)
+                            posts.add(data)
+                        }
+                    }
+                    postlist.postValue(posts)
+                }
+
+            }catch(e: java.lang.Exception)
+            {
+                Log.d("cannot get", e.toString())
+            }
+
+
     }
 
 
