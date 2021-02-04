@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.makeyourcs.R
 import kotlinx.android.synthetic.main.accountlist_item.view.*
+import java.lang.Boolean.TRUE
 
 class AccountMgtRecyclerAdapter(
     private val data: ArrayList<AccountMgtItem>,
@@ -14,12 +15,14 @@ class AccountMgtRecyclerAdapter(
     RecyclerView.Adapter<AccountMgtRecyclerAdapter.MyViewHolder>(){
 
     inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
-        View.OnClickListener{
+        View.OnClickListener,
+        View.OnLongClickListener{
         val img = itemView.acc_image
         var tv = itemView.acc_name
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnLongClickListener(this)
         }
         override fun onClick(v: View?) {
             val position = adapterPosition
@@ -27,9 +30,20 @@ class AccountMgtRecyclerAdapter(
                 listener.onItemClick(position)
             }
         }
+
+        override fun onLongClick(v: View?): Boolean {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onLongClick(position)
+            }
+            return TRUE
+        }
+
     }
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onLongClick(position: Int)
+
     }
     // 보여줄 아이템 개수가 몇 개인지
     override fun getItemCount(): Int{

@@ -45,6 +45,12 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
         System.out.println("Clicked!! $position")
     }
+
+    override fun onLongClick(position: Int) {
+        Toast.makeText(this, "Item $position long clicked", Toast.LENGTH_SHORT).show()
+        System.out.println("Clicked!! $position")
+    }
+
     public override fun onStart() {
         super.onStart()
     }
