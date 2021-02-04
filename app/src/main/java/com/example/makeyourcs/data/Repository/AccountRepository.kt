@@ -62,6 +62,10 @@ class AccountRepository(
 
     fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
         =firestore.uploadpostpergroup(group_name_list, postId, postDate)
+    //TODO:Date 타입 호출할때 다음 코드 참고
+    //    val now: Long = System.currentTimeMillis()
+    //    val date = Date(now)
+
 
 
 }

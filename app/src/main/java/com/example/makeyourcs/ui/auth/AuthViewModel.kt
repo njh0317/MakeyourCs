@@ -55,9 +55,6 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
-                val now: Long = System.currentTimeMillis()
-                val date = Date(now)
-                repository.uploadpostpergroup(listOf("본 계정", "algo"), 3, date)
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
