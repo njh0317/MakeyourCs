@@ -63,7 +63,7 @@ class UserMgtViewModel (
 
     fun getItemList(): ArrayList<AccountMgtItem>{ // 위 메소드로 전달받은 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
         var itemlist = ArrayList<AccountMgtItem>()
-        var data = repository.observeAccountData()
+        var data = accountData
         //data.value?.sortedBy { it.sub_num }
 
         var account = data.value?.iterator()

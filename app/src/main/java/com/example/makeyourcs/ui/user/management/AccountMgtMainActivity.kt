@@ -16,7 +16,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyclerAdapter.OnItemClickListener {
+class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyclerAdapter.OnItemClickListener{
     override val kodein by kodein()
     private val factory: UserMgtViewModelFactory by instance()
     lateinit var viewModel: UserMgtViewModel
@@ -30,23 +30,21 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         binding = DataBindingUtil.setContentView(this, R.layout.activity_account_mgt_main)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
         binding.viewmodel = viewModel
-
-        viewModel.getAccountList().observe(this, Observer {
+        viewModel.getAccountData()
+        viewModel.accountData.observe(this, Observer {
 //            Log.d("GetItemList", "change!!")
-            var newAdapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
-            binding.accountRecyclerView.adapter = newAdapter
+
+            adapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
+            binding.accountRecyclerView.adapter = adapter
         })
 
         Log.d("ACCOUNTMGTMAIN", "in func")
 
     }
-
     override fun onItemClick(position: Int) {
         Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
-        Log.d("click", "click!!")
-        val clickedItem = viewModel.getItemList()[position]
+        System.out.println("Clicked!! $position")
     }
-
     public override fun onStart() {
         super.onStart()
     }
