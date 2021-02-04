@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -21,7 +22,8 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
     private val factory: UserMgtViewModelFactory by instance()
     lateinit var viewModel: UserMgtViewModel
     lateinit var binding: ActivityAccountMgtMainBinding
-    lateinit var adapter: AccountMgtRecyclerAdapter
+//    lateinit var adapter: AccountMgtRecyclerAdapter
+    private var mBtn : Button? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,13 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         binding = DataBindingUtil.setContentView(this, R.layout.activity_account_mgt_main)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
         binding.viewmodel = viewModel
+
+        mBtn = findViewById(R.id.back_button) as Button
+        mBtn!!.setOnClickListener(View.OnClickListener {
+            if(it.id == R.id.back_button){
+                super.onBackPressed()
+
+            } })
 
         viewModel.getAccountList().observe(this, Observer {
 //            Log.d("GetItemList", "change!!")

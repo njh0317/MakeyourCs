@@ -11,8 +11,10 @@ import androidx.lifecycle.*
 import com.example.makeyourcs.R
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.ui.auth.SignupActivity
+import com.example.makeyourcs.ui.user.UserFragment
 import com.example.makeyourcs.utils.startAccountMgtMainActivity
 
 class UserMgtViewModel (
@@ -105,9 +107,13 @@ class UserMgtViewModel (
             }
         }
     }
-    fun tempDelete(view: View){
-        Toast.makeText(view.context, "deleting!!!!!", Toast.LENGTH_SHORT).show()
-    }
 
+    fun goToUserFeed(view: View){
+        Intent(view.context, MainActivity::class.java).also{
+            view.context.startActivity(it);
+        }
+//        var userFragment= UserFragment()
+//        supportFragmentManager.beginTransaction().replace(R.id.main_content,userFragment).commit()
+    }
 
 }

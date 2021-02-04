@@ -127,7 +127,9 @@ class   FirebaseAuthSource {
         }
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl:String) { //TODO: 사진 url :default
+    fun setOriginAccount(name:String, introduction:String, imageurl:String) {
+        //TODO: 사진 url :default
+        //TODO: 배경색(String) 받기
         val OriginAccount = AccountClass.SubClass()
         OriginAccount.name = name
         OriginAccount.introduction = introduction

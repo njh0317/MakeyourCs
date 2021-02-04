@@ -13,6 +13,7 @@
     <string name="signin">로그인</string>
     <string name="email">이메일</string>
 
+
     <string name="signin_complete">Login success</string>
     <string name="signout">Signout</string>
     <string name="signout_success">Signout success</string>
@@ -33,7 +34,10 @@
     <string name="signup_complete">Membership success</string>
     <string name="pw_condition">6~16자 영문 대 소문자, 숫자를 사용하세요.</string>
     <string name="checkpw_condition">비밀번호가 일치하지 않습니다.</string>
-
+    <string name="setprofile">프로필 설정</string>
+    <string name="editableprofile">프로필은 이후 변경 가능합니다.</string>
+    <string name="profileimg">프로필 사진 바꾸기</string>
+    <string name="background_intro">계정 피드 배경색입니다.</string>
 
     <!-- Bottom Navigation View -->
     <string name="home">home</string>
@@ -61,10 +65,7 @@
     <string name="follow_cancel">Follow cancel</string>
     <string name="profile">Profile</string>
     <string name="count_0">0</string>
-    <!--AccountManagement-->
-    <string name="accname1">본캐</string>
-    <string name="accname2">부캐1</string>
-    <string name="accname3">부캐2</string>
+
 
     <!-- Alarm -->
     <string name="alarm_favorite">Liked the press</string>

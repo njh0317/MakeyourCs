@@ -26,6 +26,7 @@
                 android:orientation="horizontal">
 
                 <android.widget.Button
+                    android:id="@+id/back_button"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="20dp"

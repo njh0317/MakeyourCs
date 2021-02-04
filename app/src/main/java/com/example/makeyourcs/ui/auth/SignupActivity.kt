@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivitySignupBinding
 import com.example.makeyourcs.utils.startMainActivity
+import com.example.makeyourcs.utils.startSetOriginProfile
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -37,7 +38,8 @@ class SignupActivity : AppCompatActivity(), AuthListener, KodeinAware {
 
     override fun onSuccess() {
         Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-        startMainActivity()
+//        startMainActivity()
+        startSetOriginProfile()
     }
 
     override fun onFailure(message: String) {

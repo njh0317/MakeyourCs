@@ -12,9 +12,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.ui.MainActivity
+import com.example.makeyourcs.ui.user.management.AccountMgtItem
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import petrov.kristiyan.colorpicker.ColorPicker
 import java.time.LocalDate
 import java.util.*
 
@@ -30,6 +33,10 @@ class AuthViewModel(
     var month: Int? = null
     var day: Int? = null
     var birthday = ObservableField<String>()
+
+    var defaultName = ObservableField<String>()
+    var defaultIntroduce = ObservableField<String>()
+    var defaultImg = ObservableField<String>()
 
     //auth listener
     var authListener: AuthListener? = null
@@ -137,14 +144,19 @@ class AuthViewModel(
             })
         disposables.add(disposable)
     }
-    fun origin_account() //TODO: SIGNUP 후 본캐생성 예시
+
+    fun set_origin_account(view: View) //TODO: SIGNUP 후 본캐생성 예시
     {
-        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
+        repository.setOriginAccount(defaultName.get().toString(), defaultIntroduce.get().toString(),"default")
+        Intent(view.context, MainActivity::class.java).also {
+            view.context.startActivity(it)
+        }
     }
 
     fun sub_account() //TODO:부캐생성 예시
     {
         repository.setSubAccount(0, "mongu", "몽구","안녕하세요 몽구입니다.","default")
+
     }
     fun del_subaccount()
     {
@@ -162,6 +174,8 @@ class AuthViewModel(
             view.context.startActivity(it)
         }
     }
+
+
     //disposing the disposables
     override fun onCleared() {
         super.onCleared()

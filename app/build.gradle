@@ -109,4 +109,7 @@ dependencies {
 
     //storage
     implementation 'com.google.firebase:firebase-storage:19.2.1'
+
+    //colorpicker
+    implementation 'petrov.kristiyan:colorpicker-library:1.1.10'
 }
