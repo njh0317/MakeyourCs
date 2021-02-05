@@ -7,6 +7,7 @@ import android.net.Uri
 
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.AccountPostClass
 import com.example.makeyourcs.data.PostClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -29,6 +30,9 @@ class   FirebaseAuthSource {
     val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val postDataLiveData = MutableLiveData<PostClass>()
+
+    val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
+    val postlist2 : MutableList<AccountPostClass.PostIdClass> = arrayListOf()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -416,5 +420,78 @@ class   FirebaseAuthSource {
 
     }
 
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
+    {
+        val post_num_list : ArrayList<Int> = arrayListOf()
+        firestore.runTransaction{ transaction ->
+            //group 별 게시글 개수 가져오기
+            for(group_name in group_name_list)
+            {
+                var check_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                val snapshot = transaction.get(check_post_num)
+                val data = snapshot?.toObject(AccountClass.SubClass::class.java)
+                if (data != null) {
+                    data.post_number?.let { post_num_list.add(it) }
+                }
+            }
+            var check = 0
+            for(group_name in group_name_list)
+            {
+                var post = AccountPostClass.PostIdClass()
+                post.order_in_feed = post_num_list[check]+1
+                post.post_id = postId
+                post.posting_date = postDate
 
+                var AccountPost = firestore.collection("AccountPost")
+                    .document(currentUser()!!.email.toString())
+                    .collection(group_name)
+                    .document(postId.toString())
+
+                transaction.set(AccountPost, post)
+
+                var update_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                transaction.update(update_post_num, "post_number", post.order_in_feed)
+
+                check+=1
+            }
+        }
+    }
+    fun observepostpergroup(group_name: String, toEmail: String, option : Int)
+    {
+        var checkEmail = toEmail
+        if(option == 0){
+            checkEmail = currentUser()!!.email.toString()
+        }
+        var posts : ArrayList<AccountPostClass.PostIdClass> = arrayListOf()
+        try{
+            firestore?.collection("AccountPost")
+                .document(checkEmail)
+                .collection(group_name)
+                .orderBy("order_in_feed")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    posts.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountPostClass.PostIdClass::class.java)
+                            posts.add(data)
+                        }
+                    }
+                    postlist.postValue(posts)
+                }
+
+            }catch(e: java.lang.Exception)
+            {
+                Log.d("cannot get", e.toString())
+            }
+    }
 }
