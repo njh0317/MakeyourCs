@@ -41,14 +41,16 @@ class Signup_SetProfileActivity : AppCompatActivity(), AuthListener, KodeinAware
     private fun colorPickerButtonSetup(){
 //        var gradientDrawable = GradientDrawable()
 //        var drawable = resources.getDrawable(R.drawable.background_colorbox, theme)
-        var drawable = colorbox.background as? GradientDrawable
+//        var drawable = colorbox.background as GradientDrawable
 
         set_background.setOnClickListener{
             val colorPicker = ColorPicker(this)
             colorPicker.setOnFastChooseColorListener(object : ColorPicker.OnFastChooseColorListener{
                 override fun setOnFastChooseColorListener(position: Int, color: Int) {
                     Log.d("color", color.toString())
+                    System.out.println(color.toString())
 //                    drawable.setColor(color)
+
                 }
 
                 override fun onCancel() {
