@@ -6,47 +6,66 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.makeyourcs.R
+import com.example.makeyourcs.databinding.ActivityAccountMgtMainBinding
+import com.example.makeyourcs.databinding.FragmentDelSubAccountDialogBinding
 import kotlinx.android.synthetic.main.fragment_del_sub_account_dialog.view.*
 
-class DelSubAccountDialogFragment(context: Context, private var groupname: String) : DialogFragment(), View.OnClickListener {
-//    var viewModel : UserMgtViewModel? = null
-    val windowManager = context?.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+class DelSubAccountDialogFragment(context: Context) : DialogFragment() {
+    val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val size = Point()
     val display = windowManager.defaultDisplay
 
-    public lateinit var delDialogResult: OnDelDialogResult
-    private lateinit var fragment: Fragment
+    ///////
+//    lateinit var delDialogResult: OnDelDialogResult
+//    private lateinit var fragment: Fragment
+    //////
+    lateinit var binding: FragmentDelSubAccountDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_del_sub_account_dialog, container, false)
-//        viewModel = ViewModelProvider(this).get(UserMgtViewModel::class.java)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_del_sub_account_dialog, container, false)
+        var view = binding.root
+//        val view = inflater.inflate(R.layout.fragment_del_sub_account_dialog, container, false)
 
-        isCancelable=true
+        isCancelable = true
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
 
-        view.deletebtn.setOnClickListener{
-//            viewModel!!.DeleteAccount(view, groupname)
-            Toast.makeText(context, "$groupname 이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+        binding.deletebtn.setOnClickListener {
+//            Toast.makeText(context, "delete btn clicked!", Toast.LENGTH_SHORT).show()
+            buttonClickListener.onAccountDeleteButtonClicked()
             dismiss()
         }
 
-        view.notdeletebtn.setOnClickListener {
+        binding.notdeletebtn.setOnClickListener {
             dismiss()
         }
+//        view.deletebtn.setOnClickListener {
+////            viewModel!!.DeleteAccount(view, groupname)
+//            Toast.makeText(context, "$groupname 이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+//            dismiss()
+//        }
+
+//        view.notdeletebtn.setOnClickListener {
+//            dismiss()
+//        }
 
         return view
     }
@@ -59,30 +78,18 @@ class DelSubAccountDialogFragment(context: Context, private var groupname: Strin
         params?.width = (deviceWidth * 0.9).toInt()
         dialog?.window?.attributes = params as WindowManager.LayoutParams
     }
-    fun getInstance(groupname: String): DelSubAccountDialogFragment{
-        return DelSubAccountDialogFragment(context!!, groupname)
+
+    public interface OnButtonClickListener{
+        fun onAccountDeleteButtonClicked()
     }
 
-    override fun onClick(v: View?) {
-        if(v!!.id == R.id.deletebtn){
-            if(fragment != null){
-                if(delDialogResult != null){
-                    delDialogResult.finish(groupname)
-                }
-
-                var dialogFragment = fragment as DialogFragment
-                dialogFragment.dismiss()
-            }
-
-        }
+    //클릭 이벤트 설정
+    public fun setButtonClickListener(buttonClickListener: OnButtonClickListener){
+        this.buttonClickListener = buttonClickListener
     }
+    //클릭 이벤트 실행
+    private lateinit var buttonClickListener: OnButtonClickListener
 
-    fun setDialogResult(dialogResult: OnDelDialogResult){
-        delDialogResult = dialogResult
-    }
 
-    interface OnDelDialogResult{
-        fun finish(result: String)
-    }
 }
 

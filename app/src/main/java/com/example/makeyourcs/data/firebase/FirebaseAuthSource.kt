@@ -194,7 +194,7 @@ class   FirebaseAuthSource {
             val newSubcount = Integer.parseInt(snapshot.get("sub_count")!!.toString()) - 1
             // Update the number of sub account
             transaction.delete(subaccount)
-            transaction.update(account, "sub_account", newSubcount)
+            transaction.update(account, "sub_count", newSubcount)
         }
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
