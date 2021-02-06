@@ -513,8 +513,6 @@ class   FirebaseAuthSource {
     suspend fun getplaceinfo(place_name:String):PlaceClass?
     {
         return try {
-
-            var placedata: PlaceClass
             val docRef = firestore.collection("Place").document(place_name)
             val doc = docRef.get().await()
             if(doc.exists())
