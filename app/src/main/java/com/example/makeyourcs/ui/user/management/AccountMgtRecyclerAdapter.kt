@@ -70,7 +70,7 @@ class AccountMgtRecyclerAdapter(
             R.layout.accountlist_item,
             parent,
             false
-        ) //check
+        )
 
         return MyViewHolder(itemView)
     }

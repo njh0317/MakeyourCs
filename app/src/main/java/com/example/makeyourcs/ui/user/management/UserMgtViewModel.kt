@@ -1,9 +1,7 @@
 package com.example.makeyourcs.ui.user.management
 
-import android.accounts.Account
-import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
@@ -89,17 +87,19 @@ class UserMgtViewModel (
     }
 
     fun DeleteAccount(view: View, delGroup: String){
-        Toast.makeText(view.context, "Cliked", Toast.LENGTH_SHORT).show()
-//        repository.delSubAccount()
+        Toast.makeText(view.context, "${delGroup} Cliked", Toast.LENGTH_SHORT).show()
+//        repository.delSubAccount(delGroup)
     }
 
     fun goToAddNewAccount(view: View) {
         var data = repository.observeUserData()
         if(data.value?.sub_count == 3){
-            val informSubCount = AlertDialog.Builder(view.context)
-            informSubCount.setMessage("부캐는 최대 3개까지 생성할 수 있습니다.")
-            informSubCount.setPositiveButton("확인", null)
-            informSubCount.show()
+//            val informSubCount = AlertDialog.Builder(view.context)
+//            informSubCount.setMessage("부캐는 최대 3개까지 생성할 수 있습니다.")
+//            informSubCount.setPositiveButton("확인", null)
+//            informSubCount.show()
+            val dialog = LimitedAccCntDialog(view.context)
+            dialog.WarningConfirm()
 //            Toast.makeText(view.context, "부캐는 최대 3개까지 생성할 수 있습니다.", Toast.LENGTH_SHORT).show()
         }else{
             Intent(view.context, NewAccountMgtActivity::class.java).also {

@@ -49,6 +49,14 @@
     <!-- User Feed -->
     <string name="change_sub_char">계정변경</string>
 
+    <!--User Feed - Management -->
+    <string name="del_confirm">삭제 확인</string>
+    <string name="ask_delete_subacc">이 계정을 정말로 삭제하시겠습니까?</string>
+    <string name="delete">삭제</string>
+    <string name="not_delete">삭제 안 함</string>
+    <string name="subacc_cnt">부캐는 \n최대 3개까지 생성할 수 있습니다.</string>
+    <string name="confirm">확인</string>
+
     <!-- More menu in User Feed -->
     <string name="settings">설정</string>
     <string name="accountmgt">계정 관리</string>

@@ -38,6 +38,7 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
                 super.onBackPressed()
 
             } })
+
         viewModel.getAccountData()
         viewModel.accountData.observe(this, Observer {
             adapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
@@ -48,14 +49,21 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
 
     }
     override fun onItemClick(position: Int) {
-        Toast.makeText(this, "Item $position clicked", Toast.LENGTH_SHORT).show()
+        var groupname = viewModel.getItemList().get(position).groupname
+        Toast.makeText(this, "Item $groupname clicked", Toast.LENGTH_SHORT).show()
         System.out.println("Clicked!! $position")
     }
 
     override fun onLongClick(position: Int) {
-        Toast.makeText(this, "Item $position long clicked", Toast.LENGTH_SHORT).show()
-        System.out.println("Clicked!! $position")
+        var groupname = viewModel.getItemList().get(position).groupname
+        val dialog = DelSubAccountDialogFragment(this, groupname)
+        if(position != 0) {
+            dialog.show(supportFragmentManager!!, "DelSubAccountDialogFragment")
+        }
+        else
+            Toast.makeText(this, "본 계정은 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
     }
+
 
     public override fun onStart() {
         super.onStart()
