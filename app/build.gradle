@@ -109,4 +109,7 @@ dependencies {
 
     //storage
     implementation 'com.google.firebase:firebase-storage:19.2.1'
+
+    //coroutine
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1"
 }

@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -16,6 +17,8 @@ import com.example.makeyourcs.data.Repository.AccountRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
@@ -59,7 +62,6 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
-                repository.imageurl("IMAGE_20210203_220411_.png")
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback

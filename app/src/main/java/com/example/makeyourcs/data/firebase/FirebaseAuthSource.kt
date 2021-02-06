@@ -15,6 +15,9 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import io.reactivex.Completable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 import java.text.SimpleDateFormat
@@ -457,19 +460,24 @@ class FirebaseAuthSource {
         return fileName
     }
 
-   fun imageurl(imagename: String)
+   suspend fun imageurl(imagename: String):Uri?
     {
-        val storageReference: StorageReference =
-            firestorage.getReference().child("profile/" + imagename)
-        storageReference.downloadUrl.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                // Glide 이용하여 이미지뷰에 로딩
-                profileimageurl = task.result
-                System.out.println(profileimageurl.toString())
-            } else {
-                // URL을 가져오지 못하면 토스트 메세지
-                Log.w(TAG,"error getting imageurl")
-            }
+        //TODO: 호출시 다음과 같이 해야함
+        //꼭 GlobalScope.launch 안에 해당 함수를 불러야합니다.!!
+//        GlobalScope.launch {
+//            repository.imageurl("IMAGE_20210203_220411_.png")
+//        }
+        return try {
+            val storageReference: StorageReference =
+                firestorage.getReference().child("profile/" + imagename)
+            val uri = storageReference.downloadUrl.await()
+            return uri
+        }catch(e:Throwable)
+        {
+            Log.w(TAG, "error in get place, ", e)
+            null
         }
+
     }
+
 }

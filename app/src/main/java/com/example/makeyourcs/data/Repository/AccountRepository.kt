@@ -79,10 +79,6 @@ class AccountRepository(
         System.out.println("url : "+ data.toString())
     }
 
-    fun imageurl(imagename: String)
-    {
-        firestore.imageurl(imagename)
-        System.out.println("imageurl : "+ firestore.profileimageurl)
-    }
-
+    suspend fun imageurl(imagename: String):Uri?
+        = firestore.imageurl(imagename)
 }
