@@ -23,7 +23,7 @@ import java.util.*
 import kotlin.collections.HashMap
 
 
-class   FirebaseAuthSource {
+class FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
     val accountsDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
@@ -157,13 +157,8 @@ class   FirebaseAuthSource {
                     return@addOnFailureListener
             }
     }
-    fun setSubAccount(
-        subaccount_num: Int,
-        name: String,
-        group_name: String,
-        introduction: String,
-        imageurl: String
-    ) { //TODO: 사진 url :default
+    fun setSubAccount(subaccount_num: Int, name: String, group_name: String, introduction: String, imageurl: String)
+    { //TODO: 사진 url :default
         val SubAccount = AccountClass.SubClass()
         SubAccount.name = name
         SubAccount.introduction = introduction
@@ -188,6 +183,7 @@ class   FirebaseAuthSource {
 
     }
     fun delSubAccount(group_name: String) {
+        //TODO: 사용자 부캐안에 게시글 삭제
         val subaccount = firestore
             .collection("Account")
             .document(currentUser()!!.email.toString())
