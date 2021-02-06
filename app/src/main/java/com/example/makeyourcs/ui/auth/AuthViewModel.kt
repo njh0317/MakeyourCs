@@ -49,7 +49,6 @@ class AuthViewModel(
     }
 
     //function to perform login
-    @RequiresApi(Build.VERSION_CODES.O)
     fun login() {
         //validating email and password
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()) {
