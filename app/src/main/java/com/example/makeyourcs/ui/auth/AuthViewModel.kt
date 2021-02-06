@@ -145,12 +145,9 @@ class AuthViewModel(
         disposables.add(disposable)
     }
 
-    fun set_origin_account(view: View) //TODO: SIGNUP 후 본캐생성 예시
+    fun origin_account(view: View) //TODO: SIGNUP 후 본캐생성 예시
     {
-        repository.setOriginAccount(defaultName.get().toString(), defaultIntroduce.get().toString(),"default")
-        Intent(view.context, MainActivity::class.java).also {
-            view.context.startActivity(it)
-        }
+        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
     }
 
     fun sub_account() //TODO:부캐생성 예시
