@@ -5,6 +5,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.AccountPostClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 import java.util.*
@@ -77,7 +78,9 @@ class AccountRepository(
         var data = firestore.postlist
         return data
     }
-
-
+//
+//    fun getplaceinfo(place_name:String):PlaceClass?
+//        = firestore.getplaceinfo(place_name)
+//
 
 }

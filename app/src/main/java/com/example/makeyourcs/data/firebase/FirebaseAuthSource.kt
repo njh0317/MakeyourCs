@@ -8,7 +8,9 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.AccountPostClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.PostClass
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -494,4 +496,18 @@ class   FirebaseAuthSource {
                 Log.d("cannot get", e.toString())
             }
     }
+
+    fun setplacetag(place: PlaceClass)
+    {
+        //TODO: 따로 함수를 구현해두지만, setPost 할 떄 해줘야 하기 떄문에 이후에 setPost 함수로 이동 해야함
+        val placedb = firestore.collection("Place")
+            .document(place.place_name.toString())
+        firestore.runBatch { batch ->
+            batch.set(placedb,place)
+        }
+            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+
 }

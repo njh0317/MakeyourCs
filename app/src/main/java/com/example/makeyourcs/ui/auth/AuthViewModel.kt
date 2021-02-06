@@ -1,19 +1,15 @@
 package com.example.makeyourcs.ui.auth
 
-import android.app.DatePickerDialog
 import android.content.Intent
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableField
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 
 class AuthViewModel(
@@ -55,6 +51,7 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+                System.out.println("data : "+repository.getplaceinfo("희루").toString())
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
