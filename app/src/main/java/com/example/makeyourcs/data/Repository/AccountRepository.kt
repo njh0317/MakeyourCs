@@ -79,8 +79,13 @@ class AccountRepository(
         return data
     }
 
-    fun getplaceinfo(place_name:String):PlaceClass?
+    suspend fun getplaceinfo(place_name:String):PlaceClass?
         = firestore.getplaceinfo(place_name)
+    //TODO: 함수 호출시 다음과 같이 해야함
+    //coroutine 방식으로, 비동기적으로 호출하기 때문에 GlobalScope.launch 안에 해당 함수를 호출한다.
+    //    GlobalScope.launch {
+    //        val owner = repository.getplaceinfo("희루")
+    //    }
 
 
 }

@@ -23,6 +23,7 @@ import io.reactivex.Completable
 import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 import kotlinx.android.synthetic.main.activity_storage.*
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -509,16 +510,16 @@ class   FirebaseAuthSource {
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
     }
-    fun getplaceinfo(place_name:String):PlaceClass?
+    suspend fun getplaceinfo(place_name:String):PlaceClass?
     {
         return try {
+
             var placedata: PlaceClass
             val docRef = firestore.collection("Place").document(place_name)
-            val document = Tasks.await(docRef.get())
-
-            if(document.exists())
+            val doc = docRef.get().await()
+            if(doc.exists())
             {
-                val place = document.toObject(PlaceClass::class.java)
+                val place = doc.toObject(PlaceClass::class.java)
                 Log.d(TAG,"place : "+place.toString())
                 place
             }else {
@@ -532,4 +533,7 @@ class   FirebaseAuthSource {
             null
         }
     }
+
 }
+
+

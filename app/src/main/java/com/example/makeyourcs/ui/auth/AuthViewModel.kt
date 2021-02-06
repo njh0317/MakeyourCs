@@ -10,6 +10,8 @@ import com.example.makeyourcs.data.Repository.AccountRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 
 class AuthViewModel(
@@ -51,7 +53,6 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
-                System.out.println("data : "+repository.getplaceinfo("희루").toString())
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
