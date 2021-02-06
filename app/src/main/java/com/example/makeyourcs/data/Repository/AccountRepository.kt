@@ -78,9 +78,9 @@ class AccountRepository(
         var data = firestore.postlist
         return data
     }
-//
-//    fun getplaceinfo(place_name:String):PlaceClass?
-//        = firestore.getplaceinfo(place_name)
-//
+
+    fun getplaceinfo(place_name:String):PlaceClass?
+        = firestore.getplaceinfo(place_name)
+
 
 }

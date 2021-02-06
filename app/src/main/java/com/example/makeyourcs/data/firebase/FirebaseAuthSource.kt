@@ -509,5 +509,27 @@ class   FirebaseAuthSource {
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
     }
+    fun getplaceinfo(place_name:String):PlaceClass?
+    {
+        return try {
+            var placedata: PlaceClass
+            val docRef = firestore.collection("Place").document(place_name)
+            val document = Tasks.await(docRef.get())
 
+            if(document.exists())
+            {
+                val place = document.toObject(PlaceClass::class.java)
+                Log.d(TAG,"place : "+place.toString())
+                place
+            }else {
+                Log.w(TAG, "no data in place")
+                null
+            }
+
+        } catch(e:Throwable)
+        {
+            Log.w(TAG, "error in get place, ", e)
+            null
+        }
+    }
 }
