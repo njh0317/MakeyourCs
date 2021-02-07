@@ -18,6 +18,7 @@ import java.util.*
 class StorageActivity : AppCompatActivity() {
     val GALLERY = 0 //GALLERY의 역할
     val firebaseStorage = FirebaseStorage.getInstance();
+    val TAG = "firebase"
     private val firestore: FirebaseFirestore by lazy{
         FirebaseFirestore.getInstance()
     }
@@ -26,28 +27,20 @@ class StorageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_storage)
         upload_photo.setOnClickListener{openAlbum()}
         //delete_photo.setOnClickListener{ deletePhoto() }
+        upload_photo.setOnClickListener{openAlbum()}
+        list_photo.setOnClickListener{
+            var testList : ArrayList<String> = ArrayList()
+            testList = photoList()
+            System.out.println("This is testList")
+            System.out.println(testList)
+            for(t:String in testList){
+                System.out.println(t)
+            }
+        }
     }
+
     fun uploadPhoto(photoUri: Uri) {
-//        val DocRef = firestore
-//            .collection("Account")
-//            .document(currentUser()!!.email.toString())
-//            .collection("SubAccount")
-//            .document(group_name)
-//
-//        firestore.runTransaction { transaction ->
-//            val snapshot = transaction.get(DocRef)
-//
-//            // Note: this could be done without a transaction
-//            //       by updating the population using FieldValue.increment()
-//            transaction.update(DocRef, "introduction", introduction)
-//            transaction.update(DocRef, "name", name)
-//            transaction.update(DocRef, "profile_pic_url", imageurl)
-//
-//            // Success
-//            null
-//        }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
-//            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
-//
+
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
         //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
@@ -55,17 +48,43 @@ class StorageActivity : AppCompatActivity() {
         var storageRef = firebaseStorage.reference.child("images/"+fileName)
         var tmpid = 0;
         System.out.println("photoUri"+photoUri)
-        firestore.collection("Post")?.document("0")?.collection("pictureClass").document("0")?.update(
-            mapOf(
-                "pictureUri" to photoUri.toString()
-            )
-        );
+
+        val photo = hashMapOf(
+            "photoUri" to photoUri.toString(),
+            "order" to tmpid.toString()
+        )
+
         //모델에서 다운로드
         storageRef.putFile(photoUri).addOnSuccessListener {
             Log.d("1", "Upload photo completed")
+            firestore.collection("Post").document("1").collection("pictureClass").document("1")
+                .set(photo)
+                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
+                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
         }
+            .addOnFailureListener{e-> Log.w(TAG,"Retry to upload photo to storage", e) }
+
     }
 
+    suspend fun photoList(): ArrayList<String>{
+        val posting : ArrayList<String> = ArrayList()
+        var src: String
+        return try{
+            for(i in 0..1) {
+                firestore?.collection("Post")?.document("1")?.collection("pictureClass").document(i.toString()).get()?.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        src = task.result!!["photoUri"].toString()
+                        posting.add(src)
+                    }
+                }
+            }
+            posting
+        }catch(e: java.lang.Exception)
+        {
+            Log.d("cannot get", e.toString())
+            posting
+        }
+    }
     fun openAlbum(){  //저장된 사진을 공유...추후 사진 바로 찍어서 올리는 함수 추가 예정
         var intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
