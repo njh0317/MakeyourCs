@@ -1,5 +1,6 @@
 package com.example.makeyourcs.data.Repository
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
@@ -87,5 +88,6 @@ class AccountRepository(
     //        val owner = repository.getplaceinfo("희루")
     //    }
 
-
+    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd: Uri)
+        =firestore.setPost(account, email, content, place_tag, pAdd)
 }

@@ -53,6 +53,7 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback

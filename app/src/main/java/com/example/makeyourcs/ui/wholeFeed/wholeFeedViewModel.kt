@@ -11,7 +11,7 @@ import com.example.makeyourcs.data.Repository.PostRepository
 import kotlinx.android.synthetic.main.activity_storage.*
 
 
-class wholeFeedViewModel (private val repository: PostRepository): ViewModel() {
+class wholeFeedViewModel (private val repository: AccountRepository): ViewModel() {
     var img = ObservableField<Uri>()
 
     val post by lazy{

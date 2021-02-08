@@ -14,10 +14,10 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.user.management.SelectFollowerForNewAccActivity"></activity>
         <activity android:name=".ui.auth.LoginActivity">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
 <!--        <activity android:name=".ui.wholeFeed.StorageActivity"></activity>-->
         <activity android:name=".ui.auth.SignupActivity"/>
@@ -27,10 +27,10 @@
         <activity android:name=".ui.user.management.AccountMgtMainActivity"></activity>
         <activity android:name=".ui.user.management.NewAccountMgtActivity"></activity>
         <activity android:name=".ui.wholeFeed.StorageActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 </manifest>
