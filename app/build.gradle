@@ -105,4 +105,7 @@ dependencies {
 
     //to use data binding annotation
     kapt "com.android.databinding:compiler:3.0.1"
+
+    //CircleImageView
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }
