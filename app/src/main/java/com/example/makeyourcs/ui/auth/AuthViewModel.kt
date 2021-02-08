@@ -40,7 +40,6 @@ class AuthViewModel(
     // Set default profile
     var defaultName = ObservableField<String>()
     var defaultIntrodue = ObservableField<String>()
-    var defaultColor = ObservableField<String>()
     var defaultImg = ObservableField<String>()
 
     //auth listener
