@@ -16,14 +16,12 @@ import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.user.management.AccountMgtItem
+import com.example.makeyourcs.utils.startMainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import petrov.kristiyan.colorpicker.ColorPicker
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.time.LocalDate
 import java.util.*
+import com.example.makeyourcs.utils.startMainActivity
 
 class AuthViewModel(
     private val repository: AccountRepository
@@ -164,6 +162,7 @@ class AuthViewModel(
         Intent(view.context, MainActivity::class.java).also{
             view.context.startActivity(it)
         }
+
     }
 
     fun sub_account() //TODO:부캐생성 예시

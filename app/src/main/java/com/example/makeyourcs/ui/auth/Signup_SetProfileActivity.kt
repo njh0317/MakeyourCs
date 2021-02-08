@@ -48,6 +48,7 @@ class Signup_SetProfileActivity : AppCompatActivity(), KodeinAware {
         if(requestCode == Gallery){
             if(resultCode == RESULT_OK){
                 var dataUri = data?.data
+
                 try{
                     var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, dataUri)
                     binding.profileImg.setImageBitmap(bitmap)
