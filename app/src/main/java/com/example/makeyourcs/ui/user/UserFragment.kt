@@ -63,10 +63,10 @@ class UserFragment : InjectionFragment(){
             binding.profileFollower.text="팔로워 " + it.follower_num.toString()
 
             lifecycleScope.launch {
-                val result = viewmodel.getImageurl(it.profile_pic_name!!)
-                Log.d("uri","uri : "+result)
+                val uri = viewmodel.getImageurl(it.profile_pic_name!!)
+                Log.d("uri","uri : "+uri)
                 Glide.with(view.context)
-                    .load(result)
+                    .load(uri)
                     .into(binding.profileImage)
             }
         })
@@ -74,7 +74,6 @@ class UserFragment : InjectionFragment(){
         //setting button listener
         binding.setting.setOnClickListener {
             showDialog()
-
         }
         return view
     }

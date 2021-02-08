@@ -83,7 +83,6 @@ class UserViewModel(
 //        GlobalScope.launch{
 //            uri = repository.imageurl(imagename)
 //        }
-        Log.d("uri","uri in viewmodel: "+uri)
         return uri
     }
 
