@@ -25,8 +25,10 @@ class AccountRepository(
         return data
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl: String) //본캐 정보 저장
-        = firestore.setOriginAccount(name, introduction, imageurl)
+    fun setOriginAccount(name:String, introduction:String, filepath: String) //본캐 정보 저장
+        = firestore.setOriginAccount(name, introduction, filepath)
+    //TODO:filepath의 경우 선택된 이미지의 경로인데 꼭 .toString()을 붙여 string 형식으로 바꿔서 호출해줘야합니다.
+    // default 사진을 사용할 경우 "default" 로 호출하면 됩니다.
 
     fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부캐 정보 저장
             = firestore.setSubAccount(subaccount_num, name, group_name, introduction, imageurl)
@@ -72,5 +74,19 @@ class AccountRepository(
 
     fun notacceptfollow(fromEmail:String) //팔로우 신청 거절, follow waitlist 로부터 삭제
         =firestore.notacceptfollow(fromEmail)
+
+    fun uploadprofile(filepath:Uri)
+    {
+        var data = firestore.uploadprofile(filepath)
+        System.out.println("url : "+ data.toString())
+    }
+
+    suspend fun imageurl(imagename: String):Uri?
+        = firestore.imageurl(imagename)
+    //TODO: 호출시 다음과 같이 해야함
+    //꼭 GlobalScope.launch 안에 해당 함수를 불러야합니다.!!
+    //        GlobalScope.launch {
+    //            repository.imageurl("IMAGE_20210203_220411_.png")
+    //        }
 
 }

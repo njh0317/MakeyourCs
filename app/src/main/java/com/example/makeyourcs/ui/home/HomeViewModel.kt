@@ -6,6 +6,7 @@ import android.widget.Toast
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -87,7 +88,7 @@ class HomeViewModel(
     }
 
     fun logout(view: View) {
-        repository.logout()
+//        repository.logout()
         view.context.startLoginActivity()
     }
 
@@ -111,4 +112,5 @@ class HomeViewModel(
 //            view.context.startActivity(it)
 //        }
     }
+
 }

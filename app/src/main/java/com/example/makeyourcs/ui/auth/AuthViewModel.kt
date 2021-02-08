@@ -2,7 +2,9 @@ package com.example.makeyourcs.ui.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -18,6 +20,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import petrov.kristiyan.colorpicker.ColorPicker
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.*
 
@@ -91,8 +95,12 @@ class AuthViewModel(
     fun removebday(){
         birthday.set("")
     }
-
+    fun setimage(uri :Uri)
+    {
+        repository.uploadprofile(uri)
+    }
     //Doing same thing with signup
+
     fun signup() {
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()|| checkpassword.get().isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
@@ -186,6 +194,5 @@ class AuthViewModel(
         super.onCleared()
         disposables.dispose()
     }
-
 
 }

@@ -20,7 +20,7 @@ data class AccountClass(var userId:String? = null,
                         var post_number:Int? = 0,
                         var follower_num:Int? = 0,
                         var back_color:String? = "#ffffff",
-                        var profile_pic_url: String? = null,
+                        var profile_pic_name: String? = "default",
                         var group_name:String? = "",
                         var follower:HashMap<String, Boolean> = HashMap()
     )

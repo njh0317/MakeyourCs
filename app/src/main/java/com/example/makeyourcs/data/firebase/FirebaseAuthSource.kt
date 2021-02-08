@@ -3,30 +3,37 @@ package com.example.makeyourcs.data.firebase
 import android.net.Uri
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
 import com.example.makeyourcs.data.AccountClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import io.reactivex.Completable
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
-class   FirebaseAuthSource {
+
+class FirebaseAuthSource {
     val TAG = "FirebaseSource"
     val userDataLiveData = MutableLiveData<AccountClass>()
     val accountsDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
     val accountDataLiveData = MutableLiveData<AccountClass.SubClass>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
+    var profileimageurl :Uri? = null
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -97,7 +104,7 @@ class   FirebaseAuthSource {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     userId = document.get("userId").toString()
-                    Log.d(TAG, "userId get success "+userId)
+                    Log.d(TAG, "userId get success " + userId)
                 }
             }
             .addOnFailureListener { exception ->
@@ -127,20 +134,17 @@ class   FirebaseAuthSource {
         }
     }
 
-    fun setOriginAccount(name:String, introduction:String, imageurl:String) {
-        //TODO: 사진 url :default
+    fun setOriginAccount(name: String, introduction: String, filepath: String) {
         //TODO: 배경색(String) 받기
         val OriginAccount = AccountClass.SubClass()
         OriginAccount.name = name
         OriginAccount.introduction = introduction
         OriginAccount.sub_num = 0
         OriginAccount.group_name = "본 계정"
-        OriginAccount.profile_pic_url = "default"
 
-//        if(imageurl.toString() != "default"){
-//            OriginAccount.profile_pic_url = uploadprofile(imageurl).toString()
-//        }
-
+        if(filepath != "default"){
+            OriginAccount.profile_pic_name = uploadprofile(Uri.parse(filepath)).toString()
+        }
 
         firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -155,13 +159,14 @@ class   FirebaseAuthSource {
                     return@addOnFailureListener
             }
     }
-    fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) { //TODO: 사진 url :default
+    fun setSubAccount(subaccount_num: Int, name: String, group_name: String, introduction: String, imageurl: String)
+    { //TODO: 사진 url :default
         val SubAccount = AccountClass.SubClass()
         SubAccount.name = name
         SubAccount.introduction = introduction
         SubAccount.sub_num = subaccount_num+1
         SubAccount.group_name = group_name
-        SubAccount.profile_pic_url = imageurl
+        SubAccount.profile_pic_name = imageurl
 
         val subaccount = firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -173,13 +178,14 @@ class   FirebaseAuthSource {
             // Set the value of 'NYC'
             batch.set(subaccount, SubAccount)
             // Update the number of sub account
-            batch.update(account, "sub_count", subaccount_num+1)
+            batch.update(account, "sub_count", subaccount_num + 1)
         }
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
     }
-    fun delSubAccount(group_name:String) {
+    fun delSubAccount(group_name: String) {
+        //TODO: 사용자 부캐안에 게시글 삭제
         val subaccount = firestore
             .collection("Account")
             .document(currentUser()!!.email.toString())
@@ -206,7 +212,7 @@ class   FirebaseAuthSource {
                 .document(currentUser()!!.email.toString())
                 .collection("SubAccount")
                 .document(group_name)
-                .addSnapshotListener{value, e ->
+                .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {
                         Log.w(TAG, "Listen failed.", e)
@@ -218,7 +224,7 @@ class   FirebaseAuthSource {
                     }
 
                 }
-        }catch(e: Exception)
+        }catch (e: Exception)
         {
             Log.e(TAG, "Error getting one account data", e)
         }
@@ -251,7 +257,7 @@ class   FirebaseAuthSource {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun follow(toEmail:String)
+    fun follow(toEmail: String)
     {
         val from = AccountClass.FollowClass()
         from.to_account = toEmail
@@ -331,8 +337,8 @@ class   FirebaseAuthSource {
         }
 
     }
-    fun make_map(group_name_list:List<String>): HashMap<String, Boolean> {
-        val hashMap:HashMap<String,Boolean> = HashMap<String, Boolean>() //define empty hashmap
+    fun make_map(group_name_list: List<String>): HashMap<String, Boolean> {
+        val hashMap:HashMap<String, Boolean> = HashMap<String, Boolean>() //define empty hashmap
 
         for(group in group_name_list)
         {
@@ -340,7 +346,7 @@ class   FirebaseAuthSource {
         }
         return hashMap
     }
-    fun notacceptfollow(fromEmail:String)
+    fun notacceptfollow(fromEmail: String)
     {
         val toAccount_waitlist = firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -361,7 +367,7 @@ class   FirebaseAuthSource {
 
 
     }
-    fun acceptfollow(fromEmail:String, group_name_list:List<String>)
+    fun acceptfollow(fromEmail: String, group_name_list: List<String>)
     {
         val hashmap = make_map(group_name_list)
         val toAccount_waitlist = firestore.collection("Account")
@@ -411,7 +417,7 @@ class   FirebaseAuthSource {
     }
 
 
-    fun modifiedprofile(group_name:String, name:String, introduction:String, imageurl:String)
+    fun modifiedprofile(group_name: String, name: String, introduction: String, imageurl: String)
     {
         val DocRef = firestore
             .collection("Account")
@@ -430,7 +436,7 @@ class   FirebaseAuthSource {
 
     }
 
-    fun uploadprofile(filepath:Uri):Uri? {
+    fun uploadprofile(filepath: Uri):String? {
         var downloadUri: Uri? = null
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
@@ -450,8 +456,40 @@ class   FirebaseAuthSource {
                 Log.w(TAG, "uploadprofile failure")
             }
         }
-        return downloadUri
+        return fileName
+    }
+    suspend fun uploadprofile2(filepath: Uri):Uri? { // upload profile image async로 하는 예시
+        var downloadUri: Uri? = null
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
+        var storageRef = firestorage.reference.child("profile/" + fileName)
+        var uploadTask = storageRef.putFile(filepath)
+        return try {
+            val urlTask = uploadTask.await()
+
+            val url = storageRef.downloadUrl.await()
+            return url
+        }catch(e:Throwable)
+        {
+            Log.w(TAG, "error in set image,  ",e)
+            null
+
+        }
     }
 
+   suspend fun imageurl(imagename: String):Uri?
+    {
+        return try {
+            val storageReference: StorageReference =
+                firestorage.getReference().child("profile/" + imagename)
+            val uri = storageReference.downloadUrl.await()
+            return uri
+        }catch(e:Throwable)
+        {
+            Log.w(TAG, "error in get place, ", e)
+            null
+        }
+
+    }
 
 }

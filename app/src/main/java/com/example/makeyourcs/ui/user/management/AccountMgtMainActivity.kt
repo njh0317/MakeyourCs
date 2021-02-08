@@ -43,7 +43,6 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         })
 
         Log.d("ACCOUNTMGTMAIN", "in func")
-
     }
 
     override fun onItemClick(position: Int) {
