@@ -93,10 +93,6 @@ class AuthViewModel(
     fun removebday(){
         birthday.set("")
     }
-    fun setimage(uri :Uri)
-    {
-        repository.uploadprofile(uri)
-    }
     //Doing same thing with signup
 
     fun signup() {
