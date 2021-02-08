@@ -61,7 +61,7 @@ class UserFragment : InjectionFragment(){
 
     private fun showDialog(){
         val dialog =
-            SettingDialogFragment()
+            SettingDialogFragment(context)
         dialog.show(childFragmentManager, null)
     }
 }
