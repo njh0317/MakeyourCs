@@ -83,5 +83,10 @@ class AccountRepository(
 
     suspend fun imageurl(imagename: String):Uri?
         = firestore.imageurl(imagename)
+    //TODO: 호출시 다음과 같이 해야함
+    //꼭 GlobalScope.launch 안에 해당 함수를 불러야합니다.!!
+    //        GlobalScope.launch {
+    //            repository.imageurl("IMAGE_20210203_220411_.png")
+    //        }
 
 }
