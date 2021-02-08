@@ -3,6 +3,8 @@
     package="com.example.makeyourcs">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
 
     <application
         android:name=".FirebaseApplication"
@@ -13,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.user.settings.ArchiveActivity"></activity>
+        <activity android:name=".ui.auth.Signup_SetProfileActivity"></activity>
         <activity android:name=".ui.user.management.SelectFollowerForNewAccActivity" />
         <activity android:name=".ui.auth.LoginActivity">
             <intent-filter>

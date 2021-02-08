@@ -2,18 +2,26 @@ package com.example.makeyourcs.ui.auth
 
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.ObservableField
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.ui.MainActivity
+import com.example.makeyourcs.ui.user.management.AccountMgtItem
+import com.example.makeyourcs.utils.startMainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.time.LocalDate
 import java.util.*
+import com.example.makeyourcs.utils.startMainActivity
 
 class AuthViewModel(
     private val repository: AccountRepository
@@ -27,6 +35,12 @@ class AuthViewModel(
     var month: Int? = null
     var day: Int? = null
     var birthday = ObservableField<String>()
+
+
+    // Set default profile
+    var defaultName = ObservableField<String>()
+    var defaultIntrodue = ObservableField<String>()
+    var defaultImg = ObservableField<String>()
 
     //auth listener
     var authListener: AuthListener? = null
@@ -79,8 +93,12 @@ class AuthViewModel(
     fun removebday(){
         birthday.set("")
     }
-
+    fun setimage(uri :Uri)
+    {
+        repository.uploadprofile(uri)
+    }
     //Doing same thing with signup
+
     fun signup() {
         if (email.get().isNullOrEmpty() || password.get().isNullOrEmpty()|| id.get().isNullOrEmpty()|| checkpassword.get().isNullOrEmpty()) {
             authListener?.onFailure("Please input all values")
@@ -133,14 +151,28 @@ class AuthViewModel(
             })
         disposables.add(disposable)
     }
-    fun origin_account() //TODO: SIGNUP 후 본캐생성 예시
+
+    fun origin_account(view: View) //TODO: SIGNUP 후 본캐생성 예시
     {
-        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
+//        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
+        Log.d("AuthViewModel", "set origin_account profile")
+        System.out.println("${defaultName.get().toString()}, ${defaultIntrodue.get().toString()}")
+        System.out.println("${defaultImg.get().toString()}")
+        if(defaultImg.get() != null){
+            repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), defaultImg.get().toString())
+        }else{  // 프로필 사진 설정 안했을 경우
+            repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), "default")
+        }
+
+        Intent(view.context, MainActivity::class.java).also{
+            view.context.startActivity(it)
+        }
     }
 
     fun sub_account() //TODO:부캐생성 예시
     {
         repository.setSubAccount(0, "mongu", "몽구","안녕하세요 몽구입니다.","default")
+
     }
     fun del_subaccount()
     {
@@ -158,6 +190,8 @@ class AuthViewModel(
             view.context.startActivity(it)
         }
     }
+
+
     //disposing the disposables
     override fun onCleared() {
         super.onCleared()

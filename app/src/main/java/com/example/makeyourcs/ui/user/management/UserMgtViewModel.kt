@@ -1,24 +1,24 @@
 package com.example.makeyourcs.ui.user.management
 
-import android.accounts.Account
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.makeyourcs.R
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
+import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.ui.auth.SignupActivity
+import com.example.makeyourcs.ui.user.UserFragment
 import com.example.makeyourcs.utils.startAccountMgtMainActivity
 
 class UserMgtViewModel (
     private val repository: AccountRepository
-): ViewModel(){
+): ViewModel() {
     val TAG = "HOMEVIEWMODEL"
     private var _userData = MutableLiveData<AccountClass>()
     val userData: LiveData<AccountClass>
@@ -64,7 +64,7 @@ class UserMgtViewModel (
 
     fun getItemList(): ArrayList<AccountMgtItem>{ // 위 메소드로 전달받은 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
         var itemlist = ArrayList<AccountMgtItem>()
-        var data = repository.observeAccountData()
+        var data = accountData
         //data.value?.sortedBy { it.sub_num }
 
         var account = data.value?.iterator()
@@ -78,24 +78,39 @@ class UserMgtViewModel (
         return itemlist
     }
 
+
     fun AddNewAccount(view: View){
 //        System.out.println("new subAccount!!")
         var data = repository.observeUserData()
+
         repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
         view.context.startAccountMgtMainActivity()
     }
 
-    fun DeleteAccount(view: View, delGroup: String){
-        Toast.makeText(view.context, "Cliked", Toast.LENGTH_SHORT).show()
-//        repository.delSubAccount()
+    fun DeleteAccount(delGroup: String){
+        Log.d("UserMgtViewModel", "$delGroup - DeleteAccount")
+        System.out.println("DeleteAccount in ViewModel")
+        repository.delSubAccount(delGroup)
     }
 
     fun goToAddNewAccount(view: View) {
-        Intent(view.context, NewAccountMgtActivity::class.java).also {
-            view.context.startActivity(it)
+        var data = repository.observeUserData()
+        if(data.value?.sub_count == 3){
+            val dialog = LimitedAccCntDialog(view.context)
+            dialog.WarningConfirm()
+        }else{
+            Intent(view.context, NewAccountMgtActivity::class.java).also {
+                view.context.startActivity(it)
+            }
         }
     }
-    fun tempDelete(view: View){
-        Toast.makeText(view.context, "deleting!!!!!", Toast.LENGTH_SHORT).show()
+
+    fun goToUserFeed(view: View){
+        Intent(view.context, MainActivity::class.java).also{
+            view.context.startActivity(it);
+        }
+//        var userFragment= UserFragment()
+//        supportFragmentManager.beginTransaction().replace(R.id.main_content,userFragment).commit()
     }
+
 }
