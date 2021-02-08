@@ -31,7 +31,6 @@ class DelSubAccountDialogFragment(context: Context) : DialogFragment() {
 //    private lateinit var fragment: Fragment
     //////
     lateinit var binding: FragmentDelSubAccountDialogBinding
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
