@@ -37,7 +37,13 @@
     <string name="setprofile">프로필 설정</string>
     <string name="editableprofile">프로필은 이후 변경 가능합니다.</string>
     <string name="profileimg">프로필 사진 바꾸기</string>
+    <string name="username">이름</string>
+    <string name="introduce">소개</string>
+    <string name="backgroundcolor">배경색</string>
+    <string name="changecolor">배경색 변경</string>
     <string name="background_intro">계정 피드 배경색입니다.</string>
+    <string name="complete">완료</string>
+
 
     <!-- Bottom Navigation View -->
     <string name="home">home</string>
