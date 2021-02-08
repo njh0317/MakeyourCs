@@ -23,6 +23,7 @@ import java.lang.Boolean.TRUE
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 
@@ -33,7 +34,7 @@ class FirebaseAuthSource {
     val accountDataLiveData = MutableLiveData<AccountClass.SubClass>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
-    var profileimageurl :Uri? = null
+    val allfollowerlistLiveData = MutableLiveData<List<String>>()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -184,6 +185,46 @@ class FirebaseAuthSource {
         }
             .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+    fun getAllfollower()
+    {
+        try {
+            firestore.collection("Account")
+                .document(currentUser()!!.email.toString())
+                .collection("SubAccount")
+                .document("본 계정")
+                .addSnapshotListener{ value, e ->
+                    if(e!=null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    value?.let{
+                        val data = it?.toObject(AccountClass.SubClass::class.java)
+                        if (data != null) {
+                            allfollowerlistLiveData.postValue(ArrayList(data.follower.keys))
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
+        }
+
+    }
+    fun setSubaccountFollower(group_name: String, follower_list: List<String>)
+    {
+        val getSubaccount = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("SubAccount")
+            .document(group_name)
+        val new_follower = make_map(follower_list)
+        firestore.runBatch { batch ->
+            batch.update(getSubaccount, "follower", new_follower)
+        }.addOnSuccessListener { Log.d(TAG, "Transaction success!(setSubaccountFollower)") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+
 
     }
     fun delSubAccount(group_name: String) {
