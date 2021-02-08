@@ -51,13 +51,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/explain_accmgt"
-                android:textSize="14sp"
-                android:textColor="@color/id_gray"/>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_horizontal"-->
+<!--                android:text="@string/explain_accmgt"-->
+<!--                android:textSize="14sp"-->
+<!--                android:textColor="@color/id_gray"/>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/account_recyclerView"

@@ -55,24 +55,27 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
         var groupname = viewModel.getItemList().get(position).groupname
 //        Log.d("onLongClick", "$groupname long clicked")
 
-        val dialog = DelSubAccountDialogFragment(this)
-        // 버튼 클릭 이벤트 설정
-        dialog.setButtonClickListener(object: DelSubAccountDialogFragment.OnButtonClickListener{
-            override fun onAccountDeleteButtonClicked() {
-//                Log.d("MgtMainActivity", "delete btn clicked")
-                viewModel.DeleteAccount(groupname)
-            }
-        })
-
-        if(position != 0) {
-            dialog.show(supportFragmentManager, "DelSubAccountDialogFragment")
-        }
-        else {
-//            Toast.makeText(this, "본 계정은 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
-            val dialog2 = OriginCannotDeleteDialog(this)
-            dialog2.WarningConfirm()
-        }
-
+        val dialog = AccMgtDialogFragment(this)
+        // TODO: 계정관리 다이얼로그 띄운 후에 삭제 다이얼로그 띄우기
+        // 여기부터 부캐 삭제 다이얼로그
+//        val dialog = DelSubAccountDialogFragment(this)
+//        // 버튼 클릭 이벤트 설정
+//        dialog.setButtonClickListener(object: DelSubAccountDialogFragment.OnButtonClickListener{
+//            override fun onAccountDeleteButtonClicked() {
+////                Log.d("MgtMainActivity", "delete btn clicked")
+//                viewModel.DeleteAccount(groupname)
+//            }
+//        })
+//
+//        if(position != 0) {
+//            dialog.show(supportFragmentManager, "DelSubAccountDialogFragment")
+//        }
+//        else {
+////            Toast.makeText(this, "본 계정은 삭제할 수 없습니다.", Toast.LENGTH_SHORT).show()
+//            val dialog2 = OriginCannotDeleteDialog(this)
+//            dialog2.WarningConfirm()
+//        }
+        //여기까지
     }
 
 

@@ -43,7 +43,7 @@
     <string name="changecolor">배경색 변경</string>
     <string name="background_intro">계정 피드 배경색입니다.</string>
     <string name="complete">완료</string>
-
+    <string name="changefollower">팔로워 변경</string>
 
     <!-- Bottom Navigation View -->
     <string name="home">home</string>
