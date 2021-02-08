@@ -141,7 +141,7 @@ class FirebaseAuthSource {
         OriginAccount.introduction = introduction
         OriginAccount.sub_num = 0
         OriginAccount.group_name = "본 계정"
-
+        System.out.println("setorigin : "+filepath)
         if(filepath != "default"){
             OriginAccount.profile_pic_name = uploadprofile(Uri.parse(filepath)).toString()
         }
@@ -159,14 +159,16 @@ class FirebaseAuthSource {
                     return@addOnFailureListener
             }
     }
-    fun setSubAccount(subaccount_num: Int, name: String, group_name: String, introduction: String, imageurl: String)
-    { //TODO: 사진 url :default
+    fun setSubAccount(subaccount_num: Int, name: String, group_name: String, introduction: String, filepath: String)
+    {
         val SubAccount = AccountClass.SubClass()
         SubAccount.name = name
         SubAccount.introduction = introduction
         SubAccount.sub_num = subaccount_num+1
         SubAccount.group_name = group_name
-        SubAccount.profile_pic_name = imageurl
+        if(filepath != "default"){
+            SubAccount.profile_pic_name = uploadprofile(Uri.parse(filepath)).toString()
+        }
 
         val subaccount = firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -417,18 +419,21 @@ class FirebaseAuthSource {
     }
 
 
-    fun modifiedprofile(group_name: String, name: String, introduction: String, imageurl: String)
+    fun modifiedprofile(group_name: String, name: String, introduction: String, filepath: String)
     {
         val DocRef = firestore
             .collection("Account")
             .document(currentUser()!!.email.toString())
             .collection("SubAccount")
             .document(group_name)
-
+        var filename = "default"
+        if(filepath != "default"){
+            filename = uploadprofile(Uri.parse(filepath)).toString()
+        }
         firestore.runTransaction { transaction ->
             transaction.update(DocRef, "introduction", introduction)
             transaction.update(DocRef, "name", name)
-            transaction.update(DocRef, "profile_pic_url", imageurl)
+            transaction.update(DocRef, "profile_pic_url", filename)
             // Success
             null
         }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }

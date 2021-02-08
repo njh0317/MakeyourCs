@@ -41,6 +41,7 @@ class AuthViewModel(
     var defaultName = ObservableField<String>()
     var defaultIntrodue = ObservableField<String>()
     var defaultColor = ObservableField<String>()
+    var defaultImg = ObservableField<String>()
 
     //auth listener
     var authListener: AuthListener? = null
@@ -157,12 +158,16 @@ class AuthViewModel(
 //        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
         Log.d("AuthViewModel", "set origin_account profile")
         System.out.println("${defaultName.get().toString()}, ${defaultIntrodue.get().toString()}")
-        repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), "default")
+        System.out.println("${defaultImg.get().toString()}")
+        if(defaultImg.get() != null){
+            repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), defaultImg.get().toString())
+        }else{  // 프로필 사진 설정 안했을 경우
+            repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), "default")
+        }
 
         Intent(view.context, MainActivity::class.java).also{
             view.context.startActivity(it)
         }
-
     }
 
     fun sub_account() //TODO:부캐생성 예시

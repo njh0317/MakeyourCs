@@ -35,11 +35,13 @@ class Signup_SetProfileActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun loadImage(){
-        val intent = Intent()
-        intent.type = "image/*"
-        intent.action = Intent.ACTION_GET_CONTENT
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE)
+        startActivityForResult(intent, Gallery)
+//        intent.type = "image/*"
+//        intent.action = Intent.ACTION_GET_CONTENT
 
-        startActivityForResult(Intent.createChooser(intent, "Load Picture"), Gallery)
+//        startActivityForResult(Intent.createChooser(intent, "Load Picture"), Gallery)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -48,7 +50,7 @@ class Signup_SetProfileActivity : AppCompatActivity(), KodeinAware {
         if(requestCode == Gallery){
             if(resultCode == RESULT_OK){
                 var dataUri = data?.data
-
+                binding.imgFilepath.text = dataUri.toString()
                 try{
                     var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, dataUri)
                     binding.profileImg.setImageBitmap(bitmap)
