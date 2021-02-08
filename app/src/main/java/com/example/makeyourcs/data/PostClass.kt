@@ -7,7 +7,7 @@ data class PostClass(var postId: Int? = 0,
                      var like:MutableList<String>? = ArrayList(),
                      var comment_cnt:Int? = 0,
                      var first_pic:String? = null,
-                     var is_stored:Boolean? = false,
+                     var isstored:Boolean? = false,
                      var place_tag:String? = null,
                      var post_data:String? = null)
 {
