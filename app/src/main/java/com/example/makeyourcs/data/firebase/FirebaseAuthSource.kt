@@ -134,18 +134,16 @@ class FirebaseAuthSource {
         }
     }
 
-    fun setOriginAccount(name: String, introduction: String, imageurl: String) { //TODO: 사진 url :default
+    fun setOriginAccount(name: String, introduction: String, filepath: String) {
         val OriginAccount = AccountClass.SubClass()
         OriginAccount.name = name
         OriginAccount.introduction = introduction
         OriginAccount.sub_num = 0
         OriginAccount.group_name = "본 계정"
-        OriginAccount.profile_pic_url = "default"
 
-//        if(imageurl.toString() != "default"){
-//            OriginAccount.profile_pic_url = uploadprofile(imageurl).toString()
-//        }
-
+        if(filepath != "default"){
+            OriginAccount.profile_pic_name = uploadprofile(Uri.parse(filepath)).toString()
+        }
 
         firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -167,7 +165,7 @@ class FirebaseAuthSource {
         SubAccount.introduction = introduction
         SubAccount.sub_num = subaccount_num+1
         SubAccount.group_name = group_name
-        SubAccount.profile_pic_url = imageurl
+        SubAccount.profile_pic_name = imageurl
 
         val subaccount = firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -458,6 +456,24 @@ class FirebaseAuthSource {
             }
         }
         return fileName
+    }
+    suspend fun uploadprofile2(filepath: Uri):Uri? { // upload profile image async로 하는 예시
+        var downloadUri: Uri? = null
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
+        var storageRef = firestorage.reference.child("profile/" + fileName)
+        var uploadTask = storageRef.putFile(filepath)
+        return try {
+            val urlTask = uploadTask.await()
+
+            val url = storageRef.downloadUrl.await()
+            return url
+        }catch(e:Throwable)
+        {
+            Log.w(TAG, "error in set image,  ",e)
+            null
+
+        }
     }
 
    suspend fun imageurl(imagename: String):Uri?

@@ -88,7 +88,7 @@ class HomeViewModel(
     }
 
     fun logout(view: View) {
-        repository.logout()
+//        repository.logout()
         view.context.startLoginActivity()
     }
 
