@@ -1,5 +1,7 @@
 package com.example.makeyourcs.ui.user
 
+import android.net.Uri
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +12,9 @@ import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.utils.startLoginActivity
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class UserViewModel(
     private val repository: AccountRepository
@@ -19,9 +24,10 @@ class UserViewModel(
     val userData: LiveData<AccountClass>
         get()= _userData
 
-    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
-    val accountData: LiveData<List<AccountClass.SubClass>>
+    private var _accountData = MutableLiveData<AccountClass.SubClass>()
+    val accountData: LiveData<AccountClass.SubClass>
         get() = _accountData
+
 
     var email: String? = null
     var id: String? = null
@@ -58,9 +64,9 @@ class UserViewModel(
         _userData = data
     }
 
-    fun getAccountData() {
+    fun getAccountData(gname : String) {
         System.out.println("getAccountData")
-        var data = repository.observeAccountData()
+        var data = repository.observeoneAccountData(gname)
         System.out.println("getAccountData " + data.value)
         _accountData = data
     }
@@ -69,4 +75,16 @@ class UserViewModel(
         repository.logout()
         view.context.startLoginActivity()
     }
+
+    suspend fun getImageurl(imagename:String):Uri? {
+        var uri:Uri?=null
+        uri=repository.imageurl(imagename)
+
+//        GlobalScope.launch{
+//            uri = repository.imageurl(imagename)
+//        }
+        Log.d("uri","uri in viewmodel: "+uri)
+        return uri
+    }
+
 }

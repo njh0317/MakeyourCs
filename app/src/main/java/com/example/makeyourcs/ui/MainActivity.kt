@@ -18,37 +18,40 @@ import org.kodein.di.generic.instance
 
 class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnNavigationItemSelectedListener {
     override val kodein by kodein()
-    private val factory : HomeViewModelFactory by instance()
     val TAG="MAINACTIVITY"
-    private lateinit var viewModel:HomeViewModel
+    var groupname:String?="본 계정"
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_home ->{
-                var homeFragment= HomeFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,homeFragment).commit()
+        when (item.itemId) {
+            R.id.action_home -> {
+                var homeFragment = HomeFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content, homeFragment)
+                    .commit()
 
                 return true
             }
-            R.id.action_search ->{
-                var searchFragment=
+            R.id.action_search -> {
+                var searchFragment =
                     SearchFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,searchFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content, searchFragment)
+                    .commit()
                 return true
             }
-            R.id.action_add_photo ->{
+            R.id.action_add_photo -> {
 
                 return true
             }
-            R.id.action_favorite_alarm ->{
-                var alarmFragment=
+            R.id.action_favorite_alarm -> {
+                var alarmFragment =
                     AlarmFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,alarmFragment).commit()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content, alarmFragment)
+                    .commit()
                 return true
             }
-            R.id.action_account ->{
-                var userFragment= UserFragment()
-                supportFragmentManager.beginTransaction().replace(R.id.main_content,userFragment).commit()
+            R.id.action_account -> {
+                var userFragment = UserFragment()
+                supportFragmentManager.beginTransaction().replace(R.id.main_content, userFragment)
+                    .commit()
                 return true
             }
         }

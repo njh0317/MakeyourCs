@@ -1,19 +1,29 @@
 package com.example.makeyourcs.ui.user
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentUserBinding
+import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.RecyclerFeedAdapter
 import com.example.makeyourcs.ui.home.InjectionFragment
 import com.example.makeyourcs.ui.user.settings.SettingDialogFragment
+import io.reactivex.annotations.SchedulerSupport.IO
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.kodein.di.generic.instance
 
 
@@ -44,11 +54,21 @@ class UserFragment : InjectionFragment(){
             binding.profileFollowing.text="팔로잉 "+it.following_num.toString()
         })
 
-        viewmodel.getAccountData()
+        viewmodel.getAccountData((activity as MainActivity).groupname!!)
+        Log.d("groupname","groupname in user: "+(activity as MainActivity).groupname)
+
         viewmodel.accountData.observe(viewLifecycleOwner, Observer {
-            binding.profileName.text=it[0].name
-            binding.profileIntro.text=it[0].introduction
-            binding.profileFollower.text="팔로워 " + it[0].follower_num.toString()
+            binding.profileName.text=it.name
+            binding.profileIntro.text=it.introduction
+            binding.profileFollower.text="팔로워 " + it.follower_num.toString()
+
+            lifecycleScope.launch {
+                val result = viewmodel.getImageurl(it.profile_pic_name!!)
+                Log.d("uri","uri : "+result)
+                Glide.with(view.context)
+                    .load(result)
+                    .into(binding.profileImage)
+            }
         })
 
         //setting button listener
