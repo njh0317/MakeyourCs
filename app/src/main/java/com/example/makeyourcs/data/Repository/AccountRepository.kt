@@ -88,6 +88,6 @@ class AccountRepository(
     //        val owner = repository.getplaceinfo("희루")
     //    }
 
-    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd: Uri)
-        =firestore.setPost(account, email, content, place_tag, pAdd)
+//    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd: Uri)
+//        =firestore.setPost(account, email, content, place_tag, pAdd)
 }

@@ -6,10 +6,7 @@ import androidx.annotation.RequiresApi
 import android.net.Uri
 
 import androidx.lifecycle.MutableLiveData
-import com.example.makeyourcs.data.AccountClass
-import com.example.makeyourcs.data.AccountPostClass
-import com.example.makeyourcs.data.PlaceClass
-import com.example.makeyourcs.data.PostClass
+import com.example.makeyourcs.data.*
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -396,18 +393,6 @@ class   FirebaseAuthSource {
             }
     }
 
-    fun setplacetag(place: PlaceClass)
-    {
-        //TODO: 따로 함수를 구현해두지만, setPost 할 떄 해줘야 하기 떄문에 이후에 setPost 함수로 이동 해야함
-        val placedb = firestore.collection("Place")
-            .document(place.place_name.toString())
-        firestore.runBatch { batch ->
-            batch.set(placedb,place)
-        }
-            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
-            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
-
-    }
     suspend fun getplaceinfo(place_name:String):PlaceClass?
     {
         return try {
@@ -454,25 +439,41 @@ class   FirebaseAuthSource {
     }
 
 
-    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd:Uri)
+
+    fun setPost(account:String, content:String, pAdd:Uri, place: PlaceClass, tag: PostClass.PictureClass.TagClass)
     {
         var posting = PostClass()
+        var postPics = PostClass.PictureClass()
+
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
 
         var curId = "POST_" + timestamp
         posting.postId = curId
         posting.account = account
-        posting.email = email
+        posting.email = currentUser()!!.email.toString()
         posting.content = content
-        posting.place_tag = place_tag
+        posting.place_tag = place.place_name
+
+        var order = 1
+        val tagdb = firestore.collection("Post").document(posting.postId.toString()).collection("PictureClass").document(order.toString()).collection("TagClass").document(tag.tagged_id.toString())
+        val placedb = firestore.collection("Place").document(place.place_name.toString())
+        val finaldb = firestore.collection("Post").document(posting.postId.toString())
 
         var fileName = "IMAGE_" + timestamp + "_.png"
         var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
         storageRef.putFile(pAdd!!).addOnSuccessListener {
             posting.imgUrl = pAdd.toString()
-            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
-
-            Log.d(TAG, "Upload photo completed")
+            postPics.order = 1
+            postPics.picture_url = pAdd.toString()
+            firestore.runBatch { batch ->
+                batch.set(placedb, place)
+                batch.set(tagdb, tag)
+                batch.set(finaldb, posting)
+            }.addOnSuccessListener {
+                Log.d(TAG, "Transaction success!")
+            }.addOnFailureListener { e ->
+                Log.w(TAG, "Transaction failure.", e)
+            }
         }
     }
 

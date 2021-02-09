@@ -1,3 +1,4 @@
 package com.example.makeyourcs.data
 
-data class HashClass(var place_name:MutableList<String>?=  ArrayList())
+data class HashClass(
+    var content: String ?= null, var cnt: Int = 0)
