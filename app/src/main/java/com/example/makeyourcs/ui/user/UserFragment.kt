@@ -65,10 +65,12 @@ class UserFragment : InjectionFragment(){
             lifecycleScope.launch {
                 val uri = viewmodel.getImageurl(it.profile_pic_name!!)
                 Log.d("uri","uri : "+uri)
-                Glide.with(view.context)
-                    .load(uri)
-                    .circleCrop()
-                    .into(binding.profileImage)
+                if(uri!=null){
+                    Glide.with(view.context)
+                        .load(uri)
+                        .circleCrop()
+                        .into(binding.profileImage)
+                }
             }
         })
 
