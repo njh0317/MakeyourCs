@@ -87,5 +87,8 @@ class AccountRepository(
     //        val owner = repository.getplaceinfo("희루")
     //    }
 
+    fun storepost(postId: Int)
+        = firestore.storepost(postId)
+
 
 }

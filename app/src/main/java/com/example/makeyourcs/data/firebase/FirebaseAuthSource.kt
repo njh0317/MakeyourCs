@@ -28,6 +28,7 @@ import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.TRUE
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 class   FirebaseAuthSource {
     val TAG = "FirebaseSource"
@@ -439,6 +440,7 @@ class   FirebaseAuthSource {
                 val snapshot = transaction.get(check_post_num)
                 val data = snapshot?.toObject(AccountClass.SubClass::class.java)
                 if (data != null) {
+                    Log.d(TAG, "group name : "+group_name)
                     data.post_number?.let { post_num_list.add(it) }
                 }
             }
@@ -462,7 +464,6 @@ class   FirebaseAuthSource {
                     .collection("SubAccount")
                     .document(group_name)
                 transaction.update(update_post_num, "post_number", post.order_in_feed)
-
                 check+=1
             }
         }
@@ -536,6 +537,7 @@ class   FirebaseAuthSource {
 
     fun storepost(postId: Int)
     {
+        //TODO: 수정하기..
         val storepost = firestore.collection("Post")
             .document(postId.toString())
         val subaccount = firestore.collection("Account")
@@ -544,20 +546,26 @@ class   FirebaseAuthSource {
             .orderBy("sub_num")
         val accountpost = firestore.collection("AccountPost")
             .document(currentUser()!!.email.toString())
-        var group_name_list: ArrayList<String>? = null
+        var group_name_list :ArrayList<String> = arrayListOf()
+        var post_num_list : MutableMap<String, Int>? = null
         var subaccountupdatepostlist : MutableMap<String, ArrayList<AccountPostClass.PostIdClass>>? = null //update 할 데이터
         firestore.runTransaction{transaction->
             //group_name_list 가져오기
             subaccount.addSnapshotListener {value, e ->
                 for (doc in value!!) {
-                    if (group_name_list != null) {
-                        doc?.let {
-                            val data = it?.toObject(AccountClass.SubClass::class.java)
-                            data.group_name?.let { it1 -> group_name_list.add(it1) }
+                    doc?.let {
+                        val data = it?.toObject(AccountClass.SubClass::class.java)
+                        Log.d(TAG, "data : "+data.toString())
+                        data.group_name!!.let { it ->
+                            Log.d(TAG, "group_name : "+it.toString())
+                            group_name_list.add(it.toString())
+                            post_num_list?.set(data.group_name!!, data.post_number!!)
                         }
                     }
                 }
             }
+            Log.d(TAG, "group_name_list : "+ group_name_list)
+            Log.d(TAG, "post num list : "+ post_num_list!!)
             //group_name_list 를 사용해서 subaccountpostlist 가져오기
             for (group_name in group_name_list!!){
                 var postsdeletelist  = ArrayList<AccountPostClass.PostIdClass>()
@@ -582,6 +590,9 @@ class   FirebaseAuthSource {
                                         order+=1
                                     }
                                     else{
+                                        post_num_list?.set(group_name!!,
+                                            post_num_list[group_name]?.minus(1)!!
+                                        )
                                         postsdeletelist.add(data)
                                     }
                                 }
@@ -589,9 +600,7 @@ class   FirebaseAuthSource {
                             subaccountupdatepostlist?.set(group_name, postupdatelist)
                         }
                     }
-                }
-
-
+            }
             //post id 에 해당하는 post 에 isstored(저장여부) TRUE로 변경
             transaction.update(storepost, "isstored", TRUE)
             for(group_name in group_name_list!!)
@@ -624,8 +633,14 @@ class   FirebaseAuthSource {
                     }
 
                 }
+                val update_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                transaction.update(update_post_num, "post_number", post_num_list?.get(group_name))
             }
-        }
+        }.addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
     }
 
