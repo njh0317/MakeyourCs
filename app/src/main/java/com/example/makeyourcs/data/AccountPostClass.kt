@@ -5,8 +5,8 @@ import kotlin.collections.ArrayList
 
 data class AccountPostClass(var account_id:String? = null)
 {
-    data class SubClass(var sub_id:String? = null,
-                        var postlist:MutableList<PostIdClass>?=ArrayList()
+    data class SubClass(var group_name:String? = null,
+                        var postlist:List<PostIdClass>?=ArrayList()
 
     )
     data class PostIdClass(var post_id:Int? = null,

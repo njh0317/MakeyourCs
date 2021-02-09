@@ -17,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import io.reactivex.Completable
@@ -24,6 +25,7 @@ import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 import kotlinx.android.synthetic.main.activity_storage.*
 import kotlinx.coroutines.tasks.await
+import java.lang.Boolean.TRUE
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -530,6 +532,101 @@ class   FirebaseAuthSource {
             Log.w(TAG, "error in get place, ", e)
             null
         }
+    }
+
+    fun storepost(postId: Int)
+    {
+        val storepost = firestore.collection("Post")
+            .document(postId.toString())
+        val subaccount = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("SubAccount")
+            .orderBy("sub_num")
+        val accountpost = firestore.collection("AccountPost")
+            .document(currentUser()!!.email.toString())
+        var group_name_list: ArrayList<String>? = null
+        var subaccountupdatepostlist : MutableMap<String, ArrayList<AccountPostClass.PostIdClass>>? = null //update 할 데이터
+        firestore.runTransaction{transaction->
+            //group_name_list 가져오기
+            subaccount.addSnapshotListener {value, e ->
+                for (doc in value!!) {
+                    if (group_name_list != null) {
+                        doc?.let {
+                            val data = it?.toObject(AccountClass.SubClass::class.java)
+                            data.group_name?.let { it1 -> group_name_list.add(it1) }
+                        }
+                    }
+                }
+            }
+            //group_name_list 를 사용해서 subaccountpostlist 가져오기
+            for (group_name in group_name_list!!){
+                var postsdeletelist  = ArrayList<AccountPostClass.PostIdClass>()
+                var postupdatelist = ArrayList<AccountPostClass.PostIdClass>()
+                accountpost
+                    .collection(group_name)
+                    .orderBy("order_in_feed")
+                    .addSnapshotListener {value: QuerySnapshot?, error: FirebaseFirestoreException? ->
+                        val docs = value?.documents
+                        var order = 1
+                        if (docs != null) {
+                            for (doc in docs) {
+                                val data = doc.toObject(AccountPostClass.PostIdClass::class.java)
+                                if(data != null)
+                                {
+                                    if(data.post_id != postId) {
+                                        if(data.order_in_feed!=order)
+                                        {
+                                            data.order_in_feed = order
+                                            postupdatelist.add(data)
+                                        }
+                                        order+=1
+                                    }
+                                    else{
+                                        postsdeletelist.add(data)
+                                    }
+                                }
+                            }
+                            subaccountupdatepostlist?.set(group_name, postupdatelist)
+                        }
+                    }
+                }
+
+
+            //post id 에 해당하는 post 에 isstored(저장여부) TRUE로 변경
+            transaction.update(storepost, "isstored", TRUE)
+            for(group_name in group_name_list!!)
+            {
+                val subaccountpost = accountpost
+                    .collection(group_name)
+
+                //delete
+                val deleteref = subaccountpost
+                    .document(postId.toString())
+                deleteref.addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    if (snapshot != null && snapshot.exists()) { //해당 문서가 존재하면 삭제
+                        transaction.delete(deleteref)
+                    } else {
+                        Log.d(TAG, "Current data: null")
+                    }
+                }
+
+                if(subaccountupdatepostlist?.get(group_name) !=null)
+                {
+                    val subaccountpostlist = subaccountupdatepostlist[group_name]
+                    for (post in subaccountpostlist!!)
+                    {
+                        val updateref = subaccountpost.document(post.post_id.toString())
+                        transaction.update(updateref, "order_in_feed", post.order_in_feed)
+                    }
+
+                }
+            }
+        }
+
     }
 
 }
