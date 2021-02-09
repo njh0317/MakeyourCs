@@ -32,8 +32,6 @@ class SettingDialogFragment(context: Context?): DialogFragment() {
 
         isCancelable=true
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        //dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
 
         view.account_mgt.setOnClickListener{
             Toast.makeText(context,"계정 관리입니다",Toast.LENGTH_SHORT).show()
@@ -45,8 +43,6 @@ class SettingDialogFragment(context: Context?): DialogFragment() {
         }
         view.archive.setOnClickListener{
             Toast.makeText(context,"아카이브입니다",Toast.LENGTH_SHORT).show()
-            val intent= Intent(context, ArchiveActivity::class.java)
-            startActivity(intent)
         }
         view.logout.setOnClickListener{
             Toast.makeText(context,"로그아웃입니다",Toast.LENGTH_SHORT).show()

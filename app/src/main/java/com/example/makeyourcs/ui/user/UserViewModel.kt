@@ -77,13 +77,11 @@ class UserViewModel(
     }
 
     suspend fun getImageurl(imagename:String):Uri? {
-        var uri:Uri?=null
-        uri=repository.imageurl(imagename)
 
 //        GlobalScope.launch{
 //            uri = repository.imageurl(imagename)
 //        }
-        return uri
+        return repository.imageurl(imagename)
     }
 
 }

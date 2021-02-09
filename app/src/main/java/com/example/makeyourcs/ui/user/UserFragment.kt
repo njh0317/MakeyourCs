@@ -67,18 +67,18 @@ class UserFragment : InjectionFragment(){
                 Log.d("uri","uri : "+uri)
                 Glide.with(view.context)
                     .load(uri)
+                    .circleCrop()
                     .into(binding.profileImage)
             }
         })
 
         //setting button listener
         binding.setting.setOnClickListener {
-            showDialog()
+            showSettingDialog()
         }
         return view
     }
-
-    private fun showDialog(){
+    private fun showSettingDialog(){
         val dialog =
             SettingDialogFragment(context)
         dialog.show(childFragmentManager, null)
