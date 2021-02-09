@@ -1,11 +1,15 @@
 package com.example.makeyourcs.data.Repository
 
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.AccountPostClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
+import java.util.*
 
 class AccountRepository(
     private val firestore: FirebaseAuthSource
@@ -59,4 +63,31 @@ class AccountRepository(
         return data
     }
 
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date) //올리려는 게시글을 사용자가 정한 group_name_list에 등록하는 함수
+        =firestore.uploadpostpergroup(group_name_list, postId, postDate) //TODO:upload 에 합쳐줘야함
+    //TODO:Date 타입 호출할때 다음 코드 참고
+    //    val now: Long = System.currentTimeMillis()
+    //    val date = Date(now)
+
+    fun observepostpergroup(group_name: String, toEmail: String, option:Int):MutableLiveData<List<AccountPostClass.PostIdClass>>
+    //선택된 group 에 해당하는 post 리스트를 보여줍니다.
+    //내 피드 게시글의 경우에는 option : 0, toEmail : "default" 로 호출합니다.
+    //상대 피드 게시글의 경우에는 option : 1, toEmail : 상대 이메일
+    //TODO:POST ID 정보만 리스트로 가져오기 때문에 추후 POST ID에 해당하는 POST CLASS 도 가져와야함
+    {
+        firestore.observepostpergroup(group_name, toEmail, option)
+        var data = firestore.postlist
+        return data
+    }
+
+    suspend fun getplaceinfo(place_name:String):PlaceClass?
+        = firestore.getplaceinfo(place_name)
+    //TODO: 함수 호출시 다음과 같이 해야함
+    //coroutine 방식으로, 비동기적으로 호출하기 때문에 GlobalScope.launch 안에 해당 함수를 호출한다.
+    //    GlobalScope.launch {
+    //        val owner = repository.getplaceinfo("희루")
+    //    }
+
+    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd: Uri)
+        =firestore.setPost(account, email, content, place_tag, pAdd)
 }

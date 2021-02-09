@@ -7,7 +7,10 @@ import android.net.Uri
 
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.AccountPostClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.PostClass
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -20,6 +23,7 @@ import io.reactivex.Completable
 import java.lang.Boolean.FALSE
 import java.time.LocalDateTime
 import kotlinx.android.synthetic.main.activity_storage.*
+import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +33,9 @@ class   FirebaseAuthSource {
     val accountDataLiveData = MutableLiveData<List<AccountClass.SubClass>>()
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val postDataLiveData = MutableLiveData<PostClass>()
+
+    val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
+    val postlist2 : MutableList<AccountPostClass.PostIdClass> = arrayListOf()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -239,90 +246,11 @@ class   FirebaseAuthSource {
         }
     }
 
-    fun setPhoto() {
-        var posting = PostClass()
-        posting.postId = 1 //난수로 시스템에서 아이디생성
-        posting.post_account = "sobinsobin"
-        posting.content = "life without fxxx coding^^"
-        posting.first_pic = "../images/test.jpg"
-        posting.place_tag = "homesweethome"
-        try{
-            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
-        }
-        catch (e: Exception){
-            Log.d("cannot upload", e.toString())
-        }
-
-    }
-
-
-    fun observePostData() {
-        System.out.println("observePostData")
-        System.out.println("observePostData2: " + currentUser()!!.email)
-
-        try {
-            firestore.collection("Post").whereEqualTo("post_account", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-                for (doc in value!!) {
-                    doc?.let {
-                        val data = it?.toObject(PostClass::class.java)
-                        System.out.println(data)
-                        postDataLiveData.postValue(data)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user data", e)
-        }
-    }
 
     fun deletePhoto(){ //추후 delete하는 Activity에 추가
 //        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
 
     }
-
-
-    fun setPost()
-    {
-        var posting = PostClass()
-        posting.postId = 1//난수로 시스템에서 아이디생성
-        posting.post_account = "dmlfid1348"
-        posting.content = "희루가기시러"
-        //posting.first_pic = "../images/test.jpg"
-        posting.place_tag = "huiru"
-        try{
-            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
-        }
-        catch(e: java.lang.Exception){
-            Log.d("cannot upload", e.toString())
-        }
-
-    }
-    fun getPost(postId:Int)
-    {
-        try{
-            firestore?.collection("Post")?.document(postId.toString())?.get()?.addOnCompleteListener{task->
-                if(task.isSuccessful){
-                    val posting = PostClass()
-                    posting.postId = task.result!!["postId"].toString().toInt()
-                    posting.post_account = task.result!!["post_account"].toString()
-                    posting.content = task.result!!["content"].toString()
-                    posting.first_pic = task.result!!["first_pic"].toString()
-
-                    System.out.println(posting)
-                }
-
-            }
-        }catch(e: java.lang.Exception)
-        {
-            Log.d("cannot get", e.toString())
-        }
-
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun follow(toEmail:String)
     {
@@ -416,5 +344,184 @@ class   FirebaseAuthSource {
 
     }
 
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
+    {
+        val post_num_list : ArrayList<Int> = arrayListOf()
+        firestore.runTransaction{ transaction ->
+            //group 별 게시글 개수 가져오기
+            for(group_name in group_name_list)
+            {
+                var check_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                val snapshot = transaction.get(check_post_num)
+                val data = snapshot?.toObject(AccountClass.SubClass::class.java)
+                if (data != null) {
+                    data.post_number?.let { post_num_list.add(it) }
+                }
+            }
+            var check = 0
+            for(group_name in group_name_list)
+            {
+                var post = AccountPostClass.PostIdClass()
+                post.order_in_feed = post_num_list[check]+1
+                post.post_id = postId
+                post.posting_date = postDate
+
+                var AccountPost = firestore.collection("AccountPost")
+                    .document(currentUser()!!.email.toString())
+                    .collection(group_name)
+                    .document(postId.toString())
+
+                transaction.set(AccountPost, post)
+
+                var update_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                transaction.update(update_post_num, "post_number", post.order_in_feed)
+
+                check+=1
+            }
+        }
+    }
+    fun observepostpergroup(group_name: String, toEmail: String, option : Int)
+    {
+        var checkEmail = toEmail
+        if(option == 0){
+            checkEmail = currentUser()!!.email.toString()
+        }
+        var posts : ArrayList<AccountPostClass.PostIdClass> = arrayListOf()
+        try{
+            firestore?.collection("AccountPost")
+                .document(checkEmail)
+                .collection(group_name)
+                .orderBy("order_in_feed")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    posts.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountPostClass.PostIdClass::class.java)
+                            posts.add(data)
+                        }
+                    }
+                    postlist.postValue(posts)
+                }
+
+            }catch(e: java.lang.Exception)
+            {
+                Log.d("cannot get", e.toString())
+            }
+    }
+
+    fun setplacetag(place: PlaceClass)
+    {
+        //TODO: 따로 함수를 구현해두지만, setPost 할 떄 해줘야 하기 떄문에 이후에 setPost 함수로 이동 해야함
+        val placedb = firestore.collection("Place")
+            .document(place.place_name.toString())
+        firestore.runBatch { batch ->
+            batch.set(placedb,place)
+        }
+            .addOnSuccessListener { Log.d(TAG, "Transaction success!") }
+            .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
+
+    }
+    suspend fun getplaceinfo(place_name:String):PlaceClass?
+    {
+        return try {
+            val docRef = firestore.collection("Place").document(place_name)
+            val doc = docRef.get().await()
+            if(doc.exists())
+            {
+                val place = doc.toObject(PlaceClass::class.java)
+                Log.d(TAG,"place : "+place.toString())
+                place
+            }else {
+                Log.w(TAG, "no data in place")
+                null
+            }
+
+        } catch(e:Throwable)
+        {
+            Log.w(TAG, "error in get place, ", e)
+            null
+        }
+    }
+
+
+    fun observePostData() {
+        System.out.println("observePostData: " + currentUser()!!.email)
+
+        try {
+            firestore.collection("Post").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                for (doc in value!!) {
+                    doc?.let {
+                        val data = it?.toObject(PostClass::class.java)
+                        System.out.println(data)
+                        postDataLiveData.postValue(data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+
+
+    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd:Uri)
+    {
+        var posting = PostClass()
+        var curId:String? = firebaseAuth?.uid
+        posting.postId = curId
+        posting.account = account
+        posting.email = email
+        posting.content = content
+        posting.place_tag = place_tag
+
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
+        //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
+        var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
+        storageRef.putFile(pAdd!!).addOnSuccessListener {
+            storageRef.downloadUrl.addOnSuccessListener {uri ->
+                if (curId != null) {
+                    posting.imgUrl = uri.toString()
+                    firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
+                }
+            }
+            Log.d(TAG, "Upload photo completed")
+        }
+    }
+
+    suspend fun getPost(postId:Int):PostClass?
+    {
+        return try {
+            val docRef = firestore.collection("Post").document(postId.toString())
+            val doc = docRef.get().await()
+            if (doc.exists()) {
+                val post = doc.toObject(PostClass::class.java)
+                Log.d(TAG, "post: " + post!!.postId)
+                post
+            } else {
+                Log.w(TAG, "no data in Post")
+                null
+            }
+        }
+        catch(e:Throwable) {
+            Log.w(TAG, "Error in Post", e)
+            null
+        }
+    }
 
 }
+
+

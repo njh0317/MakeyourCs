@@ -9,9 +9,6 @@ import com.google.firebase.storage.FirebaseStorage
 class PostRepository (
     private val firestore: FirebaseAuthSource
 ) {
-
-    fun setPhoto() = firestore.setPhoto()
-
     fun currentUser() = firestore.currentUser()
 
     fun observePostData(): MutableLiveData<PostClass>
