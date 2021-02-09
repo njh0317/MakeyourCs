@@ -1,20 +1,23 @@
 package com.example.makeyourcs.ui
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.makeyourcs.R
 import com.example.makeyourcs.ui.alarm.AlarmFragment
 import com.example.makeyourcs.ui.home.HomeFragment
-import com.example.makeyourcs.ui.home.HomeViewModel
-import com.example.makeyourcs.ui.home.HomeViewModelFactory
 import com.example.makeyourcs.ui.search.SearchFragment
+import com.example.makeyourcs.ui.upload.UploadActivity
 import com.example.makeyourcs.ui.user.UserFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
-import org.kodein.di.generic.instance
 
 class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnNavigationItemSelectedListener {
     override val kodein by kodein()
@@ -37,7 +40,19 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
                     .commit()
                 return true
             }
+            //Todo: add photo 이름 바꾸기
             R.id.action_add_photo -> {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
+
+                Log.d("upload","it's in main activity1")
+
+                if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)
+                    ==PackageManager.PERMISSION_GRANTED){
+                        Log.d("upload","it's in main activity2")
+                        startActivity(Intent(this,
+                            UploadActivity::class.java))
+                }
 
                 return true
             }
@@ -64,6 +79,7 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
 
         //Set default screen
         bottom_navigation.selectedItemId= R.id.action_home
+
 
     }
     public override fun onStart(){

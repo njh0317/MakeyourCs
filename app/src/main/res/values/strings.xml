@@ -92,7 +92,14 @@
     <!-- Comment -->
     <string name="send">Send</string>
 
-    <!-- Add Photo -->
+    <!-- Upload Photo -->
+    <string name="new_post">새 게시물</string>
+    <string name="share">공유</string>
+    <string name="text_input">문구 입력</string>
+    <string name="tag_people">사람 태그하기</string>
+    <string name="tag_location">위치 태그하기</string>
+    <string name="setting_closure">공개 범위 설정</string>
+
     <string name="upload_image">Photo Upload</string>
     <string name="hint_image_content">Image description</string>
     <string name="upload_success">Upload success</string>
