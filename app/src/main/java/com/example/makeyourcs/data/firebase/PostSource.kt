@@ -102,5 +102,7 @@ class PostSource {
             null
         }
     }
-
+    /*fun deletePhoto(){ //추후 delete하는 Activity에 추가
+        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
+    }*/
 }

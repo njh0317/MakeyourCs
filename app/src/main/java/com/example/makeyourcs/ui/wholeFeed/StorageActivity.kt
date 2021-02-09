@@ -133,5 +133,10 @@ class StorageActivity : AppCompatActivity() {
             Log.d(TAG, "Upload photo completed")
         }
     }
+
+    fun deletePhoto(email:String, postId: String){
+        firebaseStorage.reference.child("images/"+email).child(postId).delete()
+        //TODO firestore에서 삭제ㅎ
+    }
 }
 

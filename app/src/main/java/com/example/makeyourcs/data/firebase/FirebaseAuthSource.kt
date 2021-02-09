@@ -228,29 +228,6 @@ class   FirebaseAuthSource {
         }
     }
 
-    //TODO:게시글 파트
-    fun uploadPhoto(photoUri: Uri) {
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
-        //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
-        var storageRef = firebaseStorage.reference.child("images/"+fileName)
-//        var tmpid = 1;
-//        var firestore = firestore.collection("Post")?.document(tmpid.toString())?.update(
-//            mapOf(
-//                "picture_url" to storageRef.toString()
-//            )
-//        );
-        //모델에서 다운로드
-        storageRef.putFile(photoUri).addOnSuccessListener {
-            Log.d(TAG, "Upload photo completed")
-        }
-    }
-
-
-    fun deletePhoto(){ //추후 delete하는 Activity에 추가
-//        FirebaseStorage.getInstance().reference.child("images").child(delete_filename_edittext.text.toString()).delete()
-
-    }
     @RequiresApi(Build.VERSION_CODES.O)
     fun follow(toEmail:String)
     {
@@ -480,24 +457,21 @@ class   FirebaseAuthSource {
     fun setPost(account:String, email:String, content:String, place_tag:String, pAdd:Uri)
     {
         var posting = PostClass()
-        var curId:String? = firebaseAuth?.uid
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+
+        var curId = "POST_" + timestamp
         posting.postId = curId
         posting.account = account
         posting.email = email
         posting.content = content
         posting.place_tag = place_tag
 
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
-        //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
+        var fileName = "IMAGE_" + timestamp + "_.png"
         var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
         storageRef.putFile(pAdd!!).addOnSuccessListener {
-            storageRef.downloadUrl.addOnSuccessListener {uri ->
-                if (curId != null) {
-                    posting.imgUrl = uri.toString()
-                    firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
-                }
-            }
+            posting.imgUrl = pAdd.toString()
+            firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
+
             Log.d(TAG, "Upload photo completed")
         }
     }
