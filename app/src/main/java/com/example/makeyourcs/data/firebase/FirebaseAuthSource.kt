@@ -35,6 +35,7 @@ class FirebaseAuthSource {
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
     val allfollowerlistLiveData = MutableLiveData<List<String>>()
+    val searchaccountLiveData = MutableLiveData<List<String>>()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -523,7 +524,7 @@ class FirebaseAuthSource {
         }
     }
 
-   suspend fun imageurl(imagename: String):Uri?
+    suspend fun imageurl(imagename: String):Uri?
     {
         return try {
             val storageReference: StorageReference =
