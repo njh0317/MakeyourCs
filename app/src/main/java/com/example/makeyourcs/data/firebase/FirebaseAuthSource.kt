@@ -377,7 +377,38 @@ class FirebaseAuthSource {
                     followlistLiveData.postValue(followlist)
                 }
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting follower wait list", e)
+            Log.w(TAG, "Error getting follower wait list", e)
+        }
+
+    }
+    fun searchaccount(keyword: String)
+    {
+        var searchaccountlist : ArrayList<String> = arrayListOf()
+        try{
+            firestore.collection("Account")
+                .whereGreaterThanOrEqualTo("userId",keyword)
+                .orderBy("userId")
+                .limit(20)//20개 가져오기
+                .addSnapshotListener{value, e ->
+                    if(e != null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    for(doc in value!!)
+                    {
+                        doc?.let{
+                            val data = it?.toObject(AccountClass::class.java)
+                            searchaccountlist.add(data.userId!!)
+                        }
+                    }
+                    searchaccountLiveData.postValue(searchaccountlist)
+
+                }
+
+        } catch(e: Exception)
+        {
+            Log.w(TAG, "Error getting search account list",e)
         }
 
     }
