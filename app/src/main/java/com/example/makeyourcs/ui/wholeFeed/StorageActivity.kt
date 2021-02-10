@@ -6,25 +6,26 @@ import android.os.Bundle
 import android.util.Log
 import com.example.makeyourcs.R
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.PostClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_detailed.view.*
 import kotlinx.android.synthetic.main.activity_storage.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class StorageActivity : AppCompatActivity() {
     val TAG = "FirebaseSource"
-    val GALLERY = 0 //GALLERY의 역할
-    val firebaseStorage = FirebaseStorage.getInstance();
+    val GALLERY = 0
 
-
+    private val firebaseStorage: FirebaseStorage by lazy{
+        FirebaseStorage.getInstance()
+    }
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
@@ -32,73 +33,17 @@ class StorageActivity : AppCompatActivity() {
         FirebaseFirestore.getInstance()
     }
     fun currentUser() = firebaseAuth.currentUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_storage)
         upload_photo.setOnClickListener { openAlbum() }
-
-//        delete_photo.setOnClickListener{ deletePhoto() }
-//        list_photo.setOnClickListener {
-//            var testList = ArrayList<String>()
-//            GlobalScope.launch {
-//                val testList = getPost(postId)
-//            }
-//            for (t: String in testList) {
-//                System.out.println(t)
-//            }
-//        }
+        list_photo.setOnClickListener{ getMyPost() }
     }
     fun openAlbum(){  //저장된 사진을 공유...추후 사진 바로 찍어서 올리는 함수 추가 예정
         var intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY)
-    }
-
-    /*fun uploadPhoto(photoUri: Uri) {
-
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
-        //images를 폴더명으로 하고 있으나 업로드 유저 아이디를 폴더명으로 할 예정
-
-        var storageRef = firebaseStorage.reference.child("images/"+fileName)
-        var tmpid = 0;
-        System.out.println("photoUri"+photoUri)
-
-        val photo = hashMapOf(
-            "photoUri" to photoUri.toString(),
-            "order" to tmpid.toString()
-        )
-
-        //모델에서 다운로드
-        storageRef.putFile(photoUri).addOnSuccessListener {
-            Log.d("1", "Upload photo completed")
-            firestore.collection("Post").document("1").collection("pictureClass").document("1")
-                .set(photo)
-                .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot successfully written!") }
-                .addOnFailureListener { e -> Log.w(TAG, "Error writing document", e) }
-        }
-            .addOnFailureListener{e-> Log.w(TAG,"Retry to upload photo to storage", e) }
-
-    }*/
-
-    suspend fun getPost(postId:Int):PostClass?
-    {
-        return try {
-            val docRef = firestore.collection("Post").document(postId.toString())
-            val doc = docRef.get().await()
-            if (doc.exists()) {
-                val post = doc.toObject(PostClass::class.java)
-                Log.d(TAG, "post: " + post!!.postId)
-                post
-            } else {
-                Log.w(TAG, "no data in Post")
-                null
-            }
-        }
-        catch(e:Throwable) {
-            Log.w(TAG, "Error in Post", e)
-            null
-        }
     }
 
     //onCreate ->startActivityForResult -> (setResult) -> onActivityResult
@@ -156,6 +101,31 @@ class StorageActivity : AppCompatActivity() {
     fun deletePhoto(email:String, postId: String){
         firebaseStorage.reference.child("images/"+email).child(postId).delete()
         //TODO firestore에서 삭제ㅎ
+    }
+    fun getMyPost()
+    {
+        val postlistLiveData = MutableLiveData<List<PostClass>>()
+        try {//email = currentUser()!!.email.toString()
+            firestore.collection("Post").whereEqualTo("email", "dmlfid1348@naver.com")
+                .addSnapshotListener{ value, e ->
+                    if(e!=null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    value?.let{
+                        val data = it?.toObjects(PostClass::class.java)
+                        if (data != null) {
+                            Log.w(TAG, "Listen Carefully.", e)
+                            System.out.println(data)
+                            postlistLiveData.postValue(data)
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
+        }
+
     }
 }
 

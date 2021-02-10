@@ -477,24 +477,30 @@ class   FirebaseAuthSource {
         }
     }
 
-    suspend fun getPost(postId:Int):PostClass?
+    fun getMyPost()
     {
-        return try {
-            val docRef = firestore.collection("Post").document(postId.toString())
-            val doc = docRef.get().await()
-            if (doc.exists()) {
-                val post = doc.toObject(PostClass::class.java)
-                Log.d(TAG, "post: " + post!!.postId)
-                post
-            } else {
-                Log.w(TAG, "no data in Post")
-                null
-            }
+        val postlistLiveData = MutableLiveData<List<PostClass>>()
+        try {//email = currentUser()!!.email.toString()
+            firestore.collection("Post").whereEqualTo("email", "dmlfid1348@naver.com")
+                .addSnapshotListener{ value, e ->
+                    if(e!=null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    value?.let{
+                        val data = it?.toObjects(PostClass::class.java)
+                        if (data != null) {
+                            Log.w(TAG, "Listen Carefully.", e)
+                            System.out.println(data)
+                            postlistLiveData.postValue(data)
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
         }
-        catch(e:Throwable) {
-            Log.w(TAG, "Error in Post", e)
-            null
-        }
+
     }
 
 }
