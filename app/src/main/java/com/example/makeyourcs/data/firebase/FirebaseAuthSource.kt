@@ -399,7 +399,9 @@ class FirebaseAuthSource {
                     {
                         doc?.let{
                             val data = it?.toObject(AccountClass::class.java)
-                            searchaccountlist.add(data.userId!!)
+                            if(data.userId!!.contains(keyword)) {
+                                searchaccountlist.add(data.userId!!)
+                            }
                         }
                     }
                     searchaccountLiveData.postValue(searchaccountlist)

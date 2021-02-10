@@ -1,5 +1,7 @@
 package com.example.makeyourcs.ui.user
 
+import android.content.ContentValues
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +24,7 @@ class UserViewModel(
     private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
     val accountData: LiveData<List<AccountClass.SubClass>>
         get() = _accountData
+
 
     var email: String? = null
     var id: String? = null
@@ -69,4 +72,5 @@ class UserViewModel(
         repository.logout()
         view.context.startLoginActivity()
     }
+
 }
