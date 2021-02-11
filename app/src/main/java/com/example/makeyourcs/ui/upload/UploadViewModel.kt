@@ -28,9 +28,12 @@ class UploadViewModel(
         repository.currentUser()
     }
 
-    fun sharePost(){
+    fun sharePost(view:View){
         Log.d("upload","upload click listener")
         //TODO: intent 전환
     }
 
+    fun searchAccount(keyword :String):MutableLiveData<List<String>>{
+        return repository.searchaccount(keyword)
+    }
 }

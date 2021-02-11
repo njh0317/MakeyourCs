@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
+        <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.example.makeyourcs.ui.upload.UploadViewModel" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,7 +48,7 @@
                     android:textColor="@color/signature"
                     android:textSize="20dp"
                     android:textStyle="bold"
-                    android:onClick="@{(viewmodel) -> viewmodel.sharePost()}"
+                    android:onClick="@{(view)->viewmodel.sharePost(view)}"
                     ></TextView>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
