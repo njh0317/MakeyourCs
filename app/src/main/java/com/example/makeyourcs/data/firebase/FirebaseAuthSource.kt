@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PostClass
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -36,6 +37,7 @@ class FirebaseAuthSource {
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
     val allfollowerlistLiveData = MutableLiveData<List<String>>()
     val searchaccountLiveData = MutableLiveData<List<String>>()
+    val postDataLiveData = MutableLiveData<PostClass>()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -571,5 +573,29 @@ class FirebaseAuthSource {
         }
 
     }
+    fun getMyPost()
+    {
+        val postlistLiveData = MutableLiveData<List<PostClass>>()
+        try {//email = currentUser()!!.email.toString()
+            firestore.collection("Post").whereEqualTo("email", "dmlfid1348@naver.com")
+                .addSnapshotListener{ value, e ->
+                    if(e!=null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    value?.let{
+                        val data = it?.toObjects(PostClass::class.java)
+                        if (data != null) {
+                            Log.w(TAG, "Listen Carefully.", e)
+                            System.out.println(data)
+                            postlistLiveData.postValue(data)
+                        }
+                    }
+                }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting follower wait list", e)
+        }
 
+    }
 }

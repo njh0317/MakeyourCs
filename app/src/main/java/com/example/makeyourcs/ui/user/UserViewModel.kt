@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.R
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.ImageVo
 import com.example.makeyourcs.ui.auth.AuthListener
@@ -82,6 +83,17 @@ class UserViewModel(
 //            uri = repository.imageurl(imagename)
 //        }
         return repository.imageurl(imagename)
+    }
+
+    //소빈
+    private var _postData = MutableLiveData<PostClass>()
+    val postData: LiveData<PostClass>
+        get()= _postData
+
+    fun getPostData(){
+        var data = repository.getMyPost()
+        System.out.println("getPostData"+data.value)
+        _postData = data
     }
 
 }

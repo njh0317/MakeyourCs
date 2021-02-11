@@ -5,6 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.firebase.FirebaseAuthSource
 
 class AccountRepository(
@@ -94,6 +95,12 @@ class AccountRepository(
     {
         firestore.searchaccount(keyword)
         var data = firestore.searchaccountLiveData
+        return data
+    }
+    fun getMyPost(): MutableLiveData<PostClass> // 유저 게시글 정보 가져오기
+    {
+        firestore.getMyPost()
+        var data = firestore.postDataLiveData
         return data
     }
 

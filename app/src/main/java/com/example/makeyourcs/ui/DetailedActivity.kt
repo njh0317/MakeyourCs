@@ -16,9 +16,9 @@ class DetailedActivity : AppCompatActivity() {
         if (intent.hasExtra("image_name")) {
             var resourceId = intent.getIntExtra("image_name",0)
             if (resourceId > 0)
-                    imageView1.setImageResource(resourceId)
+                    imageView.setImageResource(resourceId)
             else
-                imageView1.setImageResource(R.mipmap.ic_launcher_round)
+                imageView.setImageResource(R.mipmap.ic_launcher_round)
         }
         else
             Toast.makeText(this, "전달된 이름이 없습니다", Toast.LENGTH_SHORT).show()

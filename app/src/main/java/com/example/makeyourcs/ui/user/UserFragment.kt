@@ -74,6 +74,12 @@ class UserFragment : InjectionFragment(){
             }
         })
 
+        viewmodel.getPostData()
+//        viewmodel.postData.observe(viewLifecycleOwner, Observer {
+//
+//        })
+//
+
         //setting button listener
         binding.setting.setOnClickListener {
             showSettingDialog()
