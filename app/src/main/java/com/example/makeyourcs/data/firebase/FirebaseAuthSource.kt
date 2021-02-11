@@ -534,6 +534,10 @@ class   FirebaseAuthSource {
             null
         }
     }
+    fun storepost(postId: String)
+    {
+
+    }
 
     fun storepost(postId: Int)
     {
