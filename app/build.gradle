@@ -121,4 +121,9 @@ dependencies {
     //coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1"
 
+    //Google Map
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+
+    implementation 'androidx.cardview:cardview:1.0.0'
+
 }

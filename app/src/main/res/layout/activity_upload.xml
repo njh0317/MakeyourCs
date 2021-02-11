@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
+
     <data>
+
         <import type="android.view.View" />
 
         <variable
@@ -9,8 +11,7 @@
             type="com.example.makeyourcs.ui.upload.UploadViewModel" />
     </data>
 
-    <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.upload.UploadActivity">
@@ -21,15 +22,18 @@
             android:layout_height="35dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="10dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <ImageButton
                     android:id="@+id/back_btn"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_alignParentLeft="true"
                     android:background="@drawable/btn_back"></ImageButton>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,29 +41,29 @@
                     android:text="@string/new_post"
                     android:textSize="20dp"
                     android:textStyle="bold"></TextView>
+
                 <TextView
                     android:id="@+id/share_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:onClick="@{(view)->viewmodel.sharePost(view)}"
                     android:paddingRight="20dp"
                     android:text="@string/share"
                     android:textColor="@color/signature"
                     android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:onClick="@{(view)->viewmodel.sharePost(view)}"
-                    ></TextView>
+                    android:textStyle="bold"></TextView>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
 
         <ImageView
             android:id="@+id/upload_image"
-            android:layout_below="@+id/my_toolbar"
-            android:layout_centerHorizontal="true"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_below="@+id/my_toolbar"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"></ImageView>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -67,37 +71,59 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/upload_image"
-            android:layout_marginLeft="60dp"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="60dp">
+
             <EditText
                 android:id="@+id/upload_edit_explain"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="@string/text_input"
-                android:background="@null"></EditText>
+                android:background="@null"
+                android:hint="@string/text_input"></EditText>
         </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:id="@+id/tag_people"
-            android:layout_marginLeft="60dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@id/editText"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="60dp"
             android:gravity="center|left"
+            android:text="@string/tag_people"
             android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="@string/tag_people"></TextView>
+            android:textStyle="bold"></TextView>
+
         <TextView
             android:id="@+id/tag_loc"
-            android:layout_marginLeft="60dp"
-            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_below="@id/tag_people"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="60dp"
             android:gravity="center|left"
+            android:text="@string/tag_location"
             android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="@string/tag_location"></TextView>
+            android:textStyle="bold"></TextView>
+
+
+<!--        <androidx.cardview.widget.CardView-->
+<!--            xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+<!--            android:name="@+id/card_view"-->
+<!--            android:layout_width="400dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            card_view:cardCornerRadius="4dp"-->
+<!--            >-->
+<!--        <fragment-->
+<!--            android:id="@+id/autocomplete_fragment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
+<!--            >-->
+<!--        </fragment>-->
+<!--        </androidx.cardview.widget.CardView>-->
+
 
     </RelativeLayout>
 </layout>
