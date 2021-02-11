@@ -1,5 +1,6 @@
 package com.example.makeyourcs.ui.user.management
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -110,6 +111,7 @@ class UserMgtViewModel (
         }
 //        view.context.startAccountMgtMainActivity()
         Intent(view.context, SelectFollowerForNewAccActivity::class.java).also {
+            it.putExtra("groupname", groupName.get().toString())
             view.context.startActivity(it)
         }
     }
@@ -118,6 +120,17 @@ class UserMgtViewModel (
         Log.d("UserMgtViewModel", "$delGroup - DeleteAccount")
         System.out.println("DeleteAccount in ViewModel")
         repository.delSubAccount(delGroup)
+    }
+
+    fun SetFollowertoSubaccount(context: Context, groupname: String, selected_follower: List<String>){
+        System.out.println("in viewmodel: $groupname")
+        Log.d("setfollower", "$selected_follower")
+
+        repository.setSubaccountFollower(groupname, selected_follower)
+        Log.d("setfollower", "success set follower")
+        Intent(context, AccountMgtMainActivity::class.java).also{
+            context.startActivity(it)
+        }
     }
 
     fun goToAddNewAccount(view: View) {

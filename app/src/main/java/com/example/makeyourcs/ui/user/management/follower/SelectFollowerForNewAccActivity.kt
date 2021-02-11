@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -28,9 +29,18 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
     lateinit var adapter: FollowerRecyclerAdapter
     private var SelectedItems = SparseBooleanArray(0)
 
+    private lateinit var groupname: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_select_follower_for_new_acc)
+        if (intent.hasExtra("groupname")) {
+            groupname = intent.getStringExtra("groupname")
+//            Toast.makeText(this, "$groupname get!!", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "groupname Error!", Toast.LENGTH_SHORT).show()
+        }
+
         binding =
             DataBindingUtil.setContentView(this, R.layout.activity_select_follower_for_new_acc)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
@@ -42,8 +52,23 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
             binding.followerRecyclerView.adapter = adapter
         })
 
+        binding.selectComplete.setOnClickListener {
+            selectedFollower()
+        }
 //        adapter = FollowerRecyclerAdapter(list)
 //        binding.followerRecyclerView.adapter = adapter
+    }
+
+    fun selectedFollower() {
+        var followerlist = viewModel.getFollowerItemList()
+        var selectedfollower = mutableListOf<String>()
+
+        for (i in 0..(followerlist.size - 1)) {
+            if (SelectedItems.get(i)) {
+                selectedfollower.add(followerlist.get(i).id)
+            }
+        }
+        viewModel.SetFollowertoSubaccount(this, groupname, selectedfollower)
     }
 
     override fun onItemClick(position: Int, view: View) {

@@ -32,6 +32,7 @@
 <!--                    android:textSize="20sp" />-->
 
                 <Button
+                    android:id="@+id/select_complete"
                     android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
