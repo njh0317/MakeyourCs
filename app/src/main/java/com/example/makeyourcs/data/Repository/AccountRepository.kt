@@ -90,4 +90,11 @@ class AccountRepository(
     //            repository.imageurl("IMAGE_20210203_220411_.png")
     //        }
 
+    fun searchaccount(keyword: String): MutableLiveData<List<String>> //keyword 와 비슷한 account를 livedata 로 값을 가져옴
+    {
+        firestore.searchaccount(keyword)
+        var data = firestore.searchaccountLiveData
+        return data
+    }
+
 }

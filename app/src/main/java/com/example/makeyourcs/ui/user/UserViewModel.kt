@@ -1,6 +1,10 @@
 package com.example.makeyourcs.ui.user
 
+<<<<<<< HEAD
 import android.net.Uri
+=======
+import android.content.ContentValues
+>>>>>>> 30-search_account
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.LiveData

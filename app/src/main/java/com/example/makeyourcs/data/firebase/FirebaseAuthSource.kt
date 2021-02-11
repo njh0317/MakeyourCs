@@ -35,6 +35,7 @@ class FirebaseAuthSource {
     val followerWaitlistLiveData = MutableLiveData<List<AccountClass.Follower_wait_list>>()
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
     val allfollowerlistLiveData = MutableLiveData<List<String>>()
+    val searchaccountLiveData = MutableLiveData<List<String>>()
 
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
@@ -376,7 +377,40 @@ class FirebaseAuthSource {
                     followlistLiveData.postValue(followlist)
                 }
         } catch (e: Exception) {
-            Log.e(TAG, "Error getting follower wait list", e)
+            Log.w(TAG, "Error getting follower wait list", e)
+        }
+
+    }
+    fun searchaccount(keyword: String)
+    {
+        var searchaccountlist : ArrayList<String> = arrayListOf()
+        try{
+            firestore.collection("Account")
+                .whereGreaterThanOrEqualTo("userId",keyword)
+                .orderBy("userId")
+                .limit(20)//20개 가져오기
+                .addSnapshotListener{value, e ->
+                    if(e != null)
+                    {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    for(doc in value!!)
+                    {
+                        doc?.let{
+                            val data = it?.toObject(AccountClass::class.java)
+                            if(data.userId!!.contains(keyword)) {
+                                searchaccountlist.add(data.userId!!)
+                            }
+                        }
+                    }
+                    searchaccountLiveData.postValue(searchaccountlist)
+
+                }
+
+        } catch(e: Exception)
+        {
+            Log.w(TAG, "Error getting search account list",e)
         }
 
     }
@@ -523,7 +557,7 @@ class FirebaseAuthSource {
         }
     }
 
-   suspend fun imageurl(imagename: String):Uri?
+    suspend fun imageurl(imagename: String):Uri?
     {
         return try {
             val storageReference: StorageReference =
