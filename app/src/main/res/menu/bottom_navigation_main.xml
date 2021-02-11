@@ -13,7 +13,7 @@
         android:title="@string/search">
     </item>
     <item
-        android:id="@+id/action_add_photo"
+        android:id="@+id/action_upload"
         android:icon="@drawable/ic_add_a_photo"
         android:enabled="true"
         android:title="@string/upload_image">

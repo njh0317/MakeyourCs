@@ -40,12 +40,9 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
                     .commit()
                 return true
             }
-            //Todo: add photo 이름 바꾸기
-            R.id.action_add_photo -> {
+            R.id.action_upload -> {
                 ActivityCompat.requestPermissions(this,
                     arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),1)
-
-                Log.d("upload","it's in main activity1")
 
                 if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE)
                     ==PackageManager.PERMISSION_GRANTED){
