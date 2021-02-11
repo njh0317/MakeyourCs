@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.upload.UploadActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/my_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageButton
+                    android:id="@+id/back_btn"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/btn_back"></ImageButton>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/new_post"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+                <TextView
+                    android:id="@+id/share_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:paddingRight="20dp"
+                    android:text="@string/share"
+                    android:textColor="@color/signature"
+                    android:textSize="20dp"
+                    android:textStyle="bold"></TextView>
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <ImageView
+            android:id="@+id/upload_image"
+            android:layout_below="@+id/my_toolbar"
+            android:layout_centerHorizontal="true"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"></ImageView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/upload_image">
+            <EditText
+                android:id="@+id/upload_edit_explain"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:hint="@string/text_input"></EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/tag_people"
+            android:layout_marginLeft="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/editText"
+            android:text="@string/tag_people"></TextView>
+        <TextView
+            android:id="@+id/tag_loc"
+            android:layout_marginLeft="40dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/tag_people"
+            android:text="@string/tag_location"></TextView>
+
+
+
+    </RelativeLayout>
+</layout>
