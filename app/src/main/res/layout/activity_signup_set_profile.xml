@@ -37,7 +37,6 @@
                 android:textColor="@color/deepGray"
                 android:textSize="17sp" />
 
-
             <TextView
                 android:id="@+id/img_filepath"
                 android:layout_width="wrap_content"

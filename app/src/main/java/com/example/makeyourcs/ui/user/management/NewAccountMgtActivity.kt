@@ -64,7 +64,7 @@ class NewAccountMgtActivity : AppCompatActivity() , KodeinAware {
         if(requestCode == Gallery){
             if(resultCode == RESULT_OK){
                 var dataUri = data?.data
-                binding.imgFilepath.text = dataUri.toString()
+                binding.subimgFilepath.text = dataUri.toString()
                 try{
                     var bitmap : Bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, dataUri)
                     binding.subaccountImg.setImageBitmap(bitmap)

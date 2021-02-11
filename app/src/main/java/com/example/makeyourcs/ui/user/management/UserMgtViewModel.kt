@@ -82,8 +82,6 @@ class UserMgtViewModel (
         return itemlist
     }
 
-
-
     fun getItemList(): ArrayList<AccountMgtItem>{ // 부캐정보 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
         var itemlist = ArrayList<AccountMgtItem>()
         var data = accountData

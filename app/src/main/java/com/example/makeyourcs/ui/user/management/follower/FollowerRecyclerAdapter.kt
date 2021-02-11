@@ -1,6 +1,7 @@
 package com.example.makeyourcs.ui.user.management.follower
 
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,8 @@ class FollowerRecyclerAdapter(
 ) :
     RecyclerView.Adapter<FollowerRecyclerAdapter.MyViewHolder>(){
 
+    private var mSelectedItems = SparseBooleanArray(0)
+
     inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener{
         val img = itemView.follower_img
@@ -28,14 +31,14 @@ class FollowerRecyclerAdapter(
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION){
                 if (v != null) {
-                    listener.onItemClick(position, v)
+                    listener.onItemClick(position, v, mSelectedItems)
                 }
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(position: Int, view: View)
+        fun onItemClick(position: Int, view: View, SelectedItems: SparseBooleanArray)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
