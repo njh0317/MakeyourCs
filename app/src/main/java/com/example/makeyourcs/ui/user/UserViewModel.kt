@@ -20,7 +20,6 @@ import kotlin.math.log
 class UserViewModel(
     private val repository: AccountRepository
 ) :ViewModel() {
-    val TAG = "USERVIEWMODEL"
     private var _userData = MutableLiveData<AccountClass>()
     val userData: LiveData<AccountClass>
         get()= _userData
@@ -32,10 +31,10 @@ class UserViewModel(
 
     var email: String? = null
     var id: String? = null
-    var sub_count: Int? = null
-    var following_num: Int? = null
+    //var sub_count: Int? = null
+    //var following_num: Int? = null
     //auth listener
-    var authListener: AuthListener? = null
+    //var authListener: AuthListener? = null
 
     var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
     val _imgList = ArrayList<ImageVo>()
@@ -77,7 +76,7 @@ class UserViewModel(
         view.context.startLoginActivity()
     }
 
-    suspend fun getImageurl(imagename:String):Uri? {
+    suspend fun getProfileImageurl(imagename:String):Uri? {
 
 //        GlobalScope.launch{
 //            uri = repository.imageurl(imagename)

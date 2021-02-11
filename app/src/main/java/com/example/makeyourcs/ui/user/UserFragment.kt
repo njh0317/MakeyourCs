@@ -63,7 +63,7 @@ class UserFragment : InjectionFragment(){
             binding.profileFollower.text="팔로워 " + it.follower_num.toString()
 
             lifecycleScope.launch {
-                val uri = viewmodel.getImageurl(it.profile_pic_name!!)
+                val uri = viewmodel.getProfileImageurl(it.profile_pic_name!!)
                 Log.d("uri","uri : "+uri)
                 if(uri!=null){
                     Glide.with(view.context)

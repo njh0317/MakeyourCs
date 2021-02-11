@@ -24,28 +24,27 @@ import com.example.makeyourcs.utils.startLoginActivity
 class HomeViewModel(
     private val repository: AccountRepository
 ):ViewModel() {
-    val TAG = "HOMEVIEWMODEL"
-
-    private var _userData = MutableLiveData<AccountClass>()
-    val userData: LiveData<AccountClass>
-        get() = _userData
-
-    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
-    val accountData: LiveData<List<AccountClass.SubClass>>
-        get() = _accountData
-
-    var email: String? = null
-    var id: String? = null
-    var sub_count: Int? = null
-    var following_num: Int? = null
+//
+//    private var _userData = MutableLiveData<AccountClass>()
+//    val userData: LiveData<AccountClass>
+//        get() = _userData
+//
+//    private var _accountData = MutableLiveData<List<AccountClass.SubClass>>()
+//    val accountData: LiveData<List<AccountClass.SubClass>>
+//        get() = _accountData
+//
+//    var email: String? = null
+//    var id: String? = null
+    //var sub_count: Int? = null
+    //var following_num: Int? = null
 
     //sub account Info
-    var subName = ObservableField<String>()
-    var groupName = ObservableField<String>()
-    var subIntroduce = ObservableField<String>()
+//    var subName = ObservableField<String>()
+//    var groupName = ObservableField<String>()
+//    var subIntroduce = ObservableField<String>()
 
     //auth listener
-    var authListener: AuthListener? = null
+   // var authListener: AuthListener? = null
 
 
     var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
@@ -69,26 +68,26 @@ class HomeViewModel(
     val user by lazy {
         repository.currentUser()
     }
-
-    fun newAccount(view: View) {
-        System.out.println("new subAccount!!")
-        var data = repository.observeUserData()
-
-        repository.setSubAccount(
-            data.value?.sub_count!!,
-            subName.get().toString(),
-            groupName.get().toString(),
-            subIntroduce.get().toString(),
-            "default"
-        )
-        view.context.startAccountMgtMainActivity()
-    }
-
-    fun goToUserFeedAccountMgt(view: View) {
-        view.context.startAccountMgtMainActivity()
-//        Intent(view.context, AccountMgtMainActivity::class.java).also {
-//            view.context.startActivity(it)
-//        }
-    }
+//
+//    fun newAccount(view: View) {
+//        System.out.println("new subAccount!!")
+//        var data = repository.observeUserData()
+//
+//        repository.setSubAccount(
+//            data.value?.sub_count!!,
+//            subName.get().toString(),
+//            groupName.get().toString(),
+//            subIntroduce.get().toString(),
+//            "default"
+//        )
+//        view.context.startAccountMgtMainActivity()
+//    }
+//
+//    fun goToUserFeedAccountMgt(view: View) {
+//        view.context.startAccountMgtMainActivity()
+////        Intent(view.context, AccountMgtMainActivity::class.java).also {
+////            view.context.startActivity(it)
+////        }
+//    }
 
 }

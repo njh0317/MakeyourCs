@@ -40,7 +40,7 @@ class RecyclerFeedAdapter(private val context: Context, private val dataList: Ar
 //        holder.bind(dataList[position], context)
 //
         holder.itemView.setOnClickListener { view ->
-            Toast.makeText(view.context, "$position 아이템 클릭!", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(view.context, "$position 아이템 클릭!", Toast.LENGTH_SHORT).show()
 
             // open another activity on item click
             val intent = Intent(context, DetailedActivity::class.java)
