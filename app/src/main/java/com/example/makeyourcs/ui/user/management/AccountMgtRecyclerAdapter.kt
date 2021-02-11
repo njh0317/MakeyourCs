@@ -40,6 +40,7 @@ class AccountMgtRecyclerAdapter(
         }
 
     }
+
     interface OnItemClickListener {
         fun onItemClick(position: Int)
         fun onLongClick(position: Int)
