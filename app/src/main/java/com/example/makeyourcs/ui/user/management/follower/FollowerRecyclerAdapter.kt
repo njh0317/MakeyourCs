@@ -16,8 +16,6 @@ class FollowerRecyclerAdapter(
 ) :
     RecyclerView.Adapter<FollowerRecyclerAdapter.MyViewHolder>(){
 
-    private var mSelectedItems = SparseBooleanArray(0)
-
     inner class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener{
         val img = itemView.follower_img
@@ -31,14 +29,14 @@ class FollowerRecyclerAdapter(
             val position = adapterPosition
             if(position != RecyclerView.NO_POSITION){
                 if (v != null) {
-                    listener.onItemClick(position, v, mSelectedItems)
+                    listener.onItemClick(position, v)
                 }
             }
         }
     }
 
     interface OnItemClickListener{
-        fun onItemClick(position: Int, view: View, SelectedItems: SparseBooleanArray)
+        fun onItemClick(position: Int, view: View)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)

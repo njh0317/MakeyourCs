@@ -19,28 +19,25 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware, FollowerRecyclerAdapter.OnItemClickListener {
+class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
+    FollowerRecyclerAdapter.OnItemClickListener {
     override val kodein by kodein()
     private val factory: UserMgtViewModelFactory by instance()
     lateinit var viewModel: UserMgtViewModel
     lateinit var binding: ActivitySelectFollowerForNewAccBinding
     lateinit var adapter: FollowerRecyclerAdapter
+    private var SelectedItems = SparseBooleanArray(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_select_follower_for_new_acc)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_select_follower_for_new_acc)
+        binding =
+            DataBindingUtil.setContentView(this, R.layout.activity_select_follower_for_new_acc)
         viewModel = ViewModelProviders.of(this, factory).get(UserMgtViewModel::class.java)
         binding.viewmodel = viewModel
 
-//        var list = arrayListOf<FollowerItem>(FollowerItem(R.drawable.ic_account, "lululalyang"),
-//            FollowerItem(R.drawable.ic_account, "na_j222"),
-//            FollowerItem(R.drawable.ic_account, "ekdbsl"),
-//            FollowerItem(R.drawable.ic_account, "eunj2"),
-//            FollowerItem(R.drawable.ic_account, "iamkimsobin"))
-
         viewModel.getFollowerData()
-        viewModel.followerData.observe(this, Observer{
+        viewModel.followerData.observe(this, Observer {
             adapter = FollowerRecyclerAdapter(viewModel.getFollowerItemList(), this)
             binding.followerRecyclerView.adapter = adapter
         })
@@ -49,24 +46,22 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware, Follow
 //        binding.followerRecyclerView.adapter = adapter
     }
 
-    override fun onItemClick(position: Int, view: View, SelectedItems: SparseBooleanArray) {
+    override fun onItemClick(position: Int, view: View) {
         var followerEmail = viewModel.getFollowerItemList().get(position).id
 
-        if(SelectedItems.get(position, false)){
+        if (SelectedItems.get(position, false)) {
             SelectedItems.put(position, false)
             view.plusbtn.setBackgroundResource(R.drawable.orangebtn)
             view.plusbtn.setText("추가")
             view.plusbtn.setTextColor(Color.WHITE)
             Log.d("inFollowerMainActivity", "$followerEmail 취소됨")
-        }else{
+        } else {
             SelectedItems.put(position, true)
             view.plusbtn.setBackgroundResource(R.drawable.whitebtn)
             view.plusbtn.setText("취소")
             view.plusbtn.setTextColor(Color.BLACK)
             Log.d("inFollowerMainActivity", "$followerEmail 추가됨")
         }
-
-
 
 
     }
