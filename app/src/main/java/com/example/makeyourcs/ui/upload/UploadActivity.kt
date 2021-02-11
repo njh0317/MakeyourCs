@@ -33,7 +33,7 @@ class UploadActivity : AppCompatActivity(), KodeinAware {
         setContentView(R.layout.activity_upload)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_upload)
         viewModel = ViewModelProviders.of(this, factory).get(UploadViewModel::class.java)
-        //binding.viewmodel=viewModel
+        binding.viewmodel=viewModel
 
         //open the album
         var intent = Intent(Intent.ACTION_PICK)
