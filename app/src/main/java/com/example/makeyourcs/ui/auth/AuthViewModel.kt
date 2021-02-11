@@ -152,8 +152,8 @@ class AuthViewModel(
     {
 //        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
         Log.d("AuthViewModel", "set origin_account profile")
-        System.out.println("${defaultName.get().toString()}, ${defaultIntrodue.get().toString()}")
-        System.out.println("${defaultImg.get().toString()}")
+//        System.out.println("${defaultName.get().toString()}, ${defaultIntrodue.get().toString()}")
+//        System.out.println("${defaultImg.get().toString()}")
         if(defaultImg.get() != null){
             repository.setOriginAccount(defaultName.get().toString(), defaultIntrodue.get().toString(), defaultImg.get().toString())
         }else{  // 프로필 사진 설정 안했을 경우

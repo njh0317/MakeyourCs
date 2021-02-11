@@ -1,4 +1,4 @@
-package com.example.makeyourcs.ui.user.management
+package com.example.makeyourcs.ui.user.management.dialog
 
 
 import android.content.Context
@@ -6,20 +6,14 @@ import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import com.example.makeyourcs.R
-import com.example.makeyourcs.databinding.ActivityAccountMgtMainBinding
 import com.example.makeyourcs.databinding.FragmentDelSubAccountDialogBinding
-import kotlinx.android.synthetic.main.fragment_del_sub_account_dialog.view.*
 
 class DelSubAccountDialogFragment(context: Context) : DialogFragment() {
     val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager

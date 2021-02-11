@@ -1,10 +1,8 @@
 package com.example.makeyourcs.ui.user.management
 
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.makeyourcs.R
@@ -12,6 +10,7 @@ import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.auth.AuthListener
+import com.example.makeyourcs.ui.user.management.dialog.LimitedAccCntDialog
 import com.example.makeyourcs.ui.user.management.follower.FollowerItem
 import com.example.makeyourcs.ui.user.management.follower.SelectFollowerForNewAccActivity
 
@@ -40,6 +39,8 @@ class UserMgtViewModel (
     var subName = ObservableField<String>()
     var groupName = ObservableField<String>()
     var subIntroduce = ObservableField<String>()
+    var subImg = ObservableField<String>()
+
     var authListener: AuthListener? = null
 
     val user by lazy {
@@ -104,7 +105,11 @@ class UserMgtViewModel (
 //        System.out.println("new subAccount!!")
         var data = repository.observeUserData()
 
-        repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
+        if(subImg.get() != null){
+            repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), subImg.get().toString())
+        }else{ // 부캐 프로필 사진 설정안했을 경우
+            repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
+        }
 //        view.context.startAccountMgtMainActivity()
         Intent(view.context, SelectFollowerForNewAccActivity::class.java).also {
             view.context.startActivity(it)
@@ -120,7 +125,10 @@ class UserMgtViewModel (
     fun goToAddNewAccount(view: View) {
         var data = repository.observeUserData()
         if(data.value?.sub_count == 3){
-            val dialog = LimitedAccCntDialog(view.context)
+            val dialog =
+                LimitedAccCntDialog(
+                    view.context
+                )
             dialog.WarningConfirm()
         }else{
             Intent(view.context, NewAccountMgtActivity::class.java).also {
