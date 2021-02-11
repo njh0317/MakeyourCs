@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <layout>
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.makeyourcs.ui.upload.UploadViewModel" />
+    </data>
+
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -38,7 +45,9 @@
                     android:text="@string/share"
                     android:textColor="@color/signature"
                     android:textSize="20dp"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"
+                    android:onClick="@{(viewmodel) -> viewmodel.sharePost()}"
+                    ></TextView>
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
@@ -55,29 +64,38 @@
             android:id="@+id/editText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/upload_image">
+            android:layout_below="@id/upload_image"
+            android:layout_marginLeft="60dp"
+            android:layout_centerHorizontal="true">
             <EditText
                 android:id="@+id/upload_edit_explain"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:hint="@string/text_input"></EditText>
+                android:hint="@string/text_input"
+                android:background="@null"></EditText>
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/tag_people"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="60dp"
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_below="@id/editText"
+            android:gravity="center|left"
+            android:textSize="15dp"
+            android:textStyle="bold"
             android:text="@string/tag_people"></TextView>
         <TextView
             android:id="@+id/tag_loc"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="60dp"
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="60dp"
             android:layout_below="@id/tag_people"
+            android:gravity="center|left"
+            android:textSize="15dp"
+            android:textStyle="bold"
             android:text="@string/tag_location"></TextView>
-
-
 
     </RelativeLayout>
 </layout>

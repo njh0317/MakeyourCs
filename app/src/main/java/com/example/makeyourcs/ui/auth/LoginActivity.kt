@@ -51,7 +51,6 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware{
     }
 
     override fun onSuccess() {//로그인 성공시
-        Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
         startMainActivity()
     }
 
