@@ -11,12 +11,15 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.BuildConfig
 import com.example.makeyourcs.R
+import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.databinding.ActivityUploadBinding
 import com.example.makeyourcs.databinding.FragmentUserBinding
 import com.example.makeyourcs.ui.user.management.UserMgtViewModel
@@ -59,6 +62,13 @@ class UploadActivity : AppCompatActivity(), KodeinAware {
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM)
 
+        binding.tagPeople.setOnClickListener {
+            Log.d("tagPeople","in tag people listener")
+            var people = MutableLiveData<List<String>>()
+            people=viewModel.searchAccount("dmlfid")
+
+            println(people)
+        }
 
         binding.tagLoc.setOnClickListener{
 
@@ -71,14 +81,13 @@ class UploadActivity : AppCompatActivity(), KodeinAware {
             val fields = listOf(Place.Field.ID, Place.Field.NAME)
 
             // Start the autocomplete intent.
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                 .build(this)
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
         //back button
         binding.backBtn.setOnClickListener {
-            Log.d("button","back button is pressed")
             super.onBackPressed()
         }
 
@@ -97,22 +106,25 @@ class UploadActivity : AppCompatActivity(), KodeinAware {
         }
 
         else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            Log.i("resultCode", "resultCode: ${resultCode.toString()}")
+
             when (resultCode) {
                 Activity.RESULT_OK -> {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                        Log.i("RESULT_OK", "Place: ${place.name}, ${place.id}")
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR -> {
                     // TODO: Handle the error.
                     data?.let {
                         val status = Autocomplete.getStatusFromIntent(data)
-                        Log.i(TAG, status.statusMessage)
+                        Log.i("RESULT_ERROR", status.statusMessage)
                     }
                 }
                 Activity.RESULT_CANCELED -> {
                     // The user canceled the operation.
+                    Log.i("RESULT_CANCELED","canceled")
                 }
             }
         }
