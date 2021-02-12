@@ -3,9 +3,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
         <import type="android.view.View" />
-
         <variable
             name="viewmodel"
             type="com.example.makeyourcs.ui.upload.UploadViewModel" />
@@ -105,24 +103,6 @@
             android:text="@string/tag_location"
             android:textSize="15dp"
             android:textStyle="bold"></TextView>
-
-
-<!--        <androidx.cardview.widget.CardView-->
-<!--            xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
-<!--            android:name="@+id/card_view"-->
-<!--            android:layout_width="400dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_gravity="center"-->
-<!--            card_view:cardCornerRadius="4dp"-->
-<!--            >-->
-<!--        <fragment-->
-<!--            android:id="@+id/autocomplete_fragment"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"-->
-<!--            >-->
-<!--        </fragment>-->
-<!--        </androidx.cardview.widget.CardView>-->
 
 
     </RelativeLayout>

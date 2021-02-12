@@ -15,14 +15,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import com.example.makeyourcs.BuildConfig
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.ActivityUploadBinding
 import com.example.makeyourcs.databinding.FragmentUserBinding
 import com.example.makeyourcs.ui.user.management.UserMgtViewModel
 import com.example.makeyourcs.ui.user.management.UserMgtViewModelFactory
 import com.google.android.gms.common.api.Status
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
@@ -30,13 +33,16 @@ import kotlinx.android.synthetic.main.activity_upload.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.util.*
 
-class UploadActivity : FragmentActivity(), KodeinAware {
+class UploadActivity : AppCompatActivity(), KodeinAware {
     val TAG = "UPLOADACTIVITY"
     override val kodein by kodein()
     private val factory: UploadViewModelFactory by instance()
 
     var PICK_IMAGE_FROM_ALBUM = 0
+    val AUTOCOMPLETE_REQUEST_CODE = 1
+
     var photoUri: Uri? = null
     lateinit var binding: ActivityUploadBinding
     private lateinit var viewModel: UploadViewModel
@@ -54,36 +60,31 @@ class UploadActivity : FragmentActivity(), KodeinAware {
         startActivityForResult(intent, PICK_IMAGE_FROM_ALBUM)
 
 
-//        // Initialize the AutocompleteSupportFragment.
-//        val autocompleteFragment =
-//            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
-//                    as AutocompleteSupportFragment
-//
-//        // Specify the types of place data to return.
-//        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
-//
-//        // Set up a PlaceSelectionListener to handle the response.
-//        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-//            override fun onPlaceSelected(place: Place) {
-//                // TODO: Get info about the selected place.
-//                Log.i(TAG, "Place: ${place.name}, ${place.id}")
-//            }
-//
-//            override fun onError(status: Status) {
-//                // TODO: Handle the error.
-//                Log.i(TAG, "An error occurred: $status")
-//            }
-//        })
+        binding.tagLoc.setOnClickListener{
+
+            if (!Places.isInitialized()) {
+                Places.initialize(getApplicationContext(),BuildConfig.API_KEY , Locale.US);
+            }
+
+            // Set the fields to specify which types of place data to
+            // return after the user has made a selection.
+            val fields = listOf(Place.Field.ID, Place.Field.NAME)
+
+            // Start the autocomplete intent.
+            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
+                .build(this)
+            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+        }
 
         //back button
         binding.backBtn.setOnClickListener {
+            Log.d("button","back button is pressed")
             super.onBackPressed()
         }
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PICK_IMAGE_FROM_ALBUM) {
             if (resultCode == Activity.RESULT_OK) {
                 //This it path to the selected image
@@ -94,5 +95,28 @@ class UploadActivity : FragmentActivity(), KodeinAware {
                 finish()
             }
         }
+
+        else if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            when (resultCode) {
+                Activity.RESULT_OK -> {
+                    data?.let {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        Log.i(TAG, "Place: ${place.name}, ${place.id}")
+                    }
+                }
+                AutocompleteActivity.RESULT_ERROR -> {
+                    // TODO: Handle the error.
+                    data?.let {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                        Log.i(TAG, status.statusMessage)
+                    }
+                }
+                Activity.RESULT_CANCELED -> {
+                    // The user canceled the operation.
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+
     }
 }

@@ -3,6 +3,10 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
 }
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleMapApiKey = properties.getProperty('api_key_name')
+
 
 android {
     compileSdkVersion 29
@@ -17,6 +21,8 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [api_key_name:googleMapApiKey]
+        buildConfigField "String", "API_KEY", properties['api_key_name']
     }
 
     buildTypes {
@@ -124,6 +130,5 @@ dependencies {
     //Google Map
     implementation 'com.google.android.libraries.places:places:2.4.0'
 
-    implementation 'androidx.cardview:cardview:1.0.0'
 
 }

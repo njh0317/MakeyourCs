@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyA0fhpHI7c9U4Y5ALSARTIJ7iGplgccOis"/>
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="${api_key_name}"/>
 
         <activity android:name=".ui.upload.UploadActivity"></activity>
         <activity android:name=".ui.auth.Signup_SetProfileActivity" />
