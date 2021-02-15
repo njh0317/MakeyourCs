@@ -251,7 +251,7 @@ class   FirebaseAuthSource {
 
     fun setPhoto() {
         var posting = PostClass()
-        posting.postId = 1 //난수로 시스템에서 아이디생성
+//        posting.postId = 1 //난수로 시스템에서 아이디생성
         posting.post_account = "sobinsobin"
         posting.content = "life without fxxx coding^^"
         posting.first_pic = "../images/test.jpg"
@@ -298,7 +298,7 @@ class   FirebaseAuthSource {
     fun setPost()
     {
         var posting = PostClass()
-        posting.postId = 1//난수로 시스템에서 아이디생성
+//        posting.postId = 1//난수로 시스템에서 아이디생성
         posting.post_account = "dmlfid1348"
         posting.content = "희루가기시러"
         //posting.first_pic = "../images/test.jpg"
@@ -317,7 +317,7 @@ class   FirebaseAuthSource {
             firestore?.collection("Post")?.document(postId.toString())?.get()?.addOnCompleteListener{task->
                 if(task.isSuccessful){
                     val posting = PostClass()
-                    posting.postId = task.result!!["postId"].toString().toInt()
+                    posting.postId = task.result!!["postId"].toString()
                     posting.post_account = task.result!!["post_account"].toString()
                     posting.content = task.result!!["content"].toString()
                     posting.first_pic = task.result!!["first_pic"].toString()
@@ -536,6 +536,83 @@ class   FirebaseAuthSource {
     }
     fun storepost(postId: String)
     {
+        //1
+        val subaccountlist = firestore.collection("AccountPost")
+            .document(currentUser()!!.email.toString()) //부계정 목록을 받아오기 위함
+        //TODO: 부계정 추가될 때 subaccount 필드에 추가
+        //TODO: 부계정 삭제될 때 subaccount 필드에서 삭제, 컬렉션 삭제
+
+        //2
+        val accountpost = firestore.collection("AccountPost")
+            .document(currentUser()!!.email.toString())
+        //게시글 없애고 order 나머지 하나씩 땡겨줘야함
+
+        //3
+        val subaccount = firestore.collection("Account")
+            .document(currentUser()!!.email.toString())
+            .collection("SubAccount")
+            .orderBy("sub_num")
+        //게시글 숫자 줄여줘야함
+
+        //4
+        val storepost = firestore.collection("Post")
+            .document(postId)
+        //_stored : true 로 바꾸기
+
+
+        firestore.runTransaction{transaction ->
+            val subaccountlistsnapshot = transaction.get(subaccountlist)
+
+            //1
+            val group_name_list = subaccountlistsnapshot.toObject(AccountPostClass.SubClass::class.java)!!.group_name
+
+            //2
+            for (group_name in group_name_list!!){
+                var postsdeletelist  = ArrayList<AccountPostClass.PostIdClass>()
+                var postupdatelist = ArrayList<AccountPostClass.PostIdClass>()
+                val accountpostpergroup = accountpost
+                    .collection(group_name)
+                    .orderBy("order_in_feed")
+                val postsnapshot = transaction.get(accountpostpergroup)
+
+                        val docs = value?.documents
+                        var order = 1
+                        if (docs != null) {
+                            for (doc in docs) {
+                                val data = doc.toObject(AccountPostClass.PostIdClass::class.java)
+                                if(data != null)
+                                {
+                                    if(data.post_id != postId) {
+                                        if(data.order_in_feed!=order)
+                                        {
+                                            data.order_in_feed = order
+                                            postupdatelist.add(data)
+                                        }
+                                        order+=1
+                                    }
+                                    else{
+                                        post_num_list?.set(group_name!!,
+                                            post_num_list[group_name]?.minus(1)!!
+                                        )
+                                        postsdeletelist.add(data)
+                                    }
+                                }
+                            }
+                            subaccountupdatepostlist?.set(group_name, postupdatelist)
+                        }
+
+            }
+
+            //3
+
+            //4
+            transaction.update(storepost, "_stored", TRUE)
+
+
+        }
+
+
+
 
     }
 

@@ -1,6 +1,6 @@
 package com.example.makeyourcs.data
 
-data class PostClass(var postId: Int? = 0,
+data class PostClass(var postId: String? = null,
                      var post_account:String? = null,
                      var post_email:String? = null,
                      var content:String? = null,
