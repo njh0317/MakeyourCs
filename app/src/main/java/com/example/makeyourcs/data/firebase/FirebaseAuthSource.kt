@@ -743,6 +743,7 @@ class FirebaseAuthSource {
         val postlistLiveData = MutableLiveData<List<PostClass>>()
         try {
             var email = currentUser()!!.email.toString()
+            Log.w("email","currentUser : "+email)
             firestore.collection("Post").whereEqualTo("email", email)
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
@@ -752,6 +753,8 @@ class FirebaseAuthSource {
                     }
                     value?.let{
                         val data = it?.toObjects(PostClass::class.java)
+                        Log.w("data","data :"+data)
+
                         if (data != null) {
                             Log.w(TAG, "Listen Carefully.", e)
                             System.out.println(data)
