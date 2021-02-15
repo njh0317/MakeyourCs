@@ -129,10 +129,11 @@ class AccountRepository(
 //    fun setPost(account:String, email:String, content:String, place_tag:String, pAdd: Uri)
 //        =firestore.setPost(account, email, content, place_tag, pAdd)
 
-    fun getMyPost(): MutableLiveData<PostClass> // 유저 게시글 정보 가져오기
+    fun getMyPost(): MutableLiveData<List<PostClass>> // 유저 게시글 정보 가져오기
     {
         firestore.getMyPost()
         var data = firestore.postDataLiveData
+        System.out.println("in repository"+ data.value)
         return data
     }
 }

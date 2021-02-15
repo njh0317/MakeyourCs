@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.data.*
+import com.example.makeyourcs.ui.user.PostVo
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -42,7 +43,7 @@ class FirebaseAuthSource {
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
     val allfollowerlistLiveData = MutableLiveData<List<String>>()
     val searchaccountLiveData = MutableLiveData<List<String>>()
-    val postDataLiveData = MutableLiveData<PostClass>()
+    val postDataLiveData = MutableLiveData<List<PostClass>>()
 
 
     val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
@@ -286,6 +287,7 @@ class FirebaseAuthSource {
         }
 
     }
+
     fun observeAccountsData() {
         var subaccountlist : ArrayList<AccountClass.SubClass> = arrayListOf()
         try {
@@ -677,28 +679,28 @@ class FirebaseAuthSource {
 
     }
 
-    fun observePostData() {
-        System.out.println("observePostData: " + currentUser()!!.email)
-
-        try {
-            firestore.collection("Post").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
-                }
-                for (doc in value!!) {
-                    doc?.let {
-                        val data = it?.toObject(PostClass::class.java)
-                        System.out.println(data)
-                        postDataLiveData.postValue(data)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            Log.e(TAG, "Error getting user data", e)
-        }
-    }
-
+//    fun observePostData() {
+//        System.out.println("observePostData: " + currentUser()!!.email)
+//
+//        try {
+//            firestore.collection("Post").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+//                if (e != null) {
+//                    Log.w(TAG, "Listen failed.", e)
+//                    return@addSnapshotListener
+//                }
+//                for (doc in value!!) {
+//                    doc?.let {
+//                        val data = it?.toObject(PostClass::class.java)
+//                        System.out.println(data)
+//                        postDataLiveData.postValue(data)
+//                    }
+//                }
+//            }
+//        } catch (e: Exception) {
+//            Log.e(TAG, "Error getting user data", e)
+//        }
+//    }
+//
 
 
     fun setPost(account:String, content:String, pAdd:Uri, place: PlaceClass, tag: PostClass.PictureClass.TagClass)
@@ -740,32 +742,39 @@ class FirebaseAuthSource {
 
     fun getMyPost()
     {
-        val postlistLiveData = MutableLiveData<List<PostClass>>()
+        var postlistLiveData = ArrayList<PostClass>()
+
         try {
             var email = currentUser()!!.email.toString()
             Log.w("email","currentUser : "+email)
-            firestore.collection("Post").whereEqualTo("email", email)
+            firestore.collection("Post").whereEqualTo("email", email).whereEqualTo("_stored", false)
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {
                         Log.w(TAG, "Listen failed.", e)
                         return@addSnapshotListener
                     }
-                    value?.let{
-                        val data = it?.toObjects(PostClass::class.java)
-                        Log.w("data","data :"+data)
+                    postlistLiveData.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(PostClass::class.java)
+                            if (data != null) {
+                                Log.w(TAG, "Listen Carefully.", e)
+                                Log.w("data", "data :" + data)
+                                postlistLiveData.add(data)
+                            }
 
-                        if (data != null) {
-                            Log.w(TAG, "Listen Carefully.", e)
-                            System.out.println(data)
-                            postlistLiveData.postValue(data)
                         }
                     }
+                    //postDataLiveData.setValue(postlistLiveData)
+                    postDataLiveData.postValue(postlistLiveData)
+                    Log.w("postDataLiveData",postDataLiveData.value.toString())
                 }
+
+
         } catch (e: Exception) {
             Log.e(TAG, "Error getting follower wait list", e)
         }
-
     }
 
 }

@@ -11,10 +11,10 @@ class PostRepository (
 ) {
     fun currentUser() = firestore.currentUser()
 
-    fun observePostData(): MutableLiveData<PostClass>
-    {
-        firestore.observePostData()
-        var data = firestore.postDataLiveData
-        return data
-    }
+//    fun observePostData(): MutableLiveData<PostClass>
+//    {
+//        firestore.observePostData()
+//        var data = firestore.postDataLiveData
+//        return data
+//    }
 }

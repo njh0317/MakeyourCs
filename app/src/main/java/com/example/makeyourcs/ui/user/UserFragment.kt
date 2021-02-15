@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentUserBinding
 import com.example.makeyourcs.ui.MainActivity
-import com.example.makeyourcs.ui.RecyclerFeedAdapter
+import com.example.makeyourcs.ui.user.RecyclerUserFeedAdapter
 import com.example.makeyourcs.ui.home.InjectionFragment
 import com.example.makeyourcs.ui.user.settings.SettingDialogFragment
 import io.reactivex.annotations.SchedulerSupport.IO
@@ -32,7 +32,8 @@ class UserFragment : InjectionFragment(){
     private val factory : UserViewModelFactory by instance()
     lateinit var binding: FragmentUserBinding
     lateinit var viewmodel:UserViewModel
-
+    lateinit var adapter:RecyclerUserFeedAdapter
+    var lmanager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -42,10 +43,17 @@ class UserFragment : InjectionFragment(){
         binding.viewmodel=viewmodel
 
         //recyclerview adapter, layoutmanger setting
-        val adapter= RecyclerFeedAdapter(view.context, viewmodel._imgList)
-        binding.userRecycler.adapter=adapter
-        val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-        binding.userRecycler.layoutManager=lmanager
+        viewmodel.getPostData()
+        viewmodel.postData.observe(viewLifecycleOwner, Observer {
+            adapter=RecyclerUserFeedAdapter(view.context,viewmodel.getPostList())
+            binding.userRecycler.adapter=adapter
+            binding.userRecycler.layoutManager=lmanager
+        })
+
+        //val adapter= RecyclerUserFeedAdapter(view.context, viewmodel.postData)
+//        binding.userRecycler.adapter=adapter
+        //val lmanager=StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
+       // binding.userRecycler.layoutManager=lmanager
 
         //observer
         viewmodel.getUserData()

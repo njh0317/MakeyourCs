@@ -39,23 +39,25 @@ class UserViewModel(
     //auth listener
     //var authListener: AuthListener? = null
 
-    var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
-    val _imgList = ArrayList<ImageVo>()
+//    var imgList : MutableLiveData<ArrayList<ImageVo>> = MutableLiveData<ArrayList<ImageVo>>()
+//    val _imgList = ArrayList<ImageVo>()
 
-    init{
-        _imgList.add(ImageVo("1", R.drawable.ic_1,60.toString()))
-        _imgList.add(ImageVo("2", R.drawable.ic_2,61.toString()))
-        _imgList.add(ImageVo("3", R.drawable.ic_3,62.toString()))
-        _imgList.add(ImageVo("4", R.drawable.ic_4,63.toString()))
-        _imgList.add(ImageVo("5", R.drawable.ic_5,64.toString()))
-        _imgList.add(ImageVo("6", R.drawable.ic_6,65.toString()))
-        _imgList.add(ImageVo("7", R.drawable.ic_7,66.toString()))
-        _imgList.add(ImageVo("8", R.drawable.ic_8,67.toString()))
-        _imgList.add(ImageVo("9", R.drawable.ic_9,68.toString()))
-        _imgList.add(ImageVo("10", R.drawable.ic_10,69.toString()))
+//    init{
+//        _imgList.add(ImageVo("1", R.drawable.ic_1,60.toString()))
+//        _imgList.add(ImageVo("2", R.drawable.ic_2,61.toString()))
+//        _imgList.add(ImageVo("3", R.drawable.ic_3,62.toString()))
+//        _imgList.add(ImageVo("4", R.drawable.ic_4,63.toString()))
+//        _imgList.add(ImageVo("5", R.drawable.ic_5,64.toString()))
+//        _imgList.add(ImageVo("6", R.drawable.ic_6,65.toString()))
+//        _imgList.add(ImageVo("7", R.drawable.ic_7,66.toString()))
+//        _imgList.add(ImageVo("8", R.drawable.ic_8,67.toString()))
+//        _imgList.add(ImageVo("9", R.drawable.ic_9,68.toString()))
+//        _imgList.add(ImageVo("10", R.drawable.ic_10,69.toString()))
+//
+//        imgList.postValue(_imgList)
+//    }
 
-        imgList.postValue(_imgList)
-    }
+
     val user by lazy {
         repository.currentUser()
     }
@@ -87,16 +89,35 @@ class UserViewModel(
         return repository.imageurl(imagename)
     }
 
-    //소빈
-    private var _postData = MutableLiveData<PostClass>()
-    val postData: LiveData<PostClass>
+//    var postList : MutableLiveData<ArrayList<PostVo>> = MutableLiveData<ArrayList<PostVo>>()
+//    val _postList = ArrayList<PostVo>()
+
+    private var _postData = MutableLiveData<List<PostClass>>()
+    val postData: LiveData<List<PostClass>>
         get()= _postData
 
 
     fun getPostData(){
         var data = repository.getMyPost()
-        System.out.println("getPostData"+data.value)
+        System.out.println("getPostData "+data.value)
         _postData = data
+    }
+
+    fun getPostList():ArrayList<PostVo>{
+        var postList=ArrayList<PostVo>()
+        var data = postData
+        var post = data.value?.iterator()
+
+        if(post!=null){
+            while(post.hasNext()){
+                var now =post.next()
+                System.out.println("getPostList " + now)
+                postList.add(PostVo(now.postId!!,now.account!!,now.email!!,now.content!!,now.like!!,now.comment_cnt!!
+                    , now.imgUrl!!, now.is_stored!!,now.place_tag!!))
+            }
+        }
+
+        return postList
     }
 
 }
