@@ -70,21 +70,21 @@ class UploadActivity : AppCompatActivity(), KodeinAware {
             println(people)
         }
 
-        binding.tagLoc.setOnClickListener{
-
-            if (!Places.isInitialized()) {
-                Places.initialize(getApplicationContext(),BuildConfig.API_KEY , Locale.US);
-            }
-
-            // Set the fields to specify which types of place data to
-            // return after the user has made a selection.
-            val fields = listOf(Place.Field.ID, Place.Field.NAME)
-
-            // Start the autocomplete intent.
-            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-                .build(this)
-            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
-        }
+/*//        binding.tagLoc.setOnClickListener{
+//
+//            if (!Places.isInitialized()) {
+//                Places.initialize(getApplicationContext(),BuildConfig.API_KEY , Locale.US);
+//            }
+//
+//            // Set the fields to specify which types of place data to
+//            // return after the user has made a selection.
+//            val fields = listOf(Place.Field.ID, Place.Field.NAME)
+//
+//            // Start the autocomplete intent.
+//            val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+//                .build(this)
+//            startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+//        }*/
 
         //back button
         binding.backBtn.setOnClickListener {

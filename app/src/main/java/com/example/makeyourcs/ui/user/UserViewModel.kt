@@ -88,8 +88,8 @@ class UserViewModel(
     }
 
     //소빈
-    private var _postData = MutableLiveData<PostClass>()
-    val postData: LiveData<PostClass>
+    private var _postData = MutableLiveData<List<PostClass>>()
+    val postData: LiveData<List<PostClass>>
         get()= _postData
 
 

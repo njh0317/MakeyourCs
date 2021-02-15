@@ -3,9 +3,6 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
 }
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def googleMapApiKey = properties.getProperty('api_key_name')
 
 
 android {
@@ -21,8 +18,8 @@ android {
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [api_key_name:googleMapApiKey]
-        buildConfigField "String", "API_KEY", properties['api_key_name']
+
+//        buildConfigField "String", "API_KEY", properties['api_key_name']
     }
 
     buildTypes {

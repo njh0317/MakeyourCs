@@ -42,7 +42,7 @@ class FirebaseAuthSource {
     val followlistLiveData = MutableLiveData<List<AccountClass.FollowClass>>()
     val allfollowerlistLiveData = MutableLiveData<List<String>>()
     val searchaccountLiveData = MutableLiveData<List<String>>()
-    val postDataLiveData = MutableLiveData<PostClass>()
+    val postDataLiveData = MutableLiveData<List<PostClass>>()
 
 
     val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
@@ -677,7 +677,7 @@ class FirebaseAuthSource {
 
     }
 
-    fun observePostData() {
+    /*fun observePostData() {
         System.out.println("observePostData: " + currentUser()!!.email)
 
         try {
@@ -697,7 +697,7 @@ class FirebaseAuthSource {
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
         }
-    }
+    }*/
 
 
 
@@ -740,11 +740,11 @@ class FirebaseAuthSource {
 
     fun getMyPost()
     {
-        val postlistLiveData = MutableLiveData<List<PostClass>>()
+//        val postlistLiveData = MutableLiveData<List<PostClass>>()
         try {
             var email = currentUser()!!.email.toString()
             Log.w("email","currentUser : "+email)
-            firestore.collection("Post").whereEqualTo("email", email)
+            firestore.collection("Post").whereEqualTo("email", email).whereEqualTo("_stored", false)
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {
@@ -758,14 +758,13 @@ class FirebaseAuthSource {
                         if (data != null) {
                             Log.w(TAG, "Listen Carefully.", e)
                             System.out.println(data)
-                            postlistLiveData.postValue(data)
+                            postDataLiveData.postValue(data)
                         }
                     }
                 }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting follower wait list", e)
         }
-
     }
 
 }
