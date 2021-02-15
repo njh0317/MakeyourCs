@@ -11,9 +11,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.ObservableField
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.makeyourcs.data.AccountClass
+import com.example.makeyourcs.data.PlaceClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.user.management.AccountMgtItem
@@ -21,6 +21,8 @@ import com.example.makeyourcs.utils.startMainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import com.example.makeyourcs.utils.startMainActivity
 
@@ -69,6 +71,7 @@ class AuthViewModel(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 //sending a success callback
+
                 authListener?.onSuccess()
             }, {
                 //sending a failure callback
@@ -133,9 +136,9 @@ class AuthViewModel(
         account.pw = password.get().toString()
         account.email = email.get().toString()
         account.userId = id.get().toString()
-        account.year = year
-        account.month = month
-        account.day = day
+//        account.year = year
+//        account.month = month
+//        account.day = day
 
         System.out.println(account)
         val disposable = repository.register(account)

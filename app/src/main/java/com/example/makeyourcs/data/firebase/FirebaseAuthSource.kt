@@ -9,6 +9,8 @@ import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.PostClass
+import com.example.makeyourcs.data.*
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,11 +23,14 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.lang.Boolean.FALSE
 import java.lang.Boolean.TRUE
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
+import java.time.LocalDateTime
+import kotlinx.android.synthetic.main.activity_storage.*
+import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class FirebaseAuthSource {
@@ -39,16 +44,20 @@ class FirebaseAuthSource {
     val searchaccountLiveData = MutableLiveData<List<String>>()
     val postDataLiveData = MutableLiveData<PostClass>()
 
+
+    val postlist = MutableLiveData<List<AccountPostClass.PostIdClass>>()
+    val postlist2 : MutableList<AccountPostClass.PostIdClass> = arrayListOf()
+
     private val firebaseAuth: FirebaseAuth by lazy {
         FirebaseAuth.getInstance()
     }
     private val firestore: FirebaseFirestore by lazy{
         FirebaseFirestore.getInstance()
     }
-    private val firestorage: FirebaseStorage by lazy{
+
+    private val firebaseStorage: FirebaseStorage by lazy{
         FirebaseStorage.getInstance()
     }
-
 
     fun login(email: String, password: String) = Completable.create { emitter ->
         Log.d("TAG", email)
@@ -149,6 +158,7 @@ class FirebaseAuthSource {
         if(filepath != "default"){
             OriginAccount.profile_pic_name = uploadprofile(Uri.parse(filepath)).toString()
         }
+
 
         firestore.collection("Account")
             .document(currentUser()!!.email.toString())
@@ -284,19 +294,21 @@ class FirebaseAuthSource {
                 .collection("SubAccount")
                 .orderBy("sub_num")
                 .addSnapshotListener{ value, e ->
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e)
-                    return@addSnapshotListener
-                }
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
                     subaccountlist.clear()
-                for (doc in value!!) {
-                    doc?.let {
-                        val data = it?.toObject(AccountClass.SubClass::class.java)
-                        subaccountlist.add(data)
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountClass.SubClass::class.java)
+                            subaccountlist.add(data)
+                        }
                     }
                 }
                     accountsDataLiveData.postValue(subaccountlist)
-            }
+
+
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)
         }
@@ -522,7 +534,7 @@ class FirebaseAuthSource {
         var downloadUri: Uri? = null
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
-        var storageRef = firestorage.reference.child("profile/" + fileName)
+        var storageRef = firebaseStorage.reference.child("profile/" + fileName)
         var uploadTask = storageRef.putFile(filepath)
         val urlTask = uploadTask.continueWithTask { task ->
             if (!task.isSuccessful) {
@@ -544,7 +556,7 @@ class FirebaseAuthSource {
         var downloadUri: Uri? = null
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var fileName = "IMAGE_" + timestamp + "_.png"//photoUri 받아서 뷰 모델에서 이름 설정
-        var storageRef = firestorage.reference.child("profile/" + fileName)
+        var storageRef = firebaseStorage.reference.child("profile/" + fileName)
         var uploadTask = storageRef.putFile(filepath)
         return try {
             val urlTask = uploadTask.await()
@@ -559,25 +571,179 @@ class FirebaseAuthSource {
         }
     }
 
-    suspend fun imageurl(imagename: String):Uri?
-    {
+    suspend fun imageurl(imagename: String):Uri? {
         return try {
             val storageReference: StorageReference =
-                firestorage.getReference().child("profile/" + imagename)
+                firebaseStorage.getReference().child("profile/" + imagename)
             val uri = storageReference.downloadUrl.await()
             return uri
-        }catch(e:Throwable)
-        {
+        } catch (e: Throwable){
+            //TODO: 확인요
+            return null
+        }
+    }
+    fun uploadpostpergroup(group_name_list: List<String>, postId:Int, postDate: Date)
+    {
+        val post_num_list : ArrayList<Int> = arrayListOf()
+        firestore.runTransaction{ transaction ->
+            //group 별 게시글 개수 가져오기
+            for(group_name in group_name_list)
+            {
+                var check_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                val snapshot = transaction.get(check_post_num)
+                val data = snapshot?.toObject(AccountClass.SubClass::class.java)
+                if (data != null) {
+                    data.post_number?.let { post_num_list.add(it) }
+                }
+            }
+            var check = 0
+            for(group_name in group_name_list)
+            {
+                var post = AccountPostClass.PostIdClass()
+                post.order_in_feed = post_num_list[check]+1
+                post.post_id = postId
+                post.posting_date = postDate
+
+                var AccountPost = firestore.collection("AccountPost")
+                    .document(currentUser()!!.email.toString())
+                    .collection(group_name)
+                    .document(postId.toString())
+
+                transaction.set(AccountPost, post)
+
+                var update_post_num = firestore.collection("Account")
+                    .document(currentUser()!!.email.toString())
+                    .collection("SubAccount")
+                    .document(group_name)
+                transaction.update(update_post_num, "post_number", post.order_in_feed)
+
+                check+=1
+            }
+        }
+    }
+    fun observepostpergroup(group_name: String, toEmail: String, option : Int)
+    {
+        var checkEmail = toEmail
+        if(option == 0){
+            checkEmail = currentUser()!!.email.toString()
+        }
+        var posts : ArrayList<AccountPostClass.PostIdClass> = arrayListOf()
+        try{
+            firestore?.collection("AccountPost")
+                .document(checkEmail)
+                .collection(group_name)
+                .orderBy("order_in_feed")
+                .addSnapshotListener{ value, e ->
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+                    posts.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(AccountPostClass.PostIdClass::class.java)
+                            posts.add(data)
+                        }
+                    }
+                    postlist.postValue(posts)
+                }
+
+            }catch(e: java.lang.Exception)
+            {
+                Log.d("cannot get", e.toString())
+            }
+    }
+
+    suspend fun getplaceinfo(place_name:String):PlaceClass? {
+        return try {
+            val docRef = firestore.collection("Place").document(place_name)
+            val doc = docRef.get().await()
+            if (doc.exists()) {
+                val place = doc.toObject(PlaceClass::class.java)
+                Log.d(TAG, "place : " + place.toString())
+                place
+            } else {
+                Log.w(TAG, "no data in place")
+                null
+            }
+
+        } catch (e: Throwable) {
             Log.w(TAG, "error in get place, ", e)
             null
         }
 
     }
+
+    fun observePostData() {
+        System.out.println("observePostData: " + currentUser()!!.email)
+
+        try {
+            firestore.collection("Post").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+                for (doc in value!!) {
+                    doc?.let {
+                        val data = it?.toObject(PostClass::class.java)
+                        System.out.println(data)
+                        postDataLiveData.postValue(data)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error getting user data", e)
+        }
+    }
+
+
+
+    fun setPost(account:String, content:String, pAdd:Uri, place: PlaceClass, tag: PostClass.PictureClass.TagClass)
+    {
+        var posting = PostClass()
+        var postPics = PostClass.PictureClass()
+
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+
+        var curId = "POST_" + timestamp
+        posting.postId = curId
+        posting.account = account
+        posting.email = currentUser()!!.email.toString()
+        posting.content = content
+        posting.place_tag = place.place_name
+
+        var order = 1
+        val tagdb = firestore.collection("Post").document(posting.postId.toString()).collection("PictureClass").document(order.toString()).collection("TagClass").document(tag.tagged_id.toString())
+        val placedb = firestore.collection("Place").document(place.place_name.toString())
+        val finaldb = firestore.collection("Post").document(posting.postId.toString())
+
+        var fileName = "IMAGE_" + timestamp + "_.png"
+        var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
+        storageRef.putFile(pAdd!!).addOnSuccessListener {
+            posting.imgUrl = pAdd.toString()
+            postPics.order = 1
+            postPics.picture_url = pAdd.toString()
+            firestore.runBatch { batch ->
+                batch.set(placedb, place)
+                batch.set(tagdb, tag)
+                batch.set(finaldb, posting)
+            }.addOnSuccessListener {
+                Log.d(TAG, "Transaction success!")
+            }.addOnFailureListener { e ->
+                Log.w(TAG, "Transaction failure.", e)
+            }
+        }
+    }
+
     fun getMyPost()
     {
         val postlistLiveData = MutableLiveData<List<PostClass>>()
-        try {//email = currentUser()!!.email.toString()
-            firestore.collection("Post").whereEqualTo("email", "dmlfid1348@naver.com")
+        try {
+            var email = currentUser()!!.email.toString()
+            firestore.collection("Post").whereEqualTo("email", email)
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {
@@ -598,4 +764,6 @@ class FirebaseAuthSource {
         }
 
     }
+
 }
+

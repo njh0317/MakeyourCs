@@ -17,8 +17,6 @@ data class PostClass(var postId: String? = null,
                             var x_idx:Int? = 0,
                             var y_idx:Int? = 0)
     }
+
 }
 
-/*
-,
-var post_data:String? = null)*/

@@ -36,6 +36,7 @@
         <activity android:name=".ui.auth.SignupActivity" />
         <activity android:name=".ui.user.management.AccountMgtMainActivity" />
         <activity android:name=".ui.user.management.NewAccountMgtActivity" />
+        <activity android:name=".ui.wholeFeed.StorageActivity">
+        </activity>
     </application>
-
 </manifest>

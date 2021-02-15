@@ -12,13 +12,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.example.makeyourcs.R
+import com.example.makeyourcs.ui.wholeFeed.StorageActivity
+import com.example.makeyourcs.data.PostClass
 import com.example.makeyourcs.databinding.ActivityLoginBinding
 import com.example.makeyourcs.utils.startMainActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.InputStream
+import java.lang.Exception
 
 
 class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware{

@@ -90,6 +90,7 @@ class UserViewModel(
     val postData: LiveData<PostClass>
         get()= _postData
 
+
     fun getPostData(){
         var data = repository.getMyPost()
         System.out.println("getPostData"+data.value)

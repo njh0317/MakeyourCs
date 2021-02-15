@@ -50,7 +50,6 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
                         startActivity(Intent(this,
                             UploadActivity::class.java))
                 }
-
                 return true
             }
             R.id.action_favorite_alarm -> {

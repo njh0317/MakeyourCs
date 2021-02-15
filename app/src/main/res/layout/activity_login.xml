@@ -71,7 +71,6 @@
                 android:theme="@style/ButtonStyle"
                ></Button>
 
-
             <Button
                 android:id="@+id/signup_bt"
                 android:layout_width="match_parent"
