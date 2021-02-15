@@ -133,6 +133,7 @@ class AccountRepository(
     {
         firestore.getMyPost()
         var data = firestore.postDataLiveData
+        System.out.println("reposit data / "+data.value)
         return data
     }
 }

@@ -740,7 +740,7 @@ class FirebaseAuthSource {
 
     fun getMyPost()
     {
-//        val postlistLiveData = MutableLiveData<List<PostClass>>()
+        var postlistLiveData : ArrayList<PostClass> = arrayListOf()
         try {
             var email = currentUser()!!.email.toString()
             Log.w("email","currentUser : "+email)
@@ -751,17 +751,21 @@ class FirebaseAuthSource {
                         Log.w(TAG, "Listen failed.", e)
                         return@addSnapshotListener
                     }
-                    value?.let{
-                        val data = it?.toObjects(PostClass::class.java)
-                        Log.w("data","data :"+data)
+                    postlistLiveData.clear()
+                    for (doc in value!!) {
+                        doc?.let {
+                            val data = it?.toObject(PostClass::class.java)
+                            Log.w("data", "data :" + data)
+                            if (data != null) {
+                                Log.w(TAG, "Listen Carefully.", e)
+                                System.out.println(data)
+                                postlistLiveData.add(data)
+                            }
 
-                        if (data != null) {
-                            Log.w(TAG, "Listen Carefully.", e)
-                            System.out.println(data)
-                            postDataLiveData.postValue(data)
                         }
                     }
                 }
+            postDataLiveData.postValue(postlistLiveData)
         } catch (e: Exception) {
             Log.e(TAG, "Error getting follower wait list", e)
         }
