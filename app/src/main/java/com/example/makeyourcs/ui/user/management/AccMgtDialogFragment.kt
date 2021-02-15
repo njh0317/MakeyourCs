@@ -16,7 +16,7 @@ import com.example.makeyourcs.R
 import com.example.makeyourcs.databinding.FragmentAccMgtDialogBinding
 
 
-class AccMgtDialogFragment(context: Context) : DialogFragment() {
+class AccMgtDialogFragment(context: Context, var groupname: String) : DialogFragment() {
     val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     val size = Point()
     val display = windowManager.defaultDisplay
@@ -34,11 +34,17 @@ class AccMgtDialogFragment(context: Context) : DialogFragment() {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
 
-        binding.deletebtn.setOnClickListener {
+        binding.subaccount.text = groupname
+
+        binding.delete.setOnClickListener {
             buttonClickListener.onAccountMgtMenu_Delete()
+            dismiss()
+        }
+
+        binding.changefollower.setOnClickListener {
             dismiss()
         }
 

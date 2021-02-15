@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.*
 import com.example.makeyourcs.R
@@ -12,9 +11,10 @@ import com.example.makeyourcs.data.AccountClass
 import com.example.makeyourcs.data.Repository.AccountRepository
 import com.example.makeyourcs.ui.MainActivity
 import com.example.makeyourcs.ui.auth.AuthListener
-import com.example.makeyourcs.ui.auth.SignupActivity
-import com.example.makeyourcs.ui.user.UserFragment
-import com.example.makeyourcs.utils.startAccountMgtMainActivity
+import com.example.makeyourcs.ui.user.management.dialog.LimitedAccCntDialog
+import com.example.makeyourcs.ui.user.management.follower.FollowerItem
+import com.example.makeyourcs.ui.user.management.follower.SelectFollowerForNewAccActivity
+
 
 class UserMgtViewModel (
     private val repository: AccountRepository
@@ -27,6 +27,9 @@ class UserMgtViewModel (
     val accountData: LiveData<List<AccountClass.SubClass>>
         get()= _accountData
 
+    private var _followerData = MutableLiveData<List<String>>()
+    val followerData: LiveData<List<String>>
+        get() = _followerData
 
     var email: String? = null
     var id: String? = null
@@ -37,6 +40,8 @@ class UserMgtViewModel (
     var subName = ObservableField<String>()
     var groupName = ObservableField<String>()
     var subIntroduce = ObservableField<String>()
+    var subImg = ObservableField<String>()
+
     var authListener: AuthListener? = null
 
     val user by lazy {
@@ -57,12 +62,28 @@ class UserMgtViewModel (
         _accountData = data
     }
 
-    fun getAccountList(): MutableLiveData<List<AccountClass.SubClass>> { // accountmgtmain activity는 이 메소드를 observe
-        var data = repository.observeAccountData()
-        return data
+    fun getFollowerData(){
+        System.out.println("getFollowerData")
+        var data = repository.getAllfollower()
+        System.out.println("follower Data: " + data.value)
+        _followerData = data
     }
 
-    fun getItemList(): ArrayList<AccountMgtItem>{ // 위 메소드로 전달받은 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
+    fun getFollowerItemList(): ArrayList<FollowerItem>{ // 나를 팔로워하는 계정 리스트를 반환
+        var itemlist = ArrayList<FollowerItem>()
+        var data = followerData
+
+        var follower = data.value?.iterator()
+        if(follower != null){
+            while(follower.hasNext()){
+                var now = follower.next()
+                itemlist.add(FollowerItem(R.drawable.ic_account, now.toString()))
+            }
+        }
+        return itemlist
+    }
+
+    fun getItemList(): ArrayList<AccountMgtItem>{ // 부캐정보 값이 바뀌면 이 메소드 호출 -> recyclerItemList를 리턴
         var itemlist = ArrayList<AccountMgtItem>()
         var data = accountData
         //data.value?.sortedBy { it.sub_num }
@@ -72,7 +93,7 @@ class UserMgtViewModel (
             while(account.hasNext()){
 //                Log.d("account","in Account")
                 var now = account.next()
-                itemlist.add(AccountMgtItem(R.drawable.profile_oval, now.name.toString(), now.group_name.toString()))
+                itemlist.add(AccountMgtItem(R.drawable.ic_account, now.name.toString(), now.group_name.toString()))
             }
         }
         return itemlist
@@ -83,8 +104,16 @@ class UserMgtViewModel (
 //        System.out.println("new subAccount!!")
         var data = repository.observeUserData()
 
-        repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
-        view.context.startAccountMgtMainActivity()
+        if(subImg.get() != null){
+            repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), subImg.get().toString())
+        }else{ // 부캐 프로필 사진 설정안했을 경우
+            repository.setSubAccount(data.value?.sub_count!!, subName.get().toString(), groupName.get().toString(), subIntroduce.get().toString(), "default")
+        }
+//        view.context.startAccountMgtMainActivity()
+        Intent(view.context, SelectFollowerForNewAccActivity::class.java).also {
+            it.putExtra("groupname", groupName.get().toString())
+            view.context.startActivity(it)
+        }
     }
 
     fun DeleteAccount(delGroup: String){
@@ -93,10 +122,24 @@ class UserMgtViewModel (
         repository.delSubAccount(delGroup)
     }
 
+    fun SetFollowertoSubaccount(context: Context, groupname: String, selected_follower: List<String>){
+        System.out.println("in viewmodel: $groupname")
+        Log.d("setfollower", "$selected_follower")
+
+        repository.setSubaccountFollower(groupname, selected_follower)
+        Log.d("setfollower", "success set follower")
+        Intent(context, AccountMgtMainActivity::class.java).also{
+            context.startActivity(it)
+        }
+    }
+
     fun goToAddNewAccount(view: View) {
         var data = repository.observeUserData()
         if(data.value?.sub_count == 3){
-            val dialog = LimitedAccCntDialog(view.context)
+            val dialog =
+                LimitedAccCntDialog(
+                    view.context
+                )
             dialog.WarningConfirm()
         }else{
             Intent(view.context, NewAccountMgtActivity::class.java).also {

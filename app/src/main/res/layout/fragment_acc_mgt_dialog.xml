@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,6 +10,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/subaccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -21,7 +21,7 @@
 
 
         <Button
-            android:id="@+id/deletebtn"
+            android:id="@+id/delete"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -37,7 +37,7 @@
             android:background="@color/line_gray" />
 
         <Button
-            android:id="@+id/change_foller"
+            android:id="@+id/changefollower"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

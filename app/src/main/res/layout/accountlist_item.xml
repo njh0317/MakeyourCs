@@ -16,7 +16,6 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/background_accountmgt_item"
         android:orientation="horizontal"
-        android:onClick="@{accountItem::onClickListener}"
         tools:ignore="MissingConstraints">
 
         <ImageView

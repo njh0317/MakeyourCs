@@ -1,4 +1,4 @@
-package com.example.makeyourcs.ui.user.management
+package com.example.makeyourcs.ui.user.management.dialog
 
 import android.app.Dialog
 import android.content.Context
@@ -8,12 +8,12 @@ import android.view.WindowManager
 import android.widget.Button
 import com.example.makeyourcs.R
 
+class LimitedAccCntDialog(context: Context) {
 
-class OriginCannotDeleteDialog(context: Context) {
-    private val dialog = Dialog(context)
+    private val dialog = Dialog(context);
 
     fun WarningConfirm(){
-        dialog.setContentView(R.layout.origin_cannotdelete_dialog)
+        dialog.setContentView(R.layout.limited_subacccnt_dialog)
         // Dialog 배경 투명하게
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         // Dialog 크기 설정

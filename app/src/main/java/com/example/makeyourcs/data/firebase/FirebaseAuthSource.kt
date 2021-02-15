@@ -206,7 +206,7 @@ class FirebaseAuthSource {
             firestore.collection("Account")
                 .document(currentUser()!!.email.toString())
                 .collection("SubAccount")
-                .document("본 계정")
+                .document("default")
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {

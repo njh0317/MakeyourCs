@@ -57,27 +57,33 @@
                 android:textColor="@color/black"
                 android:textSize="17sp" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/subaccount_img"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/profile_oval" />
+                android:background="@drawable/ic_account" />
 
             <Button
+                android:id="@+id/change_subimgbtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="5dp"
                 android:background="@color/transparent"
                 android:text="프로필 사진 바꾸기"
                 android:textColor="@color/signature"
                 android:textSize="19sp" />
 
+            <TextView
+                android:id="@+id/subimg_filepath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={viewmodel.subImg}"
+                android:textColor="@android:color/transparent"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="20dp"
                 android:background="@color/line_gray" />
 
             <LinearLayout
