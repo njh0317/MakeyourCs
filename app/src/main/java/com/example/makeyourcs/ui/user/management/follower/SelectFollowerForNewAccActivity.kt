@@ -19,15 +19,15 @@ import kotlinx.android.synthetic.main.followerlist_item.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-
-class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
-    FollowerRecyclerAdapter.OnItemClickListener {
+//,
+//FollowerRecyclerAdapter.OnItemClickListener
+class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware{
     override val kodein by kodein()
     private val factory: UserMgtViewModelFactory by instance()
     lateinit var viewModel: UserMgtViewModel
     lateinit var binding: ActivitySelectFollowerForNewAccBinding
     lateinit var adapter: FollowerRecyclerAdapter
-    private var SelectedItems = SparseBooleanArray(0)
+//    private var SelectedItems = SparseBooleanArray(0)
 
     private lateinit var groupname: String
 
@@ -48,7 +48,7 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
 
         viewModel.getFollowerData()
         viewModel.followerData.observe(this, Observer {
-            adapter = FollowerRecyclerAdapter(viewModel.getFollowerItemList(), this)
+            adapter = FollowerRecyclerAdapter(viewModel.getFollowerItemList())
             binding.followerRecyclerView.adapter = adapter
         })
 
@@ -62,6 +62,7 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
     fun selectedFollower() {
         var followerlist = viewModel.getFollowerItemList()
         var selectedfollower = mutableListOf<String>()
+        var SelectedItems = adapter.SelectedItems
 
         for (i in 0..(followerlist.size - 1)) {
             if (SelectedItems.get(i)) {
@@ -71,23 +72,21 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware,
         viewModel.SetFollowertoSubaccount(this, groupname, selectedfollower)
     }
 
-    override fun onItemClick(position: Int, view: View) {
-        var followerEmail = viewModel.getFollowerItemList().get(position).id
-
-        if (SelectedItems.get(position, false)) {
-            SelectedItems.put(position, false)
-            view.plusbtn.setBackgroundResource(R.drawable.orangebtn)
-            view.plusbtn.setText("추가")
-            view.plusbtn.setTextColor(Color.WHITE)
-            Log.d("inFollowerMainActivity", "$followerEmail 취소됨")
-        } else {
-            SelectedItems.put(position, true)
-            view.plusbtn.setBackgroundResource(R.drawable.whitebtn)
-            view.plusbtn.setText("취소")
-            view.plusbtn.setTextColor(Color.BLACK)
-            Log.d("inFollowerMainActivity", "$followerEmail 추가됨")
-        }
-
-
-    }
+//    override fun onItemClick(position: Int, view: View) {
+//        var followerEmail = viewModel.getFollowerItemList().get(position).id
+//
+//        if (SelectedItems.get(position, false)) {
+//            SelectedItems.put(position, false)
+//            view.plusbtn.setBackgroundResource(R.drawable.orangebtn)
+//            view.plusbtn.setText("추가")
+//            view.plusbtn.setTextColor(Color.WHITE)
+//            Log.d("inFollowerMainActivity", "$followerEmail 취소됨")
+//        } else {
+//            SelectedItems.put(position, true)
+//            view.plusbtn.setBackgroundResource(R.drawable.whitebtn)
+//            view.plusbtn.setText("취소")
+//            view.plusbtn.setTextColor(Color.BLACK)
+//            Log.d("inFollowerMainActivity", "$followerEmail 추가됨")
+//        }
+//    }
 }

@@ -148,6 +148,7 @@ class AuthViewModel(
         disposables.add(disposable)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun origin_account(view: View) //TODO: SIGNUP 후 본캐생성 예시
     {
 //        repository.setOriginAccount("jihae","Hi! I'm Jihae","default")
