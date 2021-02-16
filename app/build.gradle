@@ -113,6 +113,8 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    kapt "android.arch.lifecycle:compiler:1.0.0"
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'
 
     //viewModel-ktx
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"

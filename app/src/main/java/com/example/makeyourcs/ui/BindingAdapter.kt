@@ -1,7 +1,10 @@
 package com.example.makeyourcs.ui
 
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.util.Log
 import android.widget.ImageView
+import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +23,14 @@ fun imgLoad(view: ImageView, resId: Int){
 
 }
 @BindingAdapter("imgResString")
-fun imgLoadString(view: ImageView, resId: String){
-    Glide.with(view.context)
-        .load(resId)
-        .dontTransform()
-        .into(view)
+fun imgLoadString(view: ImageView, resId: Uri){
+    Log.d("resId","resId : "+ resId)
+//    Glide.with(view.context)
+//        .load(resId.toUri())
+//        .dontTransform()
+//        .into(view)
 
 //    view.setImageResource(resId)
+    view.setImageURI(resId)
 
 }

@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:text="@{postitem.like}"
+                android:text="@{Integer.toString(postitem.like)}"
                 android:textColor="@color/deepGray"></TextView>
 
         </LinearLayout>

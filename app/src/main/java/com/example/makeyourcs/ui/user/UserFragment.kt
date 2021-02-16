@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -72,6 +73,7 @@ class UserFragment : InjectionFragment(){
 
             lifecycleScope.launch {
                 val uri = viewmodel.getProfileImageurl(it.profile_pic_name!!)
+                //val uri = "content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F31/ORIGINAL/NONE/image%2Fjpeg/1054922742"
                 Log.d("uri","uri : "+uri)
                 if(uri!=null){
                     Glide.with(view.context)
