@@ -200,6 +200,7 @@ class FirebaseAuthSource {
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
     }
+
     fun getAllfollower()
     {
         try {
@@ -219,6 +220,7 @@ class FirebaseAuthSource {
                             allfollowerlistLiveData.postValue(ArrayList(data.follower.keys))
                         }
                     }
+//                    followerWaitlistLiveData.postValue(followerwaitlist)
                 }
         } catch (e: Exception) {
             Log.e(TAG, "Error getting follower wait list", e)
@@ -343,6 +345,7 @@ class FirebaseAuthSource {
 
     }
 
+
     fun observefollowerWaitList()
     {
         var followerwaitlist : ArrayList<AccountClass.Follower_wait_list> = arrayListOf()
@@ -369,6 +372,17 @@ class FirebaseAuthSource {
         }
 
     }
+
+    fun make_map(group_name_list: List<String>): HashMap<String, Boolean> {
+        val hashMap:HashMap<String, Boolean> = HashMap<String, Boolean>() //define empty hashmap
+
+        for(group in group_name_list)
+        {
+            hashMap.put(group, TRUE)
+        }
+        return hashMap
+    }
+
     fun observefollowList()
     {
         var followlist : ArrayList<AccountClass.FollowClass> = arrayListOf()
@@ -428,15 +442,7 @@ class FirebaseAuthSource {
         }
 
     }
-    fun make_map(group_name_list: List<String>): HashMap<String, Boolean> {
-        val hashMap:HashMap<String, Boolean> = HashMap<String, Boolean>() //define empty hashmap
 
-        for(group in group_name_list)
-        {
-            hashMap.put(group, TRUE)
-        }
-        return hashMap
-    }
     fun notacceptfollow(fromEmail: String)
     {
         val toAccount_waitlist = firestore.collection("Account")
@@ -456,6 +462,12 @@ class FirebaseAuthSource {
             .addOnSuccessListener { Log.d(TAG, "accept follow Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
+//            val url = storageRef.downloadUrl.await()
+//            return url
+//        }catch(e:Throwable)
+//        {
+//            Log.w(TAG, "error in set image,  ",e)
+//            null
 
     }
     fun acceptfollow(fromEmail: String, group_name_list: List<String>)
@@ -504,8 +516,9 @@ class FirebaseAuthSource {
             .addOnSuccessListener { Log.d(TAG, "accept follow Transaction success!") }
             .addOnFailureListener { e -> Log.w(TAG, "Transaction failure.", e) }
 
-
     }
+
+
 
 
     fun modifiedprofile(group_name: String, name: String, introduction: String, filepath: String)
@@ -723,7 +736,7 @@ class FirebaseAuthSource {
         var fileName = "IMAGE_" + timestamp + "_.png"
         var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
         storageRef.putFile(pAdd!!).addOnSuccessListener {
-            posting.imgUrl = pAdd.toString()
+            posting.imgUrl = pAdd
             postPics.order = 1
             postPics.picture_url = pAdd.toString()
             firestore.runBatch { batch ->

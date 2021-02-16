@@ -1,12 +1,14 @@
 package com.example.makeyourcs.data
 
+import android.net.Uri
+
 data class PostClass(var postId: String? = null,
                      var account:String? = null,
                      var email:String? = null,
                      var content:String? = null,
                      var like:Int ?= 0,
                      var comment_cnt:Int ?= 0,
-                     var imgUrl:String? = null,
+                     var imgUrl:Uri? = null,
                      var is_stored:Boolean ?= false,
                      var place_tag:String? = null)
 {

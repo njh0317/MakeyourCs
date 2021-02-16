@@ -75,7 +75,7 @@ class PostSource {
         storageRef.putFile(pAdd!!).addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener {uri ->
                 if (curId != null) {
-                    posting.imgUrl = uri.toString()
+                    posting.imgUrl = uri
                     firestore?.collection("Post")?.document(posting.postId.toString())?.set(posting)
                 }
             }

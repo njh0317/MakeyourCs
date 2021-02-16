@@ -83,7 +83,7 @@ class StorageActivity : AppCompatActivity() {
         var fileName = "IMAGE_" + timestamp + "_.png"
         var storageRef = firebaseStorage.reference.child("images/"+account+"/"+fileName)
         storageRef.putFile(pAdd!!).addOnSuccessListener {
-            posting.imgUrl = pAdd.toString()
+            posting.imgUrl = pAdd
             postPics.order = 1
             postPics.picture_url = pAdd.toString()
             firestore.runBatch { batch ->
