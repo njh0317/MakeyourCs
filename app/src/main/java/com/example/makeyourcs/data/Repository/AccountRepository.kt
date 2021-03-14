@@ -1,7 +1,9 @@
 package com.example.makeyourcs.data.Repository
 
+import android.content.ContentValues.TAG
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
@@ -51,6 +53,7 @@ class AccountRepository(
     {
         firestore.observeAccountsData()
         var data = firestore.accountsDataLiveData
+        Log.d(TAG, data.value.toString())
         return data
     }
     fun observeoneAccountData(group_name: String) : MutableLiveData<AccountClass.SubClass> //group_name 에 해당하는 부캐 계정 정보

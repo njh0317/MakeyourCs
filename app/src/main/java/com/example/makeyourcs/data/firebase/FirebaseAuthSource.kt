@@ -137,7 +137,6 @@ class FirebaseAuthSource {
                 for (doc in value!!) {
                     doc?.let {
                         val data = it?.toObject(AccountClass::class.java)
-                        System.out.println(data)
                         userDataLiveData.postValue(data)
                     }
                 }
@@ -303,6 +302,7 @@ class FirebaseAuthSource {
                         doc?.let {
                             val data = it?.toObject(AccountClass.SubClass::class.java)
                             subaccountlist.add(data)
+                            Log.d(TAG, data.toString())
                         }
                     }
                 }

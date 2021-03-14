@@ -22,6 +22,7 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
     lateinit var viewModel: UserMgtViewModel
     lateinit var binding: ActivityAccountMgtMainBinding
     lateinit var adapter: AccountMgtRecyclerAdapter
+    val TAG = "AccountMgtMain"
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,6 +38,7 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
 
         viewModel.getAccountData()
         viewModel.accountData.observe(this, Observer {
+            Log.d(TAG, viewModel.accountData.value.toString())
             adapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
             binding.accountRecyclerView.adapter = adapter
         })
