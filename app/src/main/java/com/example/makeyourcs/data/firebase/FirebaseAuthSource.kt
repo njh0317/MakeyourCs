@@ -129,7 +129,9 @@ class FirebaseAuthSource {
 
     fun observeUserData() {
         try {
-            firestore.collection("Account").whereEqualTo("email", currentUser()!!.email.toString()).addSnapshotListener{ value, e ->
+            firestore.collection("Account")
+                .whereEqualTo("email", currentUser()!!.email.toString())
+                .addSnapshotListener{ value, e ->
                 if (e != null) {
                     Log.w(TAG, "Listen failed.", e)
                     return@addSnapshotListener
@@ -286,7 +288,7 @@ class FirebaseAuthSource {
         }
 
     }
-    fun observeAccountsData() {
+    suspend fun observeAccountsData() {
         var subaccountlist : ArrayList<AccountClass.SubClass> = arrayListOf()
         try {
             firestore.collection("Account")
@@ -302,12 +304,13 @@ class FirebaseAuthSource {
                     for (doc in value!!) {
                         doc?.let {
                             val data = it?.toObject(AccountClass.SubClass::class.java)
+                            Log.e("data", data.toString())
                             subaccountlist.add(data)
                         }
                     }
-                }
+                    Log.i("SubAccounts", subaccountlist.toString())
                     accountsDataLiveData.postValue(subaccountlist)
-
+                }
 
         } catch (e: Exception) {
             Log.e(TAG, "Error getting user data", e)

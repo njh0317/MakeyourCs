@@ -51,7 +51,7 @@ class UserFragment : InjectionFragment(){
         viewmodel.getUserData()
         viewmodel.userData.observe(viewLifecycleOwner, Observer {
             binding.profileUsername.text="@"+it.userId
-            binding.profileFollowing.text="팔로잉 "+it.following_num.toString()
+            binding.profileFollowing.text="팔로잉 "+it.following_num
         })
 
         viewmodel.getAccountData((activity as MainActivity).groupname!!)

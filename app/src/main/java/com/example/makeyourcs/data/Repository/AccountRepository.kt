@@ -2,6 +2,7 @@ package com.example.makeyourcs.data.Repository
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.makeyourcs.data.AccountClass
@@ -31,8 +32,6 @@ class AccountRepository(
 
     fun setOriginAccount(name:String, introduction:String, filepath: String) //본캐 정보 저장
         = firestore.setOriginAccount(name, introduction, filepath)
-    //TODO:filepath의 경우 선택된 이미지의 경로인데 꼭 .toString()을 붙여 string 형식으로 바꿔서 호출해줘야합니다.
-    // default 사진을 사용할 경우 "default" 로 호출하면 됩니다.
 
     fun setSubAccount(subaccount_num:Int, name:String, group_name:String, introduction:String, imageurl:String) //부캐 정보 저장
             = firestore.setSubAccount(subaccount_num, name, group_name, introduction, imageurl)
@@ -47,8 +46,9 @@ class AccountRepository(
     fun delSubAccount(group_name:String) //부캐 정보 삭제
             = firestore.delSubAccount(group_name)
 
-    fun observeAccountData(): MutableLiveData<List<AccountClass.SubClass>> // 모든 계정 정보 가져오기
+    suspend fun observeAccountData(): MutableLiveData<List<AccountClass.SubClass>> // 모든 계정 정보 가져오기
     {
+        Log.e("Repository", "call success1")
         firestore.observeAccountsData()
         var data = firestore.accountsDataLiveData
         return data

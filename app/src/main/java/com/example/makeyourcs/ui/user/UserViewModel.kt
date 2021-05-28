@@ -80,10 +80,6 @@ class UserViewModel(
     }
 
     suspend fun getProfileImageurl(imagename:String):Uri? {
-
-//        GlobalScope.launch{
-//            uri = repository.imageurl(imagename)
-//        }
         return repository.imageurl(imagename)
     }
 

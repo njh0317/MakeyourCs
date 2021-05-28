@@ -14,6 +14,7 @@ import com.example.makeyourcs.ui.auth.AuthListener
 import com.example.makeyourcs.ui.user.management.dialog.LimitedAccCntDialog
 import com.example.makeyourcs.ui.user.management.follower.FollowerItem
 import com.example.makeyourcs.ui.user.management.follower.SelectFollowerForNewAccActivity
+import kotlinx.coroutines.launch
 
 
 class UserMgtViewModel (
@@ -55,10 +56,11 @@ class UserMgtViewModel (
         _userData = data
     }
 
-    fun getAccountData() {
+    fun getAccountData() = viewModelScope.launch{
         System.out.println("getAccountData")
         var data = repository.observeAccountData()
         System.out.println("account Data: " + data.value)
+
         _accountData = data
     }
 
