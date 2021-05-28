@@ -150,6 +150,10 @@ class UserMgtViewModel (
         }
     }
 
+    fun changeAccount(view: View) {
+
+    }
+
     fun goToUserFeed(view: View){
         Intent(view.context, MainActivity::class.java).also{
             view.context.startActivity(it);

@@ -22,7 +22,6 @@ import org.kodein.di.android.kodein
 class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnNavigationItemSelectedListener {
     override val kodein by kodein()
     val TAG="MAINACTIVITY"
-    var groupname:String?="본 계정"
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

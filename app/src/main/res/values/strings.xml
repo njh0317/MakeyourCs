@@ -67,6 +67,12 @@
     <string name="origin_cannotdelete">본 계정은 \n삭제할 수 없습니다.</string>
     <string name="add">추가</string>
 
+    <!-- Change sub account-->
+    <string name="change_confirm">변경 확인</string>
+    <string name="ask_change_subacc">이 계정으로 변경하시겠습니까?</string>
+    <string name="change">변경</string>
+    <string name="not_change">취소</string>
+
     <!-- More menu in User Feed -->
     <string name="settings">설정</string>
     <string name="accountmgt">계정 관리</string>

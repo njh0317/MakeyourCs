@@ -50,13 +50,11 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
 
     override fun onLongClick(position: Int) {
         var groupname = viewModel.getItemList().get(position).groupname
-//        Log.d("onLongClick", "$groupname long clicked")
 
         val dialog = AccMgtDialogFragment(this, groupname)
         dialog.setButtonClickListener(object: AccMgtDialogFragment.OnButtonClickListener{
             override fun onAccountMgtMenu_Delete() {
                 StartDeleteDialog(groupname, position)
-//                Log.d("delete_menu", "$groupname, $position")
             }
 
             override fun onAccountMgtMenu_ChangeFollower() {
