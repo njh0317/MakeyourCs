@@ -33,10 +33,8 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_select_follower_for_new_acc)
         if (intent.hasExtra("groupname")) {
             groupname = intent.getStringExtra("groupname")
-//            Toast.makeText(this, "$groupname get!!", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(this, "groupname Error!", Toast.LENGTH_SHORT).show()
         }
@@ -49,20 +47,22 @@ class SelectFollowerForNewAccActivity : AppCompatActivity(), KodeinAware{
         viewModel.getFollowerData()
         viewModel.followerData.observe(this, Observer {
             adapter = FollowerRecyclerAdapter(viewModel.getFollowerItemList())
+            Log.e("adapter", adapter.toString())
             binding.followerRecyclerView.adapter = adapter
         })
 
         binding.selectComplete.setOnClickListener {
             selectedFollower()
         }
-//        adapter = FollowerRecyclerAdapter(list)
-//        binding.followerRecyclerView.adapter = adapter
     }
 
     fun selectedFollower() {
         var followerlist = viewModel.getFollowerItemList()
         var selectedfollower = mutableListOf<String>()
+
         var SelectedItems = adapter.SelectedItems
+
+        Log.e("selected item", SelectedItems.toString())
 
         for (i in 0..(followerlist.size - 1)) {
             if (SelectedItems.get(i)) {

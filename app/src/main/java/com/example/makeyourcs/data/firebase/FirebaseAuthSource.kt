@@ -208,7 +208,7 @@ class FirebaseAuthSource {
             firestore.collection("Account")
                 .document(currentUser()!!.email.toString())
                 .collection("SubAccount")
-                .document("default")
+                .document("본 계정")
                 .addSnapshotListener{ value, e ->
                     if(e!=null)
                     {
@@ -220,6 +220,7 @@ class FirebaseAuthSource {
                         if (data != null) {
                             allfollowerlistLiveData.postValue(ArrayList(data.follower.keys))
                         }
+                        Log.e("Follower", allfollowerlistLiveData.toString())
                     }
                 }
         } catch (e: Exception) {

@@ -40,8 +40,6 @@ class AccountMgtMainActivity : AppCompatActivity(), KodeinAware, AccountMgtRecyc
             adapter = AccountMgtRecyclerAdapter(viewModel.getItemList(), this)
             binding.accountRecyclerView.adapter = adapter
         })
-
-        Log.d("ACCOUNTMGTMAIN", "in func")
     }
 
     override fun onItemClick(position: Int) {
