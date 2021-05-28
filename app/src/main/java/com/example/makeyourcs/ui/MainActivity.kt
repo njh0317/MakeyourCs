@@ -14,6 +14,7 @@ import com.example.makeyourcs.ui.home.HomeFragment
 import com.example.makeyourcs.ui.search.SearchFragment
 import com.example.makeyourcs.ui.upload.UploadActivity
 import com.example.makeyourcs.ui.user.UserFragment
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import org.kodein.di.KodeinAware
@@ -71,11 +72,8 @@ class MainActivity() : AppCompatActivity(),KodeinAware, BottomNavigationView.OnN
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         bottom_navigation.setOnNavigationItemSelectedListener(this)
-
         //Set default screen
         bottom_navigation.selectedItemId= R.id.action_home
-
-
     }
     public override fun onStart(){
         super.onStart()
